@@ -17,10 +17,7 @@
                 <div class="jogador">
                     <h1>Jogador</h1>
                     <div class="life-bar">
-                        <div class="life" 
-                        :class="{danger: playerLife < 20 }"
-                        :style="{width: playerLife+'%'}"
-                        ></div>
+                        <div class="life" :class="{danger: playerLife < 20 }" :style="{width: playerLife+'%'}"></div>
                     </div>
                     <div>{{playerLife}} %</div>
                 </div>
@@ -29,8 +26,7 @@
                 <div class="monstro">
                     <h1>Monstro</h1>
                     <div class="life-bar">
-                        <div class="life"  :class="{danger: playerLife < 20 }"
-                        :style="{width: monsterLife+'%'}"></div>
+                        <div class="life" :class="{danger: playerLife < 20 }" :style="{width: monsterLife+'%'}"></div>
                     </div>
                     <div>{{monsterLife}} %</div>
                 </div>
@@ -38,7 +34,16 @@
         </div>
         <div v-if="hasResult" class="result">
             <div v-if="playerLife == 0" class="perdeu">Voce Perdeu!!!</div>
-            <div  v-else class="ganhou">Voce Ganhou!!!</div>
+            <div v-else class="ganhou">Voce Ganhou!!!</div>
+        </div>
+        <div class="result">
+            <template v-if="running == true">
+                <button class="btn ataque" @click="attack(false)">Ataque</button>
+                <button class="btn ataque-especial" @click="attack(true)">Ataque especial</button>
+                <button class="btn curar">Curar</button>
+                <button class="btn desistir" v-on:click="running = !running">Desistir</button>
+            </template>
+            <button v-else class="btn iniciar" @click="startGame">Iniciar</button>
         </div>
     </div>
     <script src="app.js"></script>

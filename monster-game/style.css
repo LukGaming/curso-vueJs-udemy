@@ -51,3 +51,23 @@
 .ganhou{
     color: green;
 }
+.btn{
+    margin: 10px ;
+    color: white;
+}
+.iniciar{
+    background-color: blue;
+}
+.ataque{
+    background-color: red;
+}
+.ataque-especial{
+    background-color: orange;
+}
+.curar{
+    background: palegreen;
+}
+.desistir{
+    background-color: grey;
+}
+
