@@ -1,4 +1,4 @@
-# components-contacts
+# hello-world
 
 ## Project setup
 ```
