@@ -1,21 +1,22 @@
 <template>
-      <HelloWorld/>
+      <Nav/>
     
   
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import Nav from './components/Nav';
 
 export default {
   name: 'App',
 
   components: {
-    HelloWorld,
+    Nav,
   },
 
   data: () => ({
-    //
+    
+    
   }),
 };
 </script>
