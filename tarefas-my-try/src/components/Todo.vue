@@ -1,14 +1,18 @@
 <template>
   <div>
     <div class="inputTodo">
-      <input type="text" v-model="newTodoName" />
+      <input type="text" v-model="newTodoName" v-on:keyup.enter="newTodo" />
       <button class="buttonTodo" @click="newTodo">Adicionar Itens</button>
     </div>
     <div v-if="tasks" class="todos">
       <div v-for="(task, i) in tasks" :key="i">
-        <div class="todo" :class="stateClass(task.pending)" @click.stop="Todofeito(task)">
+        <div
+          class="todo"
+          :class="stateClass(task.pending)"
+          @click.stop="Todofeito(task)"
+        >
           <div class="remover">
-            <button @click.stop="removeTodo(task)">x</button>
+            <button @click.stop="removeTodo(i)">x</button>
           </div>
           {{ task.name }}
         </div>
@@ -18,6 +22,7 @@
 </template>
 <script>
 import eventBus from "./eventBus";
+
 export default {
   data() {
     return {
@@ -34,24 +39,22 @@ export default {
       }
     },
     removeTodo(todo) {
-      this.tasks.pop(todo);
-      console.log("removendo todo");
+      this.tasks.splice(todo, 1);
       this.atualizaDone();
     },
     Todofeito(todo) {
-      let done = 0;
       todo.pending = !todo.pending;
-     this.atualizaDone();
-     console.log("Todo Feito")
+      this.atualizaDone();
+      console.log("Todo Feito");
     },
-    atualizaDone(){
-       let done = 0;
-        this.tasks.forEach((element) => {
-          if (element.pending == false) {
-            done++;
-          }
-        });
-        eventBus.$emit("progressbar", this.tasks, done);
+    atualizaDone() {
+      let done = 0;
+      this.tasks.forEach((element) => {
+        if (element.pending == false) {
+          done++;
+        }
+      });
+      eventBus.$emit("progressbar", this.tasks, done);
     },
     stateClass(todo) {
       return {
@@ -96,10 +99,12 @@ export default {
 .todos {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
 }
 .todo {
+  position: relative;
   margin: 10px;
   font-size: 2rem;
   text-align: center;
@@ -111,23 +116,17 @@ export default {
   user-select: none;
 }
 .remover {
-  display: flex;
-  flex-direction: row-reverse;
   padding-right: 5px;
   width: 100%;
 }
 .remover button {
-  background: #000000; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to bottom,
-    #e74c3c,
-    #000000
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to bottom,
-    #e74c3c,
-    #000000
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  border: none;
+  border-radius: 50%;
+  color: black;
+  font-size: 1.2rem;
 }
 .pending {
   background-color: red;
@@ -135,7 +134,7 @@ export default {
 .done {
   background-color: green;
 }
-.changeTodoStyle{
+.changeTodoStyle {
   height: 100%;
 }
 </style>
