@@ -30,6 +30,16 @@ export default {
       tasks: [],
     };
   },
+  watch: {
+    tasks: {
+      deep: true,
+      handler(){
+        localStorage.setItem('tasks', JSON.stringify(this.tasks));
+        this.atualizaDone();
+      }
+    }
+  },
+  
   methods: {
     newTodo() {
       if (this.newTodoName) {
@@ -61,8 +71,15 @@ export default {
         pending: todo,
         done: !todo,
       };
-    },
+    }
   },
+  created() {
+    const json = localStorage.getItem('tasks');
+    console.log(json)
+    this.tasks = JSON.parse(json) || [];
+  },
+  
+  
 };
 </script>
 
