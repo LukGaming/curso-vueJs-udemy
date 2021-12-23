@@ -1,27 +1,41 @@
 <template >
-<div>
-  <div class="porcentagem">
-      
-    <p>{{ progresso }}%</p>
-    <div class="divProgresso">
-      <div class="bgProgresso bgProgressoNaoConcluido" :style="{ width: progresso + '%' }"></div>
+  <div>
+    <div class="porcentagem">
+      <p>{{ progresso }}%</p>
+      <div class="divProgresso">
+        <div
+          class="bgProgresso bgProgressoNaoConcluido"
+          :style="{ width: progresso + '%' }"
+        ></div>
+      </div>
     </div>
-    
-    </div>
-    
   </div>
 </template>
 <script>
+import Todo from "./Todo.vue";
+import eventBus from "./eventBus";
 export default {
   data() {
     return {
       progresso: 0,
     };
   },
+  mounted() {
+    eventBus.$on("progressbar", (tasks, done) => {
+      if(tasks == 0){
+        this.progresso = 0;
+      }
+      this.changeProgess(tasks.length, done);
+    });
+  },
   methods: {
-    incrementProgress() {
-      this.progresso += 10;
-      console.log(this.progresso);
+    changeProgess(tasks, done) {
+      if (tasks > 0) {
+        let CadaUmVale = 100 / tasks;
+        let feitos = parseInt(CadaUmVale * done);
+       this.progresso = feitos;
+      }
+      
     },
   },
 };
@@ -45,17 +59,24 @@ export default {
   width: 100%;
 }
 .bgProgresso {
-  
   width: 10%;
   height: 100%;
 }
-.bgProgressoConcluido{
-    background: #FDFC47;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #24FE41, #FDFC47);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #24FE41, #FDFC47); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+.bgProgressoConcluido {
+  background: #fdfc47; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #24fe41,
+    #fdfc47
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #24fe41,
+    #fdfc47
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
-.bgProgressoNaoConcluido{
-    background: #eb3349; /* fallback for old browsers */
+.bgProgressoNaoConcluido {
+  background: #eb3349; /* fallback for old browsers */
   background: -webkit-linear-gradient(
     to bottom,
     #f45c43,
@@ -66,6 +87,5 @@ background: linear-gradient(to right, #24FE41, #FDFC47); /* W3C, IE 10+/ Edge, F
     #f45c43,
     #eb3349
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
 }
 </style>

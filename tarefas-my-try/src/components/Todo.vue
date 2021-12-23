@@ -6,13 +6,9 @@
     </div>
     <div v-if="tasks" class="todos">
       <div v-for="(task, i) in tasks" :key="i">
-        <div
-          class="todo"
-          :class="stateClass(task.pending)"
-          @click="Todofeito(i)"
-        >
+        <div class="todo" :class="stateClass(task.pending)" @click.stop="Todofeito(task)">
           <div class="remover">
-            <button @click="removeTodo(i)">x</button>
+            <button @click.stop="removeTodo(task)">x</button>
           </div>
           {{ task.name }}
         </div>
@@ -21,13 +17,12 @@
   </div>
 </template>
 <script>
+import eventBus from "./eventBus";
 export default {
   data() {
     return {
       newTodoName: "",
       tasks: [],
-      done: 0,
-      pending: 0,
     };
   },
   methods: {
@@ -35,20 +30,28 @@ export default {
       if (this.newTodoName) {
         this.tasks.push({ name: this.newTodoName, pending: true });
         this.newTodoName = "";
+        this.atualizaDone();
       }
     },
     removeTodo(todo) {
       this.tasks.pop(todo);
+      console.log("removendo todo");
+      this.atualizaDone();
     },
     Todofeito(todo) {
-      if (this.tasks[todo].pending) {
-        this.tasks[todo].pending = false;
-      } else {
-        this.tasks[todo].pending = true;
-      }
-      
-     
-     
+      let done = 0;
+      todo.pending = !todo.pending;
+     this.atualizaDone();
+     console.log("Todo Feito")
+    },
+    atualizaDone(){
+       let done = 0;
+        this.tasks.forEach((element) => {
+          if (element.pending == false) {
+            done++;
+          }
+        });
+        eventBus.$emit("progressbar", this.tasks, done);
     },
     stateClass(todo) {
       return {
@@ -131,5 +134,8 @@ export default {
 }
 .done {
   background-color: green;
+}
+.changeTodoStyle{
+  height: 100%;
 }
 </style>
