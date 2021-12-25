@@ -17,16 +17,26 @@
     <p>{{ contandoPalavrasELetras }}</p>
     <!-- Exercício 4 -->
     <!-- Compartilhe a propriedade computada via mixin -->
-
-	
+    <!-- Complementares -->
+    <!-- Fazer máscara para CPF -->
+    <label for="cpf">Cpf: </label>
+    <input
+      type="text"
+      id="cpf"
+      v-model="cpf"
+      placeholder="000.000.000-00"
+      maxlength="14"
+     
+    />
   </div>
 </template>
 
 <script>
-import FrasesMixin from './FrasesMixin'
+import FrasesMixin from "./FrasesMixin";
 export default {
   data() {
     return {
+      cpf: "",
       palavra1: "ola mundo tudo bem?",
       palavra2: "tamanho da palavra",
     };
@@ -37,7 +47,21 @@ export default {
       return value.replace(/\s/g, ",");
     },
   },
-  
+  watch: {
+    cpf() {
+      if (this.cpf.length == 3 || this.cpf.length == 7) {
+        this.cpf += ".";
+      }
+      if(this.cpf.length == 11){
+        if(this.cpf.indexOf('-')){
+          let cpf = this.cpf.split('-');
+          console.log(cpf)
+        }
+        this.cpf += "-";
+      }
+      console.log(this.cpf);
+    },
+  },
 };
 </script>
 
