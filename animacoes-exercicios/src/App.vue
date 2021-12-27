@@ -20,7 +20,7 @@
       <b-alert show v-else variant="warning" key="warn">Default Alert</b-alert>
     </transition>
     <hr />
-	
+
     <b-select v-model="ChooseTypeOfAnimation">
       <option value="fade">Fade</option>
       <option value="slide">Slide</option>
@@ -40,20 +40,23 @@
     >
       <div class="caixa mt-4 mb-4" v-if="exibir2"></div>
     </transition>
-	<div class="m-4">
-	<b-button class="m-4" @click="exibirAlertOrInfo = 'AlertComponent'">Mostar Alert</b-button>
-	<b-button class="m-4" @click="exibirAlertOrInfo = 'InfoComponent'">Mostar Info</b-button>
-	<transition name="fade" mode="out-in">
-	<component :is="exibirAlertOrInfo"></component>
-	</transition>
-	
-	</div>
+    <div class="m-4">
+      <b-button class="m-4" @click="exibirAlertOrInfo = 'AlertComponent'"
+        >Mostar Alert</b-button
+      >
+      <b-button class="m-4" @click="exibirAlertOrInfo = 'InfoComponent'"
+        >Mostar Info</b-button
+      >
+      <transition name="fade" mode="out-in">
+        <component :is="exibirAlertOrInfo"></component>
+      </transition>
+    </div>
   </div>
 </template>
 
 <script>
-import AlertComponent from './alert.vue'
-import InfoComponent from './info.vue'
+import AlertComponent from "./alert.vue";
+import InfoComponent from "./info.vue";
 export default {
   data() {
     return {
@@ -62,12 +65,12 @@ export default {
       ChooseTypeOfAnimation: "fade",
       exibir2: false,
       larguraBase: 0,
-	  exibirAlertOrInfo: 'alert'
+      exibirAlertOrInfo: "alert",
     };
   },
-  components:{
-AlertComponent,
-InfoComponent
+  components: {
+    AlertComponent,
+    InfoComponent,
   },
   methods: {
     animar(el, done, negativo) {
