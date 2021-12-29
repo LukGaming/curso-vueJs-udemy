@@ -1,7 +1,14 @@
 <template >
   <div class="margin-tb">
-    <v-alert dismissible v-if="produtoCriado" color="primary " class="produto-criado" type="success" >Produto Criado com sucesso</v-alert>
-     
+    <v-alert
+      dismissible
+      v-if="produtoCriado"
+      color="primary "
+      class="produto-criado"
+      type="success"
+      >Produto Criado com sucesso</v-alert
+    >
+
     <v-form ref="form" lazy-validation>
       <v-text-field
         v-model="nome"
@@ -21,9 +28,11 @@
   </div>
 </template>
 <script>
+import eventBus from "./eventBus";
 export default {
+    
   data: () => ({
-      produtoCriado: false,
+    produtoCriado: false,
     valid: true,
     nome: "",
     valor: 0,
@@ -46,6 +55,7 @@ export default {
             this.valor = "";
             this.descricao = "";
             this.produtoCriado = true;
+            eventBus.$emit('AtualizarListaDeProdutos')
           });
       }
     },
@@ -61,11 +71,10 @@ export default {
 .btn-submit {
   background-color: red;
 }
-.produto-criado{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    align-content: center;
-    
+.produto-criado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
 }
 </style>

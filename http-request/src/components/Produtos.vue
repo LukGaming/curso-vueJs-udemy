@@ -3,7 +3,6 @@
     <CriandoProdutos />
     <MostrandoProdutos />
     
-
   </div>
 </template>
 <script>
@@ -18,7 +17,7 @@ export default {
   },
   components: {
     MostrandoProdutos,
-    CriandoProdutos
+    CriandoProdutos,
   },
 };
 </script>

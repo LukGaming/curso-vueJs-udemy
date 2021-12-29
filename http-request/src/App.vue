@@ -1,8 +1,9 @@
 <template>
   <div id="app">
     <Appbar />
-    <Footer />
     <Produtos />
+    <Footer />
+    
   </div>
 </template>
 
@@ -13,12 +14,12 @@ import Produtos from "./components/Produtos.vue";
 
 export default {
   name: "App",
+ 
   components: {
     Footer,
     Appbar,
     Produtos,
   },
-  
 };
 </script>
 
