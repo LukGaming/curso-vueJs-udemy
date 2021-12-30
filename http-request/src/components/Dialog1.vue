@@ -45,7 +45,7 @@
                         </v-btn>
                         <v-btn
                           color="success"
-                          @click="dialog.value = false, fechandoAlteracao"
+                          @click="(dialog.value = false), fechandoAlteracao"
                           dark
                           depressed
                           >Sair</v-btn
@@ -68,8 +68,8 @@ export default {
   props: ["produto"],
   data() {
     return {
-      dialog: false
-    }
+      dialog: false,
+    };
   },
   methods: {
     salvarAlteracoes() {
@@ -78,9 +78,9 @@ export default {
         console.log("Produto Atualizado!");
       });
     },
-    fechandoAlteracao(){
-         console.log(this.dialog)
-    }
+    fechandoAlteracao() {
+      console.log(this.dialog);
+    },
   },
 };
 </script>

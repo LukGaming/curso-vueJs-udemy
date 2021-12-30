@@ -8,7 +8,6 @@
       type="success"
       >Produto Criado com sucesso</v-alert
     >
-
     <v-form ref="form" lazy-validation>
       <v-text-field
         v-model="nome"
@@ -91,13 +90,9 @@ export default {
             this.produtoCriado = true;
             eventBus.$emit("AtualizarListaDeProdutos");
           });
-      
     },
     async submit_validation() {
       const result = await this.v$.$validate();
-      console.log(this.v$.descricao.$error);
-      console.log(this.v$.nome.$error);
-      console.log(this.v$.valor.$error);
 
       if (!result) {
         // notify user form is invalid

@@ -18,22 +18,34 @@
             <td>
               <v-row align="center" justify="space-around">
                 <div data-app><Dialog1 :produto="produto" /></div>
-
                 <v-btn
-                  tile
+                  depressed
                   color="success"
                   class="space-buttons"
                   @click="excluirProduto(produto.id)"
                 >
-                  <v-icon left> mdi-pencil </v-icon>
+                  <v-icon left depressed> mdi-pencil </v-icon>
                   Excluir
                 </v-btn>
               </v-row>
             </td>
           </tr>
+          <div class="itens-per-page" >
+            <v-select
+              :items="items"
+              label="Itens Por Página"
+              dark
+              v-model="itensPerPage"
+            >
+            </v-select>
+          </div>
         </tbody>
       </template>
     </v-simple-table>
+
+    <div class="text-center">
+      <v-pagination v-model="page" :length="4" circle dark></v-pagination>
+    </div>
   </div>
 </template>
 <script>
@@ -43,21 +55,35 @@ export default {
   data() {
     return {
       produtos: [],
+      page: 1,
+      items: [5, 10, 15, 20,50,100],
+      itensPerPage: 10,
+      
     };
   },
   components: {
     Dialog1,
   },
+  watch: {
+    itensPerPage() {
+      console.log("mudando numero de indices");
+      this.atualizaListadeProdutos();
+    },
+    page(){
+
+    }
+  },
   mounted() {
     eventBus.$on("AtualizarListaDeProdutos", () => {
       this.atualizaListadeProdutos();
+      console.log(this.itensPerPage);
     });
   },
+
   methods: {
     atualizaListadeProdutos() {
-      this.$http.get().then((res) => {
+      this.$http.get(`?_start=0&_end=${this.itensPerPage}`).then((res) => {
         if (res.data) {
-          console.log(res.data[0].id);
           var array = [];
           for (let i = 0; i < res.data.length; i++) {
             array.push({
@@ -87,5 +113,11 @@ export default {
 <style>
 .space-buttons {
   margin: 10px;
+}
+.itens-per-page {
+  display: flex;
+  flex-direction: row;
+  float: right;
+  background-color: #1e1e1e;
 }
 </style>
