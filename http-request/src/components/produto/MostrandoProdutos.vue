@@ -1,5 +1,10 @@
 <template >
-  <div>
+  <div class="container">
+    <div></div>
+    <v-btn color="primary" elevation="2" dark class="btn-primary"
+      ><router-link to="/produtos/create">Novo Produto </router-link>
+    </v-btn>
+
     <v-simple-table dark class="mt-10">
       <template v-slot:default>
         <thead>
@@ -18,19 +23,16 @@
             <td>
               <v-row align="center" justify="space-around">
                 <div data-app><Dialog1 :produto="produto" /></div>
-                <v-btn
-                  depressed
-                  color="success"
-                  class="space-buttons"
-                  @click="excluirProduto(produto.id)"
-                >
-                  <v-icon left depressed> mdi-pencil </v-icon>
-                  Excluir
+                <v-btn depressed color="success" class="space-buttons">
+                  <router-link :to="{ path: `/produtos/${produto.id}/delete` }"
+                    ><v-icon left depressed> mdi-pencil </v-icon>
+                    Excluir</router-link
+                  >
                 </v-btn>
               </v-row>
             </td>
           </tr>
-          <div class="itens-per-page" >
+          <div class="itens-per-page">
             <v-select
               :items="items"
               label="Itens Por Página"
@@ -49,16 +51,16 @@
   </div>
 </template>
 <script>
-import eventBus from "./eventBus";
-import Dialog1 from "./Dialog1.vue";
+import eventBus from "../eventBus";
+import Dialog1 from "../Dialog1.vue";
 export default {
   data() {
     return {
+      mensagem: "",
       produtos: [],
       page: 1,
-      items: [5, 10, 15, 20,50,100],
+      items: [5, 10, 15, 20, 50, 100],
       itensPerPage: 10,
-      
     };
   },
   components: {
@@ -66,18 +68,17 @@ export default {
   },
   watch: {
     itensPerPage() {
-      console.log("mudando numero de indices");
       this.atualizaListadeProdutos();
     },
-    page(){
-
-    }
+    page() {},
   },
   mounted() {
     eventBus.$on("AtualizarListaDeProdutos", () => {
       this.atualizaListadeProdutos();
-      console.log(this.itensPerPage);
     });
+    if (this.$route.params) {
+      console.log(this.$route.params.mensagem);
+    }
   },
 
   methods: {
@@ -119,5 +120,15 @@ export default {
   flex-direction: row;
   float: right;
   background-color: #1e1e1e;
+}
+.btn-primary {
+  display: flex;
+  flex-direction: row;
+  text-decoration: none;
+  color: white;
+}
+.btn-primary:hover {
+  text-decoration: none;
+  color: white;
 }
 </style>

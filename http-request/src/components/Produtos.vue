@@ -1,14 +1,15 @@
 <template >
-  <div class="container">
-    <CriandoProdutos />
+  <div>
+    <Appbar />
     <MostrandoProdutos />
+    <Footer />
     
   </div>
 </template>
 <script>
-import MostrandoProdutos from "./MostrandoProdutos.vue";
-import CriandoProdutos from "./CriandoProdutos.vue";
-
+import MostrandoProdutos from "./produto/MostrandoProdutos.vue";
+import Appbar from './Appbar.vue'
+import Footer from './Footer.vue';
 export default {
   data() {
     return {
@@ -17,9 +18,11 @@ export default {
   },
   components: {
     MostrandoProdutos,
-    CriandoProdutos,
+    Appbar,
+    Footer
   },
 };
+    
 </script>
 <style >
 .mt-10 {
