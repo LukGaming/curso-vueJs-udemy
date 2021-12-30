@@ -12,7 +12,7 @@
         </thead>
         <tbody>
           <tr v-for="(produto, i) in produtos" :key="i">
-            <td class="text-right">{{ i }}</td>
+            <td class="text-right">{{ produto.id }}</td>
             <td>{{ produto.nome }}</td>
             <td>{{ produto.valor }}</td>
             <td>
@@ -57,7 +57,7 @@ export default {
     atualizaListadeProdutos() {
       this.$http.get().then((res) => {
         if (res.data) {
-          console.log("temos resposta");
+          console.log(res.data[0].id);
           var array = [];
           for (let i = 0; i < res.data.length; i++) {
             array.push({
