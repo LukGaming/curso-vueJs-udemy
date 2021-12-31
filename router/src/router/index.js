@@ -10,14 +10,17 @@ export default new Router({
   mode: 'history',
   routes:[{
     path: '/',
+    name: 'Home',
     component: Home
   },
   {
     path: '/Produtos',
+    name: 'Produtos',
     component: Produtos
   },
   {
-    path: '/Produtos/crud',
+    path: '/Produtos/create',
+    name: 'produto/create',
     component: ProdutosCrud
   }
 ]

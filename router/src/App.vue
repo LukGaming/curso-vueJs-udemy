@@ -1,14 +1,18 @@
 <template>
-  <div id="app">
-    Rotas com Router
-   <router-view></router-view>
-  </div>
+  <v-app App>
+    <v-main>
+      <router-view/>
+    </v-main>
+  </v-app>
 </template>
+
 <script>
 
 export default {
-}
-</script>
-<style>
+  name: 'App',
 
-</style>
+  data: () => ({
+    //
+  }),
+};
+</script>
