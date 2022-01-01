@@ -1,16 +1,17 @@
 <template>
 <v-app App>
     <v-main>
-        <v-card class="mx-auto overflow-hidden" >
-            <v-app-bar color="deep-purple" dark>
+
+        <v-card class="mx-auto overflow-hidden" style="min-height: 100vh;" absolute>
+
+            <v-app-bar color="deep-purple" dark fixed>
                 <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
 
                 <v-toolbar-title>Title</v-toolbar-title>
             </v-app-bar>
 
-            <v-navigation-drawer v-model="drawer" absolute temporary>
+            <v-navigation-drawer v-model="drawer" fixed temporary>
                 <v-list>
-
                     <v-list-item class="px-2 d-flex justify-center">
                         <v-list-item-avatar>
                             <v-img src="https://randomuser.me/api/portraits/women/85.jpg"></v-img>
@@ -40,12 +41,19 @@
                             </router-link>
                         </div>
                     </v-list-item-group>
-
                 </v-list>
+                <template v-slot:append>
+                    <div class="pa-2 d-flex justify-center ">
+                        <v-btn color="black" class="white--text" block>
+                            Logout
+                        </v-btn>
+                    </div>
+                </template>
 
             </v-navigation-drawer>
             <router-view class="mt-4"></router-view>
         </v-card>
+
     </v-main>
 </v-app>
 </template>
@@ -71,7 +79,12 @@ export default {
 
     }),
     created() {
-        console.log(this.routerLinks)
+
     },
 };
 </script>
+
+<style>
+
+    
+</style>

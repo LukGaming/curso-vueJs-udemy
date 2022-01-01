@@ -14,13 +14,17 @@ export default new Router({
     component: Home
   },
   {
-    path: '/Produtos',
-    name: 'Produtos',
+    path: '/produtos',
+    name: 'produtos',
     component: Produtos
   },
   {
-    path: '/Produtos/create',
+    path: '/produtos/create',
     name: 'produto/create',
+    component: ProdutosCrud
+  },{
+    path: '/produtos/:id/edit',
+    name: 'produto/edit',
     component: ProdutosCrud
   }
 ]

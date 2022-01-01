@@ -1,14 +1,16 @@
 <template lang="">
 <div>
     <div class="d-flex column justify-center ">
-        <h1 v-if="method == 'create'">Criando um novo Produto</h1>
+        <h1 v-if="method == 'create'" class="mt-10">Criando um novo Produto</h1>
+        <h1 v-if="method == 'edit'" class="mt-10">Editando Produto - {{id}}</h1>
     </div>
     <div>
-        <v-snackbar v-model="snackbar" :multi-line="multiLine" color="success" top right class="message">
+        <!-- Snack bar é a mensagem depois que o produto for criado ou editado -->
+        <v-snackbar v-model="snackbar" :multi-line="multiLine" :color="colorSnackbar" top right class="message">
             {{sucessMessage}}
 
             <template v-slot:action="{ attrs }">
-                <v-btn color="black" text v-bind="attrs" @click="snackbar = false">
+                <v-btn :color="colorSnackbarText" text v-bind="attrs" @click="snackbar = false">
                     fechar
                 </v-btn>
             </template>
@@ -23,8 +25,8 @@
                 </v-alert>
             </div>
 
-            <v-text-field  v-model="valor"  label="Valor" type="number" prefix="R$"></v-text-field>
-            
+            <v-text-field v-model="valor" label="Valor" type="number" prefix="R$"></v-text-field>
+
             <div v-if="v$.valor.$error">
                 <v-alert color="red" type="warning" dense>Campo de <strong>Valor</strong> não pode ficar vazio</v-alert>
             </div>
@@ -32,9 +34,19 @@
             <div v-if="v$.descricao.$error">
                 <v-alert color="red" type="warning" dense>Campo de <strong>Descricao</strong> deve conter entre 20 e 2000 Caracteres</v-alert>
             </div>
-            <v-btn color="primary" @click="submit" class="mt-10">
-                Cadastrar Produto
-            </v-btn>
+            <div v-if="method == 'create'">
+                <v-btn color="primary" @click="submit" class="mt-10" :loading="loading">
+                    Cadastrar Produto
+                </v-btn>
+            </div>
+            <div v-if="method == 'edit'" class="d-flex justify-center">
+                <v-btn color="primary" @click="submit" class="mx-10" :loading="loading">
+                    Salvar Alterações
+                </v-btn>
+                <v-btn color="warning" @click="excluirProduto" class="mx-10">
+                    Excluir Produto
+                </v-btn>
+            </div>
 
         </v-form>
     </div>
@@ -66,6 +78,9 @@ export default {
     },
     data() {
         return {
+            loading: false,
+            colorSnackbar: "",
+            colorSnackbarText: "black",
             error: "",
             id: null,
             nome: null,
@@ -80,35 +95,94 @@ export default {
         method: String,
         options: Object
     },
-    created() {},
+    created() {
+        this.id = this.$route.params.id;
+        if (this.method == "edit") {
+            this.$http.get(`${this.id}`, {}).then(res => {
+                this.nome = res.data.nome;
+                this.valor = res.data.valor,
+                    this.descricao = res.data.descricao
+            })
+        }
+    },
     methods: {
         async submit() {
-
             if (this.method == "create") {
                 const isFormCorrect = await this.v$.$validate()
                 if (!isFormCorrect) {
-
                     return
                 } else {
+                    this.loading = true
                     this.$http.post('', {
                         id: null,
                         nome: this.nome,
                         valor: this.valor,
                         descricao: this.descricao
                     }).then(res => {
-                        this.v$.$reset()
-                        this.nome = ""
-                        this.valor = ""
-                        this.descricao = ""
-                        this.sucessMessage = "Produto Criado com sucesso";
-                        this.snackbar = true
+
+                        setTimeout(() => {
+                            this.v$.$reset()
+                            this.resetForm();
+                            this.loading = false
+                            this.colorSnackbar = "success",
+                                this.colorSnackbarText = "black"
+                            this.sucessMessage = "Produto Criado com sucesso";
+                            this.snackbar = true
+                        }, 1000);
+
                         return res
                     })
-
                 }
                 return;
             }
+            if (this.method == "edit") {
+                const isFormCorrect = await this.v$.$validate()
+                if (!isFormCorrect) {
+                    return
+                } else {
+                    this.editarProduto()
+                }
+                return isFormCorrect;
+            }
         },
+        resetForm() {
+            this.id = null;
+            this.nome = ""
+            this.valor = ""
+            this.descricao = ""
+        },
+        editarProduto() {
+            this.loading = true;
+            this.$http.patch(`${this.id}`, {
+                nome: this.nome,
+                valor: this.valor,
+                descricao: this.descricao
+            }).then(res => {
+                this.v$.$reset()
+                this.sucessMessage = "Produto Editado com sucesso";
+                setTimeout(() => {
+                    this.snackbar = true
+                    this.loading = false;
+                }, 1000);
+
+                return res
+            })
+        },
+        excluirProduto() {
+            if (confirm("Deseja realmente excluir o produto " + this.id + " ?")) {
+                this.$http.delete(`${this.id}`, {}).then(res => {
+                    this.v$.$reset()
+                    this.colorSnackbar = "red"
+                    this.sucessMessage = "Produto Excluido com sucesso";
+                    this.colorSnackbarText = "light"
+                    this.snackbar = true
+                    this.resetForm()
+                    this.method = "create";
+                    return res
+                })
+            }
+
+        }
     },
     validations() {
         return {
