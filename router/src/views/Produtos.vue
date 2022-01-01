@@ -1,21 +1,29 @@
 <template>
 <div>
     <Home />
-    <router-link to="/produtos/create"><v-btn elevation="2" color="primary" class="ml-4" >Novo Produto</v-btn></router-link>
-    
-    <h1 class="d-flex justify-center">visualizando Produtos</h1>
 
-    <v-data-table :headers="headers" :items="desserts" :items-per-page="5" class="elevation-1 container"></v-data-table>
+    <div>
+        <v-container>
+            <router-link to="/produtos/create">
+                <v-btn elevation="2" color="primary" class="ml-4">Novo Produto</v-btn>
+            </router-link>
 
+            <h1 class="d-flex justify-center">visualizando Produtos</h1>
+
+           <ShowProducts/>
+        </v-container>
+    </div>
 </div>
 </template>
 
 <script>
+import ShowProducts from '../components/ShowProducts.vue'
 import Home from "./Home.vue";
 export default {
 
     components: {
-        Home
+        Home,
+        ShowProducts
     },
     data() {
         return {
@@ -37,6 +45,11 @@ export default {
                     text: 'Valor (R$)',
                     value: 'valor'
                 },
+                {
+                    text: 'Ações',
+                    value: 'Options'
+
+                },
             ],
             desserts: [
 
@@ -48,7 +61,8 @@ export default {
             for (let i = 0; i < res.data.length; i++) {
                 this.desserts.push({
                     id: res.data[i].id,
-                    ...res.data[i]
+                    ...res.data[i],
+                   
                 })
 
             }

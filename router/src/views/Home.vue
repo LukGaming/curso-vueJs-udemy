@@ -11,6 +11,11 @@ export default {
   components: {
     navBar,
   },
+  data() {
+    return {
+      
+    }
+  },
   
 };
 </script>

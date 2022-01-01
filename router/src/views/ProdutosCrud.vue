@@ -1,7 +1,9 @@
 <template>
   <div>
     <Home />
+    <v-container>
       <ProductCrud :method="method"/>
+      </v-container>
   </div>
 </template>
 <script>

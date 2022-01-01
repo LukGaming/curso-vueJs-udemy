@@ -1,24 +1,16 @@
 <template lang="">
-<div>
-    <v-app-bar color="orange" elevation="4" class="mb-4">
-        <router-link to="/" exact class="mr-8">
-            <v-icon large>mdi-home</v-icon>
-        </router-link>
-        <router-link to="/produtos" exact class="mr-4  " active-class="teste" style="text-decoration: none">
-            <div class="btn-menu">Produtos</div>
-        </router-link>
-        <router-link to="/produtos/crud" exact class="mr-4 " active-class="teste" style="text-decoration: none">
-            <div class="btn-menu">Produtos Crud</div>
-        </router-link>
-
-    </v-app-bar>
+<div >
+  
 </div>
 </template>
 
 <script>
 export default {
     data() {
-        return {};
+        return {
+            drawer: false,
+            group: false
+        };
     },
     created() {
         this.nomeRota = this.$route.name;

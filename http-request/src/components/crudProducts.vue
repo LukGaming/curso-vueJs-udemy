@@ -6,7 +6,7 @@
     </div>
 </template>
 <script>
-import CriandoProdutos from "./produto/CriandoProdutos.vue";
+import CriandoProdutos from "../modules/CriandoProdutos.vue";
 import Appbar from "./Appbar.vue";
 import Footer from "./Footer.vue";
 

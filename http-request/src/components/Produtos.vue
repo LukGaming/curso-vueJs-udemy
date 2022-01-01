@@ -7,7 +7,7 @@
   </div>
 </template>
 <script>
-import MostrandoProdutos from "./produto/MostrandoProdutos.vue";
+import MostrandoProdutos from "../modules/MostrandoProdutos.vue";
 import Appbar from './Appbar.vue'
 import Footer from './Footer.vue';
 export default {
