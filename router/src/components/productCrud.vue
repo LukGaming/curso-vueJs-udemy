@@ -19,7 +19,7 @@
         </v-snackbar>
 
         <v-form ref="form" lazy-validation class="mx-16">
-            <v-text-field v-model="nome" label="Name" :readonly="inputsDisabled">
+            <v-text-field v-model="nome" label="Nome" :readonly="inputsDisabled">
             </v-text-field>
             <div v-if="v$.nome.$error">
                 <v-alert color="red" type="warning" dense>
@@ -127,7 +127,7 @@ export default {
                     return
                 } else {
                     this.loading = true
-                    this.$http.post('', {
+                    this.$http.post('produtos', {
                         id: null,
                         nome: this.nome,
                         valor: this.valor,
@@ -159,7 +159,7 @@ export default {
             }
         },
         getProductByID() {
-            this.$http.get(`${this.id}`, {}).then(res => {
+            this.$http.get(`produtos/${this.id}`, {}).then(res => {
                 this.nome = res.data.nome;
                 this.valor = res.data.valor,
                     this.descricao = res.data.descricao
@@ -173,7 +173,7 @@ export default {
         },
         editarProduto() {
             this.loading = true;
-            this.$http.patch(`${this.id}`, {
+            this.$http.patch(`produtos/${this.id}`, {
                 nome: this.nome,
                 valor: this.valor,
                 descricao: this.descricao
@@ -190,7 +190,7 @@ export default {
         },
         excluirProduto() {
             if (confirm("Deseja realmente excluir o produto " + this.id + " ?")) {
-                this.$http.delete(`${this.id}`, {}).then(res => {
+                this.$http.delete(`produtos/${this.id}`, {}).then(res => {
                     this.v$.$reset()
                     this.colorSnackbar = "red"
                     this.sucessMessage = "Produto Excluido com sucesso";

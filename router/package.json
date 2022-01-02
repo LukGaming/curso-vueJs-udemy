@@ -16,6 +16,7 @@
     "vue": "^2.6.11",
     "vue-currency-input": "^2.3.0",
     "vue-router": "^3.2.0",
+    "vue-session": "^1.0.0",
     "vue2-filters": "^0.14.0",
     "vuetify": "^2.4.0"
   },
