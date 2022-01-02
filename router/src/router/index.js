@@ -27,6 +27,11 @@ export default new Router({
     name: 'produto/edit',
     component: ProdutosCrud
   }
+  ,{
+    path: '/produtos/:id',
+    name: 'produto/read',
+    component: ProdutosCrud
+  }
 ]
 })
 

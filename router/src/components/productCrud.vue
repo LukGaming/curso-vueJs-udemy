@@ -3,6 +3,8 @@
     <div class="d-flex column justify-center ">
         <h1 v-if="method == 'create'" class="mt-10">Criando um novo Produto</h1>
         <h1 v-if="method == 'edit'" class="mt-10">Editando Produto - {{id}}</h1>
+        <h1 v-if="method == 'read'" class="mt-10">Visualizando Produto - {{id}}</h1>
+
     </div>
     <div>
         <!-- Snack bar é a mensagem depois que o produto for criado ou editado -->
@@ -17,7 +19,7 @@
         </v-snackbar>
 
         <v-form ref="form" lazy-validation class="mx-16">
-            <v-text-field v-model="nome" label="Name">
+            <v-text-field v-model="nome" label="Name" :readonly="inputsDisabled">
             </v-text-field>
             <div v-if="v$.nome.$error">
                 <v-alert color="red" type="warning" dense>
@@ -25,17 +27,17 @@
                 </v-alert>
             </div>
 
-            <v-text-field v-model="valor" label="Valor" type="number" prefix="R$"></v-text-field>
+            <v-text-field v-model="valor" label="Valor" type="number" prefix="R$" :readonly="inputsDisabled"></v-text-field>
 
             <div v-if="v$.valor.$error">
                 <v-alert color="red" type="warning" dense>Campo de <strong>Valor</strong> não pode ficar vazio</v-alert>
             </div>
-            <v-textarea v-model="descricao" label="Descricao"></v-textarea>
+            <v-textarea v-model="descricao" label="Descricao" :readonly="inputsDisabled"></v-textarea>
             <div v-if="v$.descricao.$error">
                 <v-alert color="red" type="warning" dense>Campo de <strong>Descricao</strong> deve conter entre 20 e 2000 Caracteres</v-alert>
             </div>
             <div v-if="method == 'create'">
-                <v-btn color="primary" @click="submit" class="mt-10" :loading="loading">
+                <v-btn color="primary" @click="submit" class="mt-10" :loading="loading" :disabled="inputsDisabled">
                     Cadastrar Produto
                 </v-btn>
             </div>
@@ -78,6 +80,7 @@ export default {
     },
     data() {
         return {
+            inputsDisabled: false,
             loading: false,
             colorSnackbar: "",
             colorSnackbarText: "black",
@@ -89,20 +92,31 @@ export default {
             sucessMessage: "",
             snackbar: false,
             multiLine: true,
+            method: "create"
         };
     },
     props: {
-        method: String,
+
         options: Object
     },
     created() {
+        console.log(this.$route.name)
+        if (this.$route.name == "produto/create") {
+            //Em caso da rota ser Create, aparecer os inputs vazios
+            this.method = "create";
+
+        }
+        
         this.id = this.$route.params.id;
-        if (this.method == "edit") {
-            this.$http.get(`${this.id}`, {}).then(res => {
-                this.nome = res.data.nome;
-                this.valor = res.data.valor,
-                    this.descricao = res.data.descricao
-            })
+        if (this.$route.name == "produto/read") {
+            this.method = "read";
+            this.getProductByID();
+            this.inputsDisabled = true
+        }
+
+        if (this.$route.name == "produto/edit") {
+            this.method = "edit";
+            this.getProductByID();
         }
     },
     methods: {
@@ -119,7 +133,6 @@ export default {
                         valor: this.valor,
                         descricao: this.descricao
                     }).then(res => {
-
                         setTimeout(() => {
                             this.v$.$reset()
                             this.resetForm();
@@ -144,6 +157,13 @@ export default {
                 }
                 return isFormCorrect;
             }
+        },
+        getProductByID() {
+            this.$http.get(`${this.id}`, {}).then(res => {
+                this.nome = res.data.nome;
+                this.valor = res.data.valor,
+                    this.descricao = res.data.descricao
+            })
         },
         resetForm() {
             this.id = null;

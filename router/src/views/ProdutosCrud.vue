@@ -3,7 +3,7 @@
    
     <v-container>
       Estamos em produtos
-      <ProductCrud :method="method"/>
+      <ProductCrud/>
       </v-container>
   </div>
 </template>
@@ -20,13 +20,7 @@ export default {
   },
   created() {
     
-    if (this.$route.name == "produto/create") {
-      //Em caso da rota ser Create, aparecer os inputs vazios
-      this.method = "create";
-    }
-    if(this.$route.name == "produto/edit"){
-      this.method = "edit";
-    }
+    
     
 
   },
