@@ -10,14 +10,12 @@
         <!-- Snack bar é a mensagem depois que o produto for criado ou editado -->
         <v-snackbar v-model="snackbar" :multi-line="multiLine" :color="colorSnackbar" top right class="message">
             {{sucessMessage}}
-
             <template v-slot:action="{ attrs }">
                 <v-btn :color="colorSnackbarText" text v-bind="attrs" @click="snackbar = false">
                     fechar
                 </v-btn>
             </template>
         </v-snackbar>
-
         <v-form ref="form" lazy-validation class="mx-16">
             <v-text-field v-model="nome" label="Nome" :readonly="inputsDisabled">
             </v-text-field>
@@ -50,7 +48,6 @@
                     Excluir Produto
                 </v-btn>
             </div>
-
         </v-form>
     </div>
 </div>
@@ -111,11 +108,9 @@ export default {
         options: Object
     },
     created() {
-        console.log(this.$route.name)
         if (this.$route.name == "produto/create") {
             //Em caso da rota ser Create, aparecer os inputs vazios
             this.method = "create";
-
         }
 
         this.id = this.$route.params.id;
@@ -132,7 +127,6 @@ export default {
     },
     methods: {
         async submit() {
-            console.log(this.valor)
             if (this.method == "create") {
                 const isFormCorrect = await this.v$.$validate()
                 if (!isFormCorrect) {
@@ -175,7 +169,6 @@ export default {
                 this.nome = res.data.nome;
                 this.valor = res.data.valor,
                     this.descricao = res.data.descricao
-
             })
 
         },
@@ -250,14 +243,15 @@ export default {
 .message {
     margin-top: 60px;
 }
-.moeda{
+
+.moeda {
     padding: 10px;
     font-size: 1.2rem;
-    
-}
-.valor{
-    font-size: 1.2rem;
-    
+
 }
 
+.valor {
+    font-size: 1.2rem;
+
+}
 </style>

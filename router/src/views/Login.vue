@@ -91,6 +91,7 @@ export default {
                             )
                             this.loading = false
                             this.$router.push('produtos')
+                            
                         } else {
                             this.SenhaIncorreta = true
                             setInterval(() => {

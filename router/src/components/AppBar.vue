@@ -20,12 +20,11 @@
                             <v-list-item>
                                 <v-list-item-content>
                                     <v-list-item-title class="text-h6 d-flex justify-center">
-                                        Sandra Adams
+                                        {{this.$session.get('nome')}}
                                     </v-list-item-title>
-                                    <v-list-item-subtitle class="d-flex justify-center">sandra_a88@gmail.com</v-list-item-subtitle>
+                                    <v-list-item-subtitle class="d-flex justify-center">{{this.$session.get('email')}}</v-list-item-subtitle>
                                 </v-list-item-content>
                             </v-list-item>
-
                         </v-list>
                         <v-divider></v-divider>
                         <v-list nav dense>
