@@ -6,7 +6,7 @@ import "./plugins/axios.js"
 import "./plugins/filters.js"
 import "./plugins/session.js"
 import 'animate.css';
-
+import './plugins/money.js'
 Vue.config.productionTip = false
 
 

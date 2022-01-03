@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <div>
     <div class="d-flex column justify-center ">
         <h1 v-if="method == 'create'" class="mt-10">Criando um novo Produto</h1>
@@ -26,8 +26,9 @@
                     O campo de <strong>Nome</strong> deve conter entre 3 e 50 caracteres
                 </v-alert>
             </div>
-
-            <v-text-field v-model="valor" label="Valor" type="number" prefix="R$" :readonly="inputsDisabled"></v-text-field>
+            <div class="valor">
+                Preço R$: <money v-model="valor" v-bind="money" :readonly="inputsDisabled" class="my-4 moeda"></money>
+            </div>
 
             <div v-if="v$.valor.$error">
                 <v-alert color="red" type="warning" dense>Campo de <strong>Valor</strong> não pode ficar vazio</v-alert>
@@ -61,14 +62,19 @@ import {
     useCurrencyInput
 } from 'vue-currency-input'
 import {
+    VMoney
+} from 'v-money'
+import {
     required,
     maxLength,
     minLength,
-    helpers,
-    numeric
+    helpers
+
 } from '@vuelidate/validators'
 export default {
-
+    directives: {
+        money: VMoney
+    },
     setup(props) {
         const {
             inputRef
@@ -80,6 +86,12 @@ export default {
     },
     data() {
         return {
+            money: {
+                decimal: ',',
+                thousands: '.',
+                precision: 2,
+                masked: false /* doesn't work with directive */
+            },
             inputsDisabled: false,
             loading: false,
             colorSnackbar: "",
@@ -96,7 +108,6 @@ export default {
         };
     },
     props: {
-
         options: Object
     },
     created() {
@@ -121,6 +132,7 @@ export default {
     },
     methods: {
         async submit() {
+            console.log(this.valor)
             if (this.method == "create") {
                 const isFormCorrect = await this.v$.$validate()
                 if (!isFormCorrect) {
@@ -163,7 +175,9 @@ export default {
                 this.nome = res.data.nome;
                 this.valor = res.data.valor,
                     this.descricao = res.data.descricao
+
             })
+
         },
         beforeRouteLeave(to, from, next) {
             alert("Ok")
@@ -219,8 +233,8 @@ export default {
 
             },
             valor: {
-                required,
-                numeric
+                required
+
             },
             descricao: {
                 required,
@@ -236,4 +250,14 @@ export default {
 .message {
     margin-top: 60px;
 }
+.moeda{
+    padding: 10px;
+    font-size: 1.2rem;
+    
+}
+.valor{
+    font-size: 1.2rem;
+    
+}
+
 </style>

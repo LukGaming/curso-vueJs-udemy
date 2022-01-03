@@ -3,14 +3,8 @@
     {
       "id": 13,
       "nome": "teste",
-      "valor": "123",
+      "valor": 123,
       "descricao": "asdadasdasdaasdadasdasdaasdadasdasdaasdadasdasda"
-    },
-    {
-      "id": 14,
-      "nome": "Processador AMD Ryzen 7 5700G, 3.8GHz (4.6GHz Max Turbo), AM4, Vídeo Integrado",
-      "valor": "2.19990",
-      "descricao": "Características:\n\n- Marca: AMD\n\n- Modelo: 100-100000263BOX\n\n \n\nEspecificações:\n\n- Nº de núcleos de CPU: 8\n\n- Nº de threads: 16\n\n- Nº de núcleos de GPU: 8\n\n- Clock básico: 3.8GHz\n\n- Clock de Max Boost: Até 4.6GHz\n\n- Total de Cache L2: 4MB\n\n- Cachê L3 total: 16MB\n\n- Desbloqueado: Sim\n\n- CMOS: TSMC 7nm FinFET\n\n- Pacote: AM4\n\n- Versão PCI Express: PCIe® 3.0\n\n- Solução térmica: Wraith Stealth\n\n- TDP / TDP Padrão: 65W\n\n- cTDP: 45-65W\n\n- Temps máx: 95°C\n\n \n\nSuporte de SO:\n\n- Edição Windows 10 - 64-Bit\n\n- RHEL x86 64-Bit\n\n- Ubuntu x86 64-Bit\n\n*O suporte ao sistema operacional (SO) poderá variar de acordo com o fabricante.\n\n \n\nMemória:\n\n- Velocidade máxima da memória: Até 3200MHz\n\n- Tipo de memória: DDR4\n\n- Canais de memória: 2\n\n \n\nEspecificações da placa de vídeo:\n\n- Frequência gráfica: 2000 MHz\n\n- Modelo gráfico: Radeon Graphics\n\n- Contagem de núcleos gráficos: 8\n\n \n\nPrincipais recursos:\n\n- Display Port\n\n- HDMI\n\n \n\nConteúdo da Embalagem\n\n- 1x Processador AMD Ryzen 7 5700G\n\n\nGarantia:\n1 ano de garantia (9 meses de garantia contratual junto ao fabricante + 3 meses referentes à garantia legal, nos termos do artigo 26, II, do Código de Defesa do Consumidor)\n\nPeso:\n425 gramas (bruto com embalagem)"
     },
     {
       "id": 15,
@@ -39,7 +33,7 @@
     {
       "id": 19,
       "nome": "Processador AMD Ryzen 7 5700G, 3.8GHz (4.6GHz Max Turbo), AM4, Vídeo Integrado",
-      "valor": "2.19990",
+      "valor": 2049.9,
       "descricao": "Características:\n\n- Marca: AMD\n\n- Modelo: 100-100000263BOX\n\n \n\nEspecificações:\n\n- Nº de núcleos de CPU: 8\n\n- Nº de threads: 16\n\n- Nº de núcleos de GPU: 8\n\n- Clock básico: 3.8GHz\n\n- Clock de Max Boost: Até 4.6GHz\n\n- Total de Cache L2: 4MB\n\n- Cachê L3 total: 16MB\n\n- Desbloqueado: Sim\n\n- CMOS: TSMC 7nm FinFET\n\n- Pacote: AM4\n\n- Versão PCI Express: PCIe® 3.0\n\n- Solução térmica: Wraith Stealth\n\n- TDP / TDP Padrão: 65W\n\n- cTDP: 45-65W\n\n- Temps máx: 95°C\n\n \n\nSuporte de SO:\n\n- Edição Windows 10 - 64-Bit\n\n- RHEL x86 64-Bit\n\n- Ubuntu x86 64-Bit\n\n*O suporte ao sistema operacional (SO) poderá variar de acordo com o fabricante.\n\n \n\nMemória:\n\n- Velocidade máxima da memória: Até 3200MHz\n\n- Tipo de memória: DDR4\n\n- Canais de memória: 2\n\n \n\nEspecificações da placa de vídeo:\n\n- Frequência gráfica: 2000 MHz\n\n- Modelo gráfico: Radeon Graphics\n\n- Contagem de núcleos gráficos: 8\n\n \n\nPrincipais recursos:\n\n- Display Port\n\n- HDMI\n\n \n\nConteúdo da Embalagem\n\n- 1x Processador AMD Ryzen 7 5700G\n\n\nGarantia:\n1 ano de garantia (9 meses de garantia contratual junto ao fabricante + 3 meses referentes à garantia legal, nos termos do artigo 26, II, do Código de Defesa do Consumidor)\n\nPeso:\n425 gramas (bruto com embalagem)"
     }
   ],
