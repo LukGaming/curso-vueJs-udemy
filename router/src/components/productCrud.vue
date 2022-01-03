@@ -106,7 +106,7 @@ export default {
             this.method = "create";
 
         }
-        
+
         this.id = this.$route.params.id;
         if (this.$route.name == "produto/read") {
             this.method = "read";
@@ -164,6 +164,12 @@ export default {
                 this.valor = res.data.valor,
                     this.descricao = res.data.descricao
             })
+        },
+        beforeRouteLeave(to, from, next) {
+            alert("Ok")
+            console.log(to)
+            console.log(from)
+            console.log(next)
         },
         resetForm() {
             this.id = null;

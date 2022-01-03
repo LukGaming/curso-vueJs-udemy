@@ -2,15 +2,14 @@
 <div>
     <v-app App>
         <v-main>
-            
-            <v-card class="mx-auto overflow-hidden" style="min-height: 100vh;" absolute>
-<div v-if="menuIsValid">
-                <v-app-bar color="deep-purple" dark fixed>
-                    <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
 
-                    <v-toolbar-title>Title</v-toolbar-title>
-                </v-app-bar>
-                
+            <v-card class="mx-auto overflow-hidden" style="min-height: 100vh;" absolute>
+                <div v-if="menuIsValid">
+                    <v-app-bar color="deep-purple" dark fixed>
+                        <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
+
+                        <v-toolbar-title>Title</v-toolbar-title>
+                    </v-app-bar>
                     <v-navigation-drawer v-model="drawer" fixed temporary>
                         <v-list>
                             <v-list-item class="px-2 d-flex justify-center">
@@ -53,8 +52,10 @@
 
                     </v-navigation-drawer>
                 </div>
-
-                <router-view class="mt-4"></router-view>
+                <transition appear enter-active-class="animate__animated animate__bounceInLeft animate__faster" leave-active-class="animate__animated animate__bounceOutRight animate__faster" mode="out-in">
+                    <router-view class="mt-4">
+                    </router-view>
+                </transition>
 
             </v-card>
 

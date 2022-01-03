@@ -1,28 +1,27 @@
 <template>
-  <div>
-   
+<div>
+
     <v-container>
-      Estamos em produtos
-      <ProductCrud/>
-      </v-container>
-  </div>
+        
+            <ProductCrud />
+       
+    </v-container>
+</div>
 </template>
+
 <script>
 import ProductCrud from '../components/productCrud.vue'
 export default {
-  data() {
-    return {
-      method: "create",
-    };
-  },
-  components: {
-    ProductCrud
-  },
-  created() {
-    
-    
-    
+    data() {
+        return {
+            method: "create",
+        };
+    },
+    components: {
+        ProductCrud
+    },
+    created() {
 
-  },
+    },
 };
 </script>

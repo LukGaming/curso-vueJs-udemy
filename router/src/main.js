@@ -5,6 +5,7 @@ import vuetify from './plugins/vuetify'
 import "./plugins/axios.js"
 import "./plugins/filters.js"
 import "./plugins/session.js"
+import 'animate.css';
 
 Vue.config.productionTip = false
 
