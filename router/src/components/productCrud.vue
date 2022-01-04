@@ -27,6 +27,9 @@
             <div class="valor">
                 Preço R$: <money v-model="valor" v-bind="money" :readonly="inputsDisabled" class="my-4 moeda"></money>
             </div>
+            
+            <dialogCreateCategoriaComponent :snackbar="snackbar" :sucessMessage="sucessMessage" snackbarMess :getAllCategoryes="getAllCategoryes" :select="select" :categorias="categorias" :dialog="dialog"/>
+            
 
             <div v-if="v$.valor.$error">
                 <v-alert color="red" type="warning" dense>Campo de <strong>Valor</strong> não pode ficar vazio</v-alert>
@@ -55,6 +58,7 @@
 
 <script>
 import useVuelidate from '@vuelidate/core'
+import dialogCreateCategoriaComponent from '../components/dialogCreateCategoriaComponent.vue'
 import {
     useCurrencyInput
 } from 'vue-currency-input'
@@ -72,6 +76,9 @@ export default {
     directives: {
         money: VMoney
     },
+    components: {
+        dialogCreateCategoriaComponent
+    },
     setup(props) {
         const {
             inputRef
@@ -83,6 +90,11 @@ export default {
     },
     data() {
         return {
+            dialog: false,
+            select: null,
+            categorias: [
+
+            ],
             money: {
                 decimal: ',',
                 thousands: '.',
@@ -108,6 +120,7 @@ export default {
         options: Object
     },
     created() {
+        this.getAllCategoryes()
         if (this.$route.name == "produto/create") {
             //Em caso da rota ser Create, aparecer os inputs vazios
             this.method = "create";
@@ -170,7 +183,16 @@ export default {
                 this.valor = res.data.valor,
                     this.descricao = res.data.descricao
             })
+            //Pegando as categorias
 
+        },
+        getAllCategoryes() {
+            this.$http.get(`categorias`).then(res => {
+                for (let i = 0; i < res.data.length; i++) {
+                    //Mostrando as categorias
+                    this.categorias.push(res.data[i].nome_categoria)
+                }
+            })
         },
         beforeRouteLeave(to, from, next) {
             alert("Ok")
