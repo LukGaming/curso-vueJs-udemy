@@ -5,6 +5,8 @@ import Produtos from '../views/Produtos.vue'
 import ProdutosCrud from '../views/ProdutosCrud.vue'
 import Login from '../views/Login'
 import Register from '../views/Register'
+import Categorias from '../views/Categorias'
+import CategoriaCrud from '../views/CategoriaCrud'
 Vue.use(Router)
 
 export default new Router({
@@ -43,8 +45,26 @@ export default new Router({
     name: 'register',
     component: Register
   },
-  
-  
+  {
+    path: '/categorias',
+    name: 'categorias',
+    component: Categorias,
+  },
+  {
+    path: '/categorias/create',
+    name: 'categoria/create',
+    component: CategoriaCrud
+  },
+  {
+    path: '/categorias/:id/edit',
+    name: 'categoria/edit',
+    component: CategoriaCrud
+  },
+  {
+    path: '/categorias/:id',
+    name: 'categoria/show',
+    component: CategoriaCrud
+  }
 ]
 })
 
