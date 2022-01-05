@@ -3,7 +3,7 @@
     {
       "id": 18,
       "nome": "Processador AMD Ryzen 7 5700G, 3.8GHz (4.6GHz Max Turbo), AM4, Vídeo Integrado",
-      "valor": 2199.9,
+      "valor": 199.99,
       "descricao": "Características:\n\n- Marca: AMD\n\n- Modelo: 100-100000263BOX\n\n \n\nEspecificações:\n\n- Nº de núcleos de CPU: 8\n\n- Nº de threads: 16\n\n- Nº de núcleos de GPU: 8\n\n- Clock básico: 3.8GHz\n\n- Clock de Max Boost: Até 4.6GHz\n\n- Total de Cache L2: 4MB\n\n- Cachê L3 total: 16MB\n\n- Desbloqueado: Sim\n\n- CMOS: TSMC 7nm FinFET\n\n- Pacote: AM4\n\n- Versão PCI Express: PCIe® 3.0\n\n- Solução térmica: Wraith Stealth\n\n- TDP / TDP Padrão: 65W\n\n- cTDP: 45-65W\n\n- Temps máx: 95°C\n\n \n\nSuporte de SO:\n\n- Edição Windows 10 - 64-Bit\n\n- RHEL x86 64-Bit\n\n- Ubuntu x86 64-Bit\n\n*O suporte ao sistema operacional (SO) poderá variar de acordo com o fabricante.\n\n \n\nMemória:\n\n- Velocidade máxima da memória: Até 3200MHz\n\n- Tipo de memória: DDR4\n\n- Canais de memória: 2\n\n \n\nEspecificações da placa de vídeo:\n\n- Frequência gráfica: 2000 MHz\n\n- Modelo gráfico: Radeon Graphics\n\n- Contagem de núcleos gráficos: 8\n\n \n\nPrincipais recursos:\n\n- Display Port\n\n- HDMI\n\n \n\nConteúdo da Embalagem\n\n- 1x Processador AMD Ryzen 7 5700G\n\n\nGarantia:\n1 ano de garantia (9 meses de garantia contratual junto ao fabricante + 3 meses referentes à garantia legal, nos termos do artigo 26, II, do Código de Defesa do Consumidor)\n\nPeso:\n425 gramas (bruto com embalagem)"
     },
     {
@@ -11,6 +11,48 @@
       "nome": "Processador AMD Ryzen 7 5700G, 3.8GHz (4.6GHz Max Turbo), AM4, Vídeo Integrado",
       "valor": 2049.9,
       "descricao": "Características:\n\n- Marca: AMD\n\n- Modelo: 100-100000263BOX\n\n \n\nEspecificações:\n\n- Nº de núcleos de CPU: 8\n\n- Nº de threads: 16\n\n- Nº de núcleos de GPU: 8\n\n- Clock básico: 3.8GHz\n\n- Clock de Max Boost: Até 4.6GHz\n\n- Total de Cache L2: 4MB\n\n- Cachê L3 total: 16MB\n\n- Desbloqueado: Sim\n\n- CMOS: TSMC 7nm FinFET\n\n- Pacote: AM4\n\n- Versão PCI Express: PCIe® 3.0\n\n- Solução térmica: Wraith Stealth\n\n- TDP / TDP Padrão: 65W\n\n- cTDP: 45-65W\n\n- Temps máx: 95°C\n\n \n\nSuporte de SO:\n\n- Edição Windows 10 - 64-Bit\n\n- RHEL x86 64-Bit\n\n- Ubuntu x86 64-Bit\n\n*O suporte ao sistema operacional (SO) poderá variar de acordo com o fabricante.\n\n \n\nMemória:\n\n- Velocidade máxima da memória: Até 3200MHz\n\n- Tipo de memória: DDR4\n\n- Canais de memória: 2\n\n \n\nEspecificações da placa de vídeo:\n\n- Frequência gráfica: 2000 MHz\n\n- Modelo gráfico: Radeon Graphics\n\n- Contagem de núcleos gráficos: 8\n\n \n\nPrincipais recursos:\n\n- Display Port\n\n- HDMI\n\n \n\nConteúdo da Embalagem\n\n- 1x Processador AMD Ryzen 7 5700G\n\n\nGarantia:\n1 ano de garantia (9 meses de garantia contratual junto ao fabricante + 3 meses referentes à garantia legal, nos termos do artigo 26, II, do Código de Defesa do Consumidor)\n\nPeso:\n425 gramas (bruto com embalagem)"
+    },
+    {
+      "id": 20,
+      "nome": "Teste 01",
+      "valor": 29999.99,
+      "descricao": "watch: {\n  item: {\n     handler(val){\n       // do stuff\n     },\n     deep: true\n  }\n}"
+    },
+    {
+      "id": 21,
+      "nome": "teste",
+      "valor": 9.99,
+      "descricao": "asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd"
+    },
+    {
+      "id": 22,
+      "nome": "123123123123",
+      "valor": 9.99,
+      "descricao": "1231231tfasdasasd123123123"
+    },
+    {
+      "id": 23,
+      "nome": "123129315123231232",
+      "valor": 1231.23,
+      "descricao": "asd1asd32as1d3211289+351as3c2d1a56sd"
+    },
+    {
+      "id": 24,
+      "nome": "asdasdsadasd",
+      "valor": 99.99,
+      "descricao": "asdasd51123231as32d1"
+    },
+    {
+      "id": 25,
+      "nome": "asdasd",
+      "valor": 1231.23,
+      "descricao": "asdasdasd123fasdfasdasd"
+    },
+    {
+      "id": 26,
+      "nome": "asdasdasd",
+      "valor": 99.99,
+      "descricao": "as45dsa2d411561231,20asd132as1d59+"
     }
   ],
   "usuarios": [
@@ -128,6 +170,31 @@
     {
       "id": 19,
       "nome_categoria": "asd~.asdçlasdçlasd",
+      "User_Id_Creator": 0
+    },
+    {
+      "id": 20,
+      "nome_categoria": "asdasdsa123fasdf",
+      "User_Id_Creator": 0
+    },
+    {
+      "id": 21,
+      "nome_categoria": "4d56sa4d132as1",
+      "User_Id_Creator": 0
+    },
+    {
+      "id": 22,
+      "nome_categoria": "asd",
+      "User_Id_Creator": 0
+    },
+    {
+      "id": 23,
+      "nome_categoria": "asdasd123",
+      "User_Id_Creator": 0
+    },
+    {
+      "id": 24,
+      "nome_categoria": "asd1231231dasd",
       "User_Id_Creator": 0
     }
   ]
