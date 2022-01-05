@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import SnackBarMessageComponent from '../components/SnackBarMessageComponent.vue'
+import SnackBarMessageComponent from '../utils/SnackBarMessageComponent.vue'
 export default {
     components: {
             SnackBarMessageComponent

@@ -8,14 +8,8 @@
     </div>
     <div>
         <!-- Snack bar é a mensagem depois que o produto for criado ou editado -->
-        <v-snackbar v-model="snackbar" :multi-line="multiLine" :color="colorSnackbar" top right class="message">
-            {{sucessMessage}}
-            <template v-slot:action="{ attrs }">
-                <v-btn :color="colorSnackbarText" text v-bind="attrs" @click="snackbar = false">
-                    fechar
-                </v-btn>
-            </template>
-        </v-snackbar>
+        <SnackBarMessageComponent   :SnackBarOptions="SnackBarOptions"/> 
+        
         <v-form ref="form" lazy-validation class="mx-16">
             <v-text-field v-model="nome" label="Nome" :readonly="inputsDisabled">
             </v-text-field>
@@ -27,9 +21,8 @@
             <div class="valor">
                 Preço R$: <money v-model="valor" v-bind="money" :readonly="inputsDisabled" class="my-4 moeda"></money>
             </div>
-            
-            <dialogCreateCategoriaComponent :snackbar="snackbar" :sucessMessage="sucessMessage" snackbarMess :getAllCategoryes="getAllCategoryes" :select="select" :categorias="categorias" :dialog="dialog"/>
-            
+
+            <dialogCreateCategoriaComponent :snackbar="snackbar" :sucessMessage="sucessMessage"  :getAllCategoryes="getAllCategoryes" :select="select" :categorias="categorias" :dialog="dialog" />
 
             <div v-if="v$.valor.$error">
                 <v-alert color="red" type="warning" dense>Campo de <strong>Valor</strong> não pode ficar vazio</v-alert>
@@ -57,27 +50,29 @@
 </template>
 
 <script>
+//Importações de utils
+import SnackBarMessageComponent from '../utils/SnackBarMessageComponent.vue'
+// Importação dos methods
+import submit from '../modules/produtos/submitProduct.js'
+import getAllCategoryes from '../modules/produtos/getAllCategoryes.js'
+import resetForm from '../modules/produtos/resetForm.js'
+import getProductByID from '../modules/produtos/getProductByID.js'
+import editarProduto from '../modules/produtos/editarProduto.js'
+import excluirProduto from '../modules/produtos/excluirProduto.js'
+// Importação dos methods
+import validations from '../modules/produtos/validations.js'
 import useVuelidate from '@vuelidate/core'
 import dialogCreateCategoriaComponent from '../components/dialogCreateCategoriaComponent.vue'
-import {
-    useCurrencyInput
-} from 'vue-currency-input'
-import {
-    VMoney
-} from 'v-money'
-import {
-    required,
-    maxLength,
-    minLength,
-    helpers
+import useCurrencyInput from 'vue-currency-input'
+import VMoney from 'v-money'
 
-} from '@vuelidate/validators'
 export default {
     directives: {
         money: VMoney
     },
     components: {
-        dialogCreateCategoriaComponent
+        dialogCreateCategoriaComponent,
+        SnackBarMessageComponent
     },
     setup(props) {
         const {
@@ -90,6 +85,11 @@ export default {
     },
     data() {
         return {
+            SnackBarOptions: {
+                snackbar: false,
+                snackbarMessage: ""
+                
+            },
             dialog: false,
             select: null,
             categorias: [
@@ -139,125 +139,14 @@ export default {
         }
     },
     methods: {
-        async submit() {
-            if (this.method == "create") {
-                const isFormCorrect = await this.v$.$validate()
-                if (!isFormCorrect) {
-                    return
-                } else {
-                    this.loading = true
-                    this.$http.post('produtos', {
-                        id: null,
-                        nome: this.nome,
-                        valor: this.valor,
-                        descricao: this.descricao
-                    }).then(res => {
-                        setTimeout(() => {
-                            this.v$.$reset()
-                            this.resetForm();
-                            this.loading = false
-                            this.colorSnackbar = "success",
-                                this.colorSnackbarText = "black"
-                            this.sucessMessage = "Produto Criado com sucesso";
-                            this.snackbar = true
-                        }, 1000);
-
-                        return res
-                    })
-                }
-                return;
-            }
-            if (this.method == "edit") {
-                const isFormCorrect = await this.v$.$validate()
-                if (!isFormCorrect) {
-                    return
-                } else {
-                    this.editarProduto()
-                }
-                return isFormCorrect;
-            }
-        },
-        getProductByID() {
-            this.$http.get(`produtos/${this.id}`, {}).then(res => {
-                this.nome = res.data.nome;
-                this.valor = res.data.valor,
-                    this.descricao = res.data.descricao
-            })
-            //Pegando as categorias
-
-        },
-        getAllCategoryes() {
-            this.$http.get(`categorias`).then(res => {
-                for (let i = 0; i < res.data.length; i++) {
-                    //Mostrando as categorias
-                    this.categorias.push(res.data[i].nome_categoria)
-                }
-            })
-        },
-        beforeRouteLeave(to, from, next) {
-            alert("Ok")
-            console.log(to)
-            console.log(from)
-            console.log(next)
-        },
-        resetForm() {
-            this.id = null;
-            this.nome = ""
-            this.valor = ""
-            this.descricao = ""
-        },
-        editarProduto() {
-            this.loading = true;
-            this.$http.patch(`produtos/${this.id}`, {
-                nome: this.nome,
-                valor: this.valor,
-                descricao: this.descricao
-            }).then(res => {
-                this.v$.$reset()
-                this.sucessMessage = "Produto Editado com sucesso";
-                setTimeout(() => {
-                    this.snackbar = true
-                    this.loading = false;
-                }, 1000);
-
-                return res
-            })
-        },
-        excluirProduto() {
-            if (confirm("Deseja realmente excluir o produto " + this.id + " ?")) {
-                this.$http.delete(`produtos/${this.id}`, {}).then(res => {
-                    this.v$.$reset()
-                    this.colorSnackbar = "red"
-                    this.sucessMessage = "Produto Excluido com sucesso";
-                    this.colorSnackbarText = "light"
-                    this.snackbar = true
-                    this.resetForm()
-                    this.method = "create";
-                    return res
-                })
-            }
-
-        }
+        ...submit,
+        ...getAllCategoryes,
+        ...resetForm,
+        ...getProductByID,
+        ...editarProduto,
+        ...excluirProduto,
     },
-    validations() {
-        return {
-            nome: {
-                required: helpers.withMessage("O campo de <strong>Nome</strong> não pode ficar vazio", required),
-                minLength: minLength(3),
-                maxLength: maxLength(100)
-
-            },
-            valor: {
-                required
-
-            },
-            descricao: {
-                required,
-                minLength: minLength(20),
-                maxLength: maxLength(2000)
-            },
-        };
-    },
+    ...validations,
 };
 </script>
 

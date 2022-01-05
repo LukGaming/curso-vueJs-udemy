@@ -53,7 +53,6 @@ export default {
     },
     created() {
         this.$http("produtos").then((res) => {
-            
             for (let i = 0; i < res.data.length; i++) {
                 this.desserts.push({
                     id: res.data[i].id,
