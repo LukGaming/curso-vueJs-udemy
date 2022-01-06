@@ -21,10 +21,12 @@
             <div class="valor">
                 Preço R$: <money v-model="valor" v-bind="money" :readonly="inputsDisabled" class="my-4 moeda"></money>
             </div>
-             <div class="d-flex">
-            <v-select v-model="select" :items="nome_categorias" label="Categoria"></v-select>
-            <dialogCreateCategoriaComponent :snackbar="snackbar" :sucessMessage="sucessMessage" :getAllCategoryes="getAllCategoryes"  :dialog="dialog" />
-             </div>
+            <div class="d-flex">
+                <v-select v-model="select" :items="nome_categorias"  label="Categoria">
+
+                </v-select>
+                <dialogCreateCategoriaComponent :snackbar="snackbar" :sucessMessage="sucessMessage" :getAllCategoryes="getAllCategoryes" :dialog="dialog" />
+            </div>
 
             <div v-if="v$.valor.$error">
                 <v-alert color="red" type="warning" dense>Campo de <strong>Valor</strong> não pode ficar vazio</v-alert>
