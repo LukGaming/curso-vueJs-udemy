@@ -83,6 +83,9 @@ export default {
         }
     },
     created() {
+        if(!this.$session.exists()){
+             this.$router.push('/login')
+         }
         if (this.$route.name == "categoria/create") {
             this.method = "create"
         }

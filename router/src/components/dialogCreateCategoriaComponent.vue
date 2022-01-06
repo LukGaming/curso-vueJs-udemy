@@ -1,7 +1,7 @@
 <template>
 <div>
-    <div class="d-flex">
-        <v-select v-model="select" :items="categorias" label="Categoria"></v-select>
+   
+       
         <v-icon dark>
             mdi-plus
         </v-icon>
@@ -42,15 +42,13 @@
         </v-dialog>
 
     </div>
-</div>
+
 </template>
 
 <script>
 import criar_categoria from '../modules/produtos/criarCategoria'
 export default {
     props: {
-        categorias: Array,
-        select: Boolean,
         dialog: Boolean,
         getAllCategoryes: Function,
         snackbar: Boolean,
@@ -59,12 +57,18 @@ export default {
     data() {
         return {
             nova_categoria: "",
-            existe_categoria: false
+            existe_categoria: false,
         }
     },
     methods: {
         ...criar_categoria
-    }
+    },
+    created() {
+       
+       
+       
+        
+    },
 }
 </script>
 

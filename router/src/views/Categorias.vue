@@ -151,6 +151,9 @@ export default {
     },
 
     created() {
+        if(!this.$session.exists()){
+             this.$router.push('/login')
+         }
         this.getAllCategories()
         if (this.$route.query.deleted) {
             this.SnackBarOptions.snackbar = true

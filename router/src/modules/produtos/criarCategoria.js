@@ -1,5 +1,6 @@
 export default{
     criar_categoria() {
+        
         //Verificando se já existe uma categoria com este nome
         this.$http.get(`categorias?nome_categoria=${this.nova_categoria}`).then(res => {
             if (res.data.length > 0) {
@@ -9,10 +10,10 @@ export default{
                 this.$http.post(`categorias`, {
                     id: null,
                     nome_categoria: this.nova_categoria,
-                    User_Id_Creator: 0
+                    User_Id_Creator: this.$session.get('userId')
                 }).then(res => {
                     
-                    console.log("Categoria criada com sucesso!")
+                
                     this.dialog = false;
                     this.snackbar = true
                     this.getAllCategoryes()

@@ -1,10 +1,11 @@
-<template lang="">
+<template>
 <div>
     <v-app App>
         <v-main>
 
             <v-card class="mx-auto overflow-hidden" style="min-height: 100vh;" absolute>
-                <div v-if="menuIsValid">
+                <div v-if="this.$session.exists()">
+
                     <v-app-bar color="deep-purple" dark fixed>
                         <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
 
@@ -43,7 +44,7 @@
                         </v-list>
                         <template v-slot:append>
                             <div class="pa-2 d-flex justify-center ">
-                                <v-btn color="black" class="white--text" block>
+                                <v-btn color="black" class="white--text" block @click="logout">
                                     Logout
                                 </v-btn>
                             </div>
@@ -51,6 +52,7 @@
 
                     </v-navigation-drawer>
                 </div>
+
                 <transition appear enter-active-class="animate__animated animate__bounceInLeft animate__faster" leave-active-class="animate__animated animate__bounceOutRight animate__faster" mode="out-in">
                     <router-view class="mt-4">
                     </router-view>
@@ -58,18 +60,26 @@
 
             </v-card>
 
+            <SnackBarMessageComponent :SnackBarOptions="SnackBarOptions" />
         </v-main>
     </v-app>
 </div>
 </template>
 
 <script>
+
+import logout from '../modules/session/logout'
+import SnackBarMessageComponent from '../utils/SnackBarMessageComponent.vue'
 export default {
     data: () => ({
         drawer: false,
         group: false,
         menuIsValid: true,
+        SnackBarOptions: {
+            snackbarMessage: "",
+            snackbar: false
 
+        },
         routerlinks: [{
                 nome: "Página inicial",
                 icon: "home",
@@ -83,12 +93,19 @@ export default {
         ]
 
     }),
+    methods: {
+        ...logout,
+        
+    },
     created() {
         if (this.$route.name == 'login' || this.$route.name == 'register') {
             this.menuIsValid = false
 
         }
     },
+    components: {
+        SnackBarMessageComponent
+    }
 }
 </script>
 

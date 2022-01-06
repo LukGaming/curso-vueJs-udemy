@@ -127,7 +127,10 @@ export default {
         },
     },
     created() {
-        console.log(this.$router.params)
+        
+        if(!this.$session.exists()){
+             this.$router.push('/login')
+         }
         this.initialize()
 
         this.listaDeProdutos()

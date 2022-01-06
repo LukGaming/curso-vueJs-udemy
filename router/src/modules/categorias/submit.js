@@ -13,7 +13,7 @@ export default{
                         this.$http.post(`categorias`, ({
                             id: null,
                             nome_categoria: this.nome_categoria,
-                            User_Id_Creator: 0, //Trocar depois para o Id da sessão
+                            User_Id_Creator: this.$session.get('userId'), 
 
                         }))
                         this.v$.$reset()

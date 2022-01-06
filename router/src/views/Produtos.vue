@@ -52,6 +52,9 @@ export default {
         }
     },
     created() {
+        if(!this.$session.exists()){
+             this.$router.push('/login')
+         }
         this.$http("produtos").then((res) => {
             for (let i = 0; i < res.data.length; i++) {
                 this.desserts.push({

@@ -70,7 +70,9 @@ export default {
         }
     },
     created() {
-
+        if (this.$session.exists()) {
+            this.$router.push('/')
+        }
     },
     methods: {
         async cadastrar() {
@@ -103,7 +105,12 @@ export default {
                                 this.$session.set(
                                     'email', this.email,
                                 )
-                                this.$router.push({ path: '/', query: { register: 'true' }})
+                                this.$router.push({
+                                    path: '/',
+                                    query: {
+                                        register: 'true'
+                                    }
+                                })
                                 return res
                             })
                         }
@@ -142,3 +149,4 @@ export default {
 <style lang="">
 
 </style>
+

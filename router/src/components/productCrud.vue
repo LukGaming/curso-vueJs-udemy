@@ -8,8 +8,8 @@
     </div>
     <div>
         <!-- Snack bar é a mensagem depois que o produto for criado ou editado -->
-        <SnackBarMessageComponent   :SnackBarOptions="SnackBarOptions"/> 
-        
+        <SnackBarMessageComponent :SnackBarOptions="SnackBarOptions" />
+
         <v-form ref="form" lazy-validation class="mx-16">
             <v-text-field v-model="nome" label="Nome" :readonly="inputsDisabled">
             </v-text-field>
@@ -21,8 +21,10 @@
             <div class="valor">
                 Preço R$: <money v-model="valor" v-bind="money" :readonly="inputsDisabled" class="my-4 moeda"></money>
             </div>
-
-            <dialogCreateCategoriaComponent :snackbar="snackbar" :sucessMessage="sucessMessage"  :getAllCategoryes="getAllCategoryes" :select="select" :categorias="categorias" :dialog="dialog" />
+             <div class="d-flex">
+            <v-select v-model="select" :items="nome_categorias" label="Categoria"></v-select>
+            <dialogCreateCategoriaComponent :snackbar="snackbar" :sucessMessage="sucessMessage" :getAllCategoryes="getAllCategoryes"  :dialog="dialog" />
+             </div>
 
             <div v-if="v$.valor.$error">
                 <v-alert color="red" type="warning" dense>Campo de <strong>Valor</strong> não pode ficar vazio</v-alert>
@@ -88,10 +90,10 @@ export default {
             SnackBarOptions: {
                 snackbar: false,
                 snackbarMessage: ""
-                
             },
             dialog: false,
-            select: null,
+            select: [],
+            nome_categorias: [],
             categorias: [
 
             ],
@@ -113,13 +115,17 @@ export default {
             sucessMessage: "",
             snackbar: false,
             multiLine: true,
-            method: "create"
+            method: "create",
+            id_categoria: 0
         };
     },
     props: {
         options: Object
     },
     created() {
+        if (!this.$session.exists()) {
+            this.$router.push('/login')
+        }
         this.getAllCategoryes()
         if (this.$route.name == "produto/create") {
             //Em caso da rota ser Create, aparecer os inputs vazios

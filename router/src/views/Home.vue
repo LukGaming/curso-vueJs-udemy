@@ -2,38 +2,36 @@
 <div>
 
     <div class="text-center">
+        <SnackBarMessageComponent :SnackBarOptions="SnackBarOptions" />
 
-        <v-snackbar v-model="snackbar" :color="colorSnackBar" top right class="mt-16">
-            {{ Message }}
-
-            <template>
-                <v-btn :color="colorButtonSnackBar" @click="snackbar = false" class="ml-4">
-                    fechar
-                </v-btn>
-            </template>
-        </v-snackbar>
     </div>
 </div>
 </template>
 
 <script>
+import SnackBarMessageComponent from '../utils/SnackBarMessageComponent.vue'
 export default {
     components: {
-
+        SnackBarMessageComponent
     },
 
-    created() {
-        if (this.$route.query.register) {
-            this.Message = "Registro efetuado com sucesso!"
-            this.snackbar = true
-        }
-    },
     data() {
         return {
-            colorSnackBar: "success",
-            snackbar: false,
-            Message: "",
-            colorButtonSnackBar: "primary"
+            SnackBarOptions: {
+                snackbar: false,
+                snackbarMessage: "",
+            }
+
+        }
+    },
+    created() {
+        if (!this.$session.exists()) {
+            this.$router.push('/login')
+        }
+        if (this.$route.query.loginSucess) {
+            this.SnackBarOptions.snackbarMessage = "Login efetuado com sucesso!"
+            this.SnackBarOptions.snackbar = true
+
         }
     },
 
