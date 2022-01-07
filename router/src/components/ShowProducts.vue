@@ -1,72 +1,69 @@
 <template lang="">
 <div>
-    
-        
-        <v-data-table :headers="headers" :items="desserts" sort-by="calories" class="elevation-1">
-            <template v-slot:top>
-                <v-toolbar flat>
-                    <v-toolbar-title>Produtos</v-toolbar-title>
-                    <v-divider class="mx-4" inset vertical></v-divider>
-                    <v-spacer></v-spacer>
 
-                    <template>
-                        <router-link to="/produtos/create">
-                            <v-btn elevation="2" color="primary" class="ml-4">Novo Produto</v-btn>
-                        </router-link>
-                    </template>
+    <v-data-table :headers="headers" :items="desserts" sort-by="calories" class="elevation-1">
+        <template v-slot:top>
+            <v-toolbar flat>
+                <v-toolbar-title>Produtos</v-toolbar-title>
+                <v-divider class="mx-4" inset vertical></v-divider>
+                <v-spacer></v-spacer>
 
-                    <v-dialog v-model="dialogDelete" max-width="600px">
-                        <v-card>
-                            <v-card-title class="text-h5">Tem certeza que deseja deletar este Produto?</v-card-title>
-                            <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn color="blue darken-1" text @click="closeDelete">Cancelar</v-btn>
-                                <v-btn color="warning darken-1" text v-on:click="deleteItemConfirm(editedItem.id)">Excluir</v-btn>
-                                <v-spacer></v-spacer>
-                            </v-card-actions>
-                        </v-card>
-                    </v-dialog>
-                </v-toolbar>
-            </template>
-            <template v-slot:item.actions="{ item }">
-                <router-link :to="{ path: `/produtos/${item.id}/edit` }">
-                    <v-icon small class="mr-2" @click="editItem(item)">
-                        mdi-pencil
-                    </v-icon>
-                </router-link>
+                <template>
+                    <router-link to="/produtos/create">
+                        <v-btn elevation="2" color="primary" class="ml-4">Novo Produto</v-btn>
+                    </router-link>
+                </template>
 
-                <v-icon small @click="deleteItem(item)">
-                    mdi-delete
+                <v-dialog v-model="dialogDelete" max-width="600px">
+                    <v-card>
+                        <v-card-title class="text-h5">Tem certeza que deseja deletar este Produto?</v-card-title>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="blue darken-1" text @click="closeDelete">Cancelar</v-btn>
+                            <v-btn color="warning darken-1" text v-on:click="deleteItemConfirm(editedItem.id)">Excluir</v-btn>
+                            <v-spacer></v-spacer>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
+            </v-toolbar>
+        </template>
+        <template v-slot:item.actions="{ item }">
+            <router-link :to="{ path: `/produtos/${item.id}/edit` }">
+                <v-icon small class="mr-2" @click="editItem(item)">
+                    mdi-pencil
                 </v-icon>
-            </template>
-            <template v-slot:no-data>
-                <v-btn color="primary" @click="initialize">
-                    Reset
+            </router-link>
+
+            <v-icon small @click="deleteItem(item)">
+                mdi-delete
+            </v-icon>
+        </template>
+        <template v-slot:no-data>
+            <v-btn color="primary" @click="initialize">
+                Reset
+            </v-btn>
+        </template>
+    </v-data-table>
+    <div class="text-center">
+
+        <v-snackbar v-model="snackbar" color="red" right top class="message">
+            {{messageSnackBar}}
+
+            <template v-slot:action="{ attrs }">
+                <v-btn color="light" text v-bind="attrs" @click="snackbar = false">
+                    Fechar
                 </v-btn>
             </template>
-        </v-data-table>
-        <div class="text-center">
-
-            <v-snackbar v-model="snackbar" color="red" right top class="message">
-                {{messageSnackBar}}
-
-                <template v-slot:action="{ attrs }">
-                    <v-btn color="light" text v-bind="attrs" @click="snackbar = false">
-                        Fechar
-                    </v-btn>
-                </template>
-            </v-snackbar>
-        </div>
-    
+        </v-snackbar>
+    </div>
 
 </div>
 </template>
 
 <script>
-
 export default {
     components: {
-        
+
     },
     data: () => ({
         snackbar: false,
@@ -127,10 +124,10 @@ export default {
         },
     },
     created() {
-        
-        if(!this.$session.exists()){
-             this.$router.push('/login')
-         }
+
+        if (!this.$session.exists()) {
+            this.$router.push('/login')
+        }
         this.initialize()
 
         this.listaDeProdutos()
@@ -139,8 +136,17 @@ export default {
 
     methods: {
         listaDeProdutos() {
+
             this.desserts = []
-            this.$http("produtos").then((res) => {
+            this.$http("produtos", {
+                crossdomain: true,
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE',
+                    'Access-Control-Allow-Headers': 'Content-Type, aplication/json',
+                    'Access-Control-Expose-Headers': '*'
+                }
+            }).then((res) => {
                 for (let i = 0; i < res.data.length; i++) {
                     this.desserts.push({
                         id: res.data[i].id,
@@ -164,7 +170,6 @@ export default {
         },
 
         editItem(item) {
-            
 
             this.editedIndex = this.desserts.indexOf(item)
             this.editedItem = Object.assign({}, item)

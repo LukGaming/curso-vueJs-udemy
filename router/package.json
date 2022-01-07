@@ -2,6 +2,7 @@
   "name": "router",
   "version": "0.1.0",
   "private": true,
+  "proxy":"https://localhost:8000",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -19,6 +20,7 @@
     "animate.css": "^4.1.1",
     "axios": "^0.24.0",
     "core-js": "^3.6.5",
+    "cors": "^2.8.5",
     "v-money": "^0.8.1",
     "vue": "^2.6.11",
     "vue-currency-input": "^2.3.0",
@@ -56,9 +58,7 @@
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {
-    
-    }
+    "rules": {}
   },
   "browserslist": [
     "> 1%",
