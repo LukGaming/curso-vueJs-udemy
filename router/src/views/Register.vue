@@ -83,38 +83,48 @@ export default {
             } else {
                 if (this.senha == this.senhaConfirm) {
                     this.ConfirmPassword = false
-                    this.$http.get(`usuarios?email=${this.email}`).then(res => {
-                        if (res.data.length > 0) {
-                            this.email_existe = true
-                        } else {
-                            this.email_existe = false
-                            this.$http.post('usuarios', {
-                                id: null,
-                                nome: this.nome,
-                                email: this.email,
-                                senha: this.senha
-                            }).then(res => {
-                                console.log(res.data)
-                                this.$session.start()
-                                this.$session.set(
-                                    'userId', res.data.id,
-                                )
-                                this.$session.set(
-                                    'nome', this.nome,
-                                )
-                                this.$session.set(
-                                    'email', this.email,
-                                )
-                                this.$router.push({
-                                    path: '/',
-                                    query: {
-                                        register: 'true'
-                                    }
-                                })
-                                return res
+
+                    this.$http.post(`/users`, {
+                        name: this.nome,
+                        email: this.email,
+                        password: this.senha
+                    }).then(res => {
+                        this.email_existe = false
+                        if (res.status == '201') {
+                            this.$session.start()
+                            this.$session.set(
+                                'userId', res.data.id,
+                            )
+                            this.$session.set(
+                                'nome', this.nome,
+                            )
+                            this.$session.set(
+                                'email', this.email,
+                            )
+                            this.$router.push({
+                                path: '/',
+                                query: {
+                                    register: 'true'
+                                }
                             })
+                            
                         }
-                    })
+                        return res
+                    }).catch(error => {
+                        if(error.toJSON().status == '500'){
+                            this.email_existe = true
+                        }
+                    });
+                    // if (res.data.length > 0) {
+                    //     this.email_existe = true
+                    // } else {
+                    //     this.email_existe = false
+                    //       this.$http.post(`/users`, {nome: this.nome, email: this.email, senha: this.senha}).then(res => {
+                    //         console.log(res.data)
+                    //         
+                    //     })
+                    // }
+
                 } else {
                     this.ConfirmPassword = true
 
@@ -149,4 +159,3 @@ export default {
 <style lang="">
 
 </style>
-

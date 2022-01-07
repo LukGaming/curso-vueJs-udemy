@@ -10,32 +10,25 @@ export default{
     
         }
     
-        this.$http(`/usuarios/?email=${this.email}`).then(res => {
-                if (res.data) {
-                    if (this.senha == res.data[0].senha) {
-                        this.$session.start()
-    
+        this.$http.post(`/users/${this.email}`, {email: this.email, password: this.senha}).then(res => {
+            if(res.data.response == 'success'){
+                this.$session.start()
                         this.$session.set(
-                            'userId', res.data[0].id,
+                            'userId', res.data.id,
                         )
                         this.$session.set(
-                            'nome', res.data[0].nome,
+                            'nome', res.data.nome,
                         )
                         this.$session.set(
-                            'email', res.data[0].email,
+                            'email', res.data.email,
                         )
                         this.loading = false
                         this.$router.push( {path: '/', query: { loginSucess: 'true' } })
-    
-                    } else {
-                        this.SenhaIncorreta = true
-                        this.loading = false
-    
-                    }
-                }
-    
-            
-    
+            }
+            if(res.data.response == 'error_password'){
+                this.loading = false
+                this.SenhaIncorreta = true
+            }
         })
     }
 }

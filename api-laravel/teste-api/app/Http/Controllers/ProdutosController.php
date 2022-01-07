@@ -10,11 +10,11 @@ class ProdutosController extends Controller
 {
     public function GetAllProducts()
     {
-        return json_encode(Produtos::paginate(10));
+        return json_encode(Produtos::paginate(500));
     }
     public function GetProductById($id)
     {
-        header('Access-Control-Allow-Origin: *'); 
+
         return json_encode(Produtos::where('id', $id)->first());
     }
     public function createProduct(Request $request)
@@ -22,10 +22,22 @@ class ProdutosController extends Controller
         return Produtos::create([
             'nome' => $request->nome,
             'valor' => $request->valor,
-            'descricao' => $request->descricao
+            'descricao' => $request->descricao,
+            'id_user_criador' => $request->id_user_criador
+            
         ]);
     }
     public function deleteProduct($id)
     {
+        return Produtos::find($id)->delete($id);
+    }
+    public function editarProduto(Request $request)
+    {
+        return Produtos::where('id', $request->id)->update([
+            'nome' => $request->nome,
+            'valor' => $request->valor,
+            'descricao' => $request->descricao
+        ]);
+           
     }
 }

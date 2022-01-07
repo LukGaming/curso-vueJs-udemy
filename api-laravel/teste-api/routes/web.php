@@ -23,24 +23,19 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 */
 
 header('Access-Control-Allow-Origin: *');
-Route::get('/users', function () {
-    return UserResource::collection(ModelsUser::all());
-});
-Route::get('/users/{id}', function ($id) {
-    try{
-        return new UserResource(ModelsUser::findOrFail($id));
-    }
-    catch(\Exception $e){
-        throw new HttpException(500, $e->getMessage());
-    }
-});
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS, ANY');
+header('Access-Control-Allow-Headers:   Origin, Content-Type, X-Auth-Token, Authorization');
+/*Rotas de Usuários*/
 
-Route::post('/users', [UserController::class, 'postUser']);
-
+/*Rotas de Usuários*/
+Route::post('/users', [UserController::class, 'createUser']);//Criação de usuário
+Route::any('/users/{email}',[UserController::class, 'loggingUser']);
+/*Rotas de Produtos */
 Route::get('/produtos/{id}', [ProdutosController::class, 'GetProductById']);
 Route::get('/produtos', [ProdutosController::class, 'GetAllProducts']);
 Route::post('/produtos', [ProdutosController::class, 'createProduct']);
+Route::patch('/produtos/{id}', [ProdutosController::class, 'editarProduto']);
+Route::delete('/produtos/{id}', [ProdutosController::class, 'deleteProduct']);
 
-
-
-
+/*Rotas de Produtos */

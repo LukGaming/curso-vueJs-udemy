@@ -138,23 +138,15 @@ export default {
         listaDeProdutos() {
 
             this.desserts = []
-            this.$http("produtos", {
-                crossdomain: true,
-                headers: {
-                    'Access-Control-Allow-Origin': '*',
-                    'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE',
-                    'Access-Control-Allow-Headers': 'Content-Type, aplication/json',
-                    'Access-Control-Expose-Headers': '*'
-                }
-            }).then((res) => {
-                for (let i = 0; i < res.data.length; i++) {
+            this.$http("produtos"
+            ).then((res) => {
+                for (let i = 0; i < res.data.data.length; i++) {
                     this.desserts.push({
-                        id: res.data[i].id,
-                        ...res.data[i],
+                        id: res.data.data[i].id,
+                        ...res.data.data[i],
                     })
-
                 }
-                return res
+              return res
             });
         },
         initialize() {
