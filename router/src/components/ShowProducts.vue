@@ -125,9 +125,9 @@ export default {
     },
     created() {
 
-        if (!this.$session.exists()) {
-            this.$router.push('/login')
-        }
+        // if (!this.$session.exists()) {
+        //     this.$router.push('/login')
+        // }
         this.initialize()
 
         this.listaDeProdutos()
@@ -178,8 +178,8 @@ export default {
         deleteItemConfirm(id) {
             console.log(id)
             //Apagar Produto do banco de dados aqui!
-            this.$http.delete(`produtos/${id}`).then(res => {
-                console.log("Produto deletado!")
+            this.$http.post(`produtos/${id}/delete`).then(res => {
+                
                 this.listaDeProdutos()
                 return res
             })

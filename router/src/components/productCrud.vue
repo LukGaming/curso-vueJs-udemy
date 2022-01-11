@@ -125,9 +125,9 @@ export default {
         options: Object
     },
     created() {
-        if (!this.$session.exists()) {
-            this.$router.push('/login')
-        }
+        // if (!this.$session.exists()) {
+        //     this.$router.push('/login')
+        // }
         this.getAllCategoryes()
         if (this.$route.name == "produto/create") {
             //Em caso da rota ser Create, aparecer os inputs vazios

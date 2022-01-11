@@ -8,22 +8,22 @@
                         <div class="font-weight-medium">Página de Cadastro de usuário</div>
                     </div>
                     <div class="inputs mt-4">
-                        <v-text-field label="Nome Completo" hide-details="auto" class="mt-4" v-model="nome"></v-text-field>
-                        <div v-if="v$.nome.$error">
+                        <v-text-field label="Nome Completo" hide-details="auto" class="mt-4" v-model="usuario.name"></v-text-field>
+                        <div v-if="v$.usuario.name.$error">
                             <v-alert border="left" color="red" type="error" dense>O nome deve conter entre 5 e 50 Caracteres</v-alert>
                         </div>
-                        <v-text-field label="Email" hide-details="auto" class="mt-4" v-model="email"></v-text-field>
-                        <div v-if="v$.email.$error">
+                        <v-text-field label="Email" hide-details="auto" class="mt-4" v-model="usuario.email"></v-text-field>
+                        <div v-if="v$.usuario.email.$error">
                             <v-alert border="left" color="red" type="error" dense>Email invalido</v-alert>
                         </div>
                         <div v-if="email_existe == true">
                             <v-alert border="left" color="red" type="error" dense>Este Email já está sendo utilizado</v-alert>
                         </div>
-                        <v-text-field label="Senha" type="password" class="mt-4" v-model="senha"></v-text-field>
-                        <div v-if="v$.senha.$error">
+                        <v-text-field label="Senha" type="password" class="mt-4" v-model="usuario.password"></v-text-field>
+                        <div v-if="v$.usuario.password.$error">
                             <v-alert border="left" color="red" type="error" dense>A senha deve obter entre 8 e 16 caractéres</v-alert>
                         </div>
-                        <v-text-field label="Confirmar senha" type="password" class="mt-4" v-model="senhaConfirm"></v-text-field>
+                        <v-text-field label="Confirmar senha" type="password" class="mt-4" v-model="usuario.senhaConfirm"></v-text-field>
                         <div v-if="ConfirmPassword">
                             <v-alert border="left" color="red" type="error" dense>As senhas não confirmam</v-alert>
                         </div>
@@ -42,120 +42,100 @@
 </template>
 
 <script>
-import useVuelidate from '@vuelidate/core'
-import {
-    required,
-    maxLength,
-    minLength,
-    email
-
-} from '@vuelidate/validators'
+import useVuelidate from "@vuelidate/core";
+import { required, maxLength, minLength, email } from "@vuelidate/validators";
 export default {
-    setup() {
-
-        return {
-            v$: useVuelidate(),
-
-        };
-    },
-    data() {
-        return {
-            loading: false,
-            nome: "",
-            email: "",
-            senha: "",
-            senhaConfirm: "",
-            email_existe: false,
-            ConfirmPassword: false
-        }
-    },
-    created() {
-        if (this.$session.exists()) {
-            this.$router.push('/')
-        }
-    },
-    methods: {
-        async cadastrar() {
-
-            const isFormCorrect = await this.v$.$validate()
-            if (!isFormCorrect) {
-                return isFormCorrect
-            } else {
-                if (this.senha == this.senhaConfirm) {
-                    this.ConfirmPassword = false
-
-                    this.$http.post(`/users`, {
-                        name: this.nome,
-                        email: this.email,
-                        password: this.senha
-                    }).then(res => {
-                        this.email_existe = false
-                        if (res.status == '201') {
-                            this.$session.start()
-                            this.$session.set(
-                                'userId', res.data.id,
-                            )
-                            this.$session.set(
-                                'nome', this.nome,
-                            )
-                            this.$session.set(
-                                'email', this.email,
-                            )
-                            this.$router.push({
-                                path: '/',
-                                query: {
-                                    register: 'true'
-                                }
-                            })
-                            
-                        }
-                        return res
-                    }).catch(error => {
-                        if(error.toJSON().status == '500'){
-                            this.email_existe = true
-                        }
-                    });
-                    // if (res.data.length > 0) {
-                    //     this.email_existe = true
-                    // } else {
-                    //     this.email_existe = false
-                    //       this.$http.post(`/users`, {nome: this.nome, email: this.email, senha: this.senha}).then(res => {
-                    //         console.log(res.data)
-                    //         
-                    //     })
-                    // }
-
-                } else {
-                    this.ConfirmPassword = true
-
-                    //Tudo ok pra poder enviar para o banco de dados
-
-                }
-            }
-
-        }
-    },
-    validations() {
-        return {
-            nome: {
-                required,
-                maxLength: maxLength(50),
-                minLengt: minLength(5)
-            },
-            email: {
-                required,
-                email
-            },
-            senha: {
-                required,
-                maxLength: maxLength(16),
-                minLengt: minLength(8)
-            }
-        }
+  setup() {
+    return {
+      v$: useVuelidate(),
+    };
+  },
+  data() {
+    return {
+      usuario: {
+        name: "",
+        email: "",
+        password: "",
+        senhaConfirm: "",
+      },
+      loading: false,
+      email_existe: false,
+      ConfirmPassword: false,
+    };
+  },
+  created() {
+    if (this.$session.exists()) {
+      this.$router.push("/");
     }
-}
+  },
+  methods: {
+    async cadastrar() {
+      const isFormCorrect = await this.v$.$validate();
+      if (!isFormCorrect) {
+        return isFormCorrect;
+      } else {
+        if (this.usuario.password == this.usuario.senhaConfirm) {
+          this.ConfirmPassword = false;
+          this.$http
+            .post(`/api/register`, {
+              name: this.usuario.name,
+              email: this.usuario.email,
+              password: this.usuario.password,
+            })
+            .then((res) => {
+              this.email_existe = false;
+              this.$http
+                .post("/api/login", {
+                  email: this.usuario.email,
+                  password: this.usuario.password,
+                })
+                .then((res) => {
+                  localStorage.setItem("userToken", res.data.token);
+                  localStorage.setItem("userId", res.data.user.id);
+                  localStorage.setItem("email", res.data.user.email);
+                  localStorage.setItem("name", res.data.user.name);
+                  this.$router.push({
+                    path: "/",
+                    query: {
+                      register: "true",
+                    },
+                  });
+                });
+
+              return res;
+            })
+            .catch((error) => {
+              this.email_existe = true;
+              return error;
+            });
+        } else {
+          this.ConfirmPassword = true;
+        }
+      }
+    },
+  },
+  validations() {
+    return {
+      usuario: {
+        name: {
+          required,
+          maxLength: maxLength(50),
+          minLengt: minLength(5),
+        },
+        email: {
+          required,
+          email,
+        },
+        password: {
+          required,
+          maxLength: maxLength(16),
+          minLengt: minLength(8),
+        },
+      },
+    };
+  },
+};
 </script>
 
 <style lang="">
-
 </style>
