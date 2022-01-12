@@ -4,7 +4,7 @@
         <v-main>
 
             <v-card class="mx-auto overflow-hidden" style="min-height: 100vh;" absolute>
-                <div v-if="this.$session.exists()">
+                <div>
 
                     <v-app-bar color="deep-purple" dark fixed>
                         <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
@@ -21,9 +21,9 @@
                             <v-list-item>
                                 <v-list-item-content>
                                     <v-list-item-title class="text-h6 d-flex justify-center">
-                                        {{this.$session.get('nome')}}
+                                        {{userData.name}}
                                     </v-list-item-title>
-                                    <v-list-item-subtitle class="d-flex justify-center">{{this.$session.get('email')}}</v-list-item-subtitle>
+                                    <v-list-item-subtitle class="d-flex justify-center">{{userData.email}}</v-list-item-subtitle>
                                 </v-list-item-content>
                             </v-list-item>
                         </v-list>
@@ -78,7 +78,10 @@ export default {
         SnackBarOptions: {
             snackbarMessage: "",
             snackbar: false
-
+        },
+        userData:{
+            name: "",
+            email: "",
         },
         routerlinks: [{
                 nome: "Página inicial",
@@ -95,9 +98,15 @@ export default {
     }),
     methods: {
         ...logout,
+        getUserData(){
+            this.userData.name = localStorage.getItem('name');
+            this.userData.email = localStorage.getItem('email');
+
+        }
         
     },
     created() {
+        this.getUserData()
         if (this.$route.name == 'login' || this.$route.name == 'register') {
             this.menuIsValid = false
 

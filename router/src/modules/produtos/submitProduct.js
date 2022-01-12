@@ -16,13 +16,13 @@
                             this.id_categoria = this.categorias[i].id
                         }
                     }
-                    this.$http.post('produtos', {
+                    this.$http.post('api/produtos', {
                         id: null,
                         nome: this.nome,
                         valor: this.valor,
                         descricao: this.descricao,
-                        id_user_criador: this.$session.get('userId'),
-                        id_categoria: this.id_categoria
+                        // id_user_criador: this.$session.get('userId'),
+                        // id_categoria: this.id_categoria
                         
                     }).then(res => {
                         setTimeout(() => {

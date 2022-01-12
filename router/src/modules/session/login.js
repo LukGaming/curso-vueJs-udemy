@@ -1,4 +1,4 @@
-export default{
+export default {
     async logar() {
         this.loading = true
         const isFormCorrect = await this.v$.$validate()
@@ -7,28 +7,22 @@ export default{
                 this.loading = false
                 return
             }, 1000);
-    
         }
-    
-        this.$http.post(`/users/${this.email}`, {email: this.email, password: this.senha}).then(res => {
-            if(res.data.response == 'success'){
-                this.$session.start()
-                        this.$session.set(
-                            'userId', res.data.id,
-                        )
-                        this.$session.set(
-                            'nome', res.data.nome,
-                        )
-                        this.$session.set(
-                            'email', res.data.email,
-                        )
-                        this.loading = false
-                        this.$router.push( {path: '/', query: { loginSucess: 'true' } })
-            }
-            if(res.data.response == 'error_password'){
-                this.loading = false
-                this.SenhaIncorreta = true
-            }
+        this.$http.post(`/api/login`, {
+            email: this.usuario.email,
+            password: this.usuario.password,
+        }).then(res => {
+            localStorage.setItem("userToken", res.data.token);
+            localStorage.setItem("userId", res.data.user.id);
+            localStorage.setItem("email", res.data.user.email);
+            localStorage.setItem("name", res.data.user.name);
+            this.loading = false
+            this.$router.push({ path: '/', query: { loginSucess: 'true' } })
+            return res;
+        }).catch(error => {
+            this.loading = false;
+            this.SenhaIncorreta = true;
+            return error;
         })
     }
 }

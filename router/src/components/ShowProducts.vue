@@ -138,7 +138,7 @@ export default {
         listaDeProdutos() {
 
             this.desserts = []
-            this.$http("produtos"
+            this.$http("api/produtos"
             ).then((res) => {
                 for (let i = 0; i < res.data.data.length; i++) {
                     this.desserts.push({

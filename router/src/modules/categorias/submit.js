@@ -1,37 +1,32 @@
-export default{
+export default {
     async submit() {
         const isFormCorrect = await this.v$.$validate()
         if (!isFormCorrect) {
             return isFormCorrect
         } else {
             if (this.method == "create") {
-                this.$http.get(`categorias?nome_categoria=${this.nome_categoria}`).then(res => {
-                    if (res.data.length > 0) {
-                        this.categoriaExists = true
-                    } else {
-                        this.categoriaExists = false
-                        this.$http.post(`categorias`, ({
-                            id: null,
-                            nome_categoria: this.nome_categoria,
-                            User_Id_Creator: this.$session.get('userId'), 
-
-                        }))
-                        this.v$.$reset()
-                        this.snackbar = true
-                        this.messageSnackBar = "Categoria Criada com sucesso!"
-                        this.nome_categoria = ""
-                    }
-
+                this.$http.post(`api/categorias`, {
+                    nome_categoria: this.nome_categoria,
+                }).then(res => {
+                    console.log(res)
+                    this.categoriaExists = false
+                    this.v$.$reset()
+                    this.snackbar = true
+                    this.messageSnackBar = "Categoria Criada com sucesso!"
+                    this.nome_categoria = ""
+                }).catch(error => {
+                    this.categoriaExists = true
+                    return error;
                 })
             }
             if (this.method == "edit") {
-                this.$http.get(`categorias?nome_categoria=${this.nome_categoria}`).then(res => {
+                this.$http.get(`api/categorias/${this.nome_categoria}`).then(res => {
                     if (res.data.length > 0) {
                         this.categoriaExists = true
 
                     } else {
                         this.categoriaExists = false
-                        this.$http.patch(`categorias/${this.id}`, {
+                        this.$http.patch(`api/categorias/${this.id}`, {
                             nome_categoria: this.nome_categoria
                         }).then(res => {
                             this.snackbar = true

@@ -25,13 +25,16 @@ export default {
         }
     },
     created() {
-        // if (!this.$session.exists()) {
-        //     this.$router.push('/login')
-        // }
+
+         if (this.$route.query.register) {
+             this.SnackBarOptions.snackbarMessage = "Cadastro efetuado com sucesso!"
+            this.SnackBarOptions.snackbar = true
+         }
+
+
         if (this.$route.query.loginSucess) {
             this.SnackBarOptions.snackbarMessage = "Login efetuado com sucesso!"
             this.SnackBarOptions.snackbar = true
-
         }
     },
 

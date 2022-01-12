@@ -1,11 +1,11 @@
 <template lang="">
 <div>
     <div class="d-flex align-center " style="min-height: 90vh">
-        <v-container>
-            <v-row no-gutters>
-                <v-col align-self="center" class="borda-login container-color  px-10 py-10" outlined color="purple">
+        <v-container >
+            <v-row no-gutters >
+                <v-col align-self="center" class="deep-purple borda-login container-color  px-10 py-10" outlined color="purple">
                     <div class="d-flex justify-center h2">
-                        <div class="font-weight-medium">Página de Cadastro de usuário</div>
+                        <div class="font-weight-medium white--text">Página de Cadastro de usuário</div>
                     </div>
                     <div class="inputs mt-4">
                         <v-text-field label="Nome Completo" hide-details="auto" class="mt-4" v-model="usuario.name"></v-text-field>
@@ -30,8 +30,8 @@
                     </div>
                     <div class="d-flex justify-space-around mt-4">
                         <v-btn color="success" @click="cadastrar" :loading="loading">Logar</v-btn>
-                        <router-link to="/register">
-                            <v-btn color="primary">Criar uma conta</v-btn>
+                        <router-link to="/login">
+                            <v-btn color="primary">Já possui Conta? Logar</v-btn>
                         </router-link>
                     </div>
                 </v-col>
@@ -137,5 +137,9 @@ export default {
 };
 </script>
 
-<style lang="">
+<style>
+
+.theme--light.v-label {
+  color: white !important;
+}
 </style>

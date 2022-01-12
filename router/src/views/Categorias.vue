@@ -135,25 +135,23 @@ export default {
         },
         getAllCategories() {
             this.desserts = []
-            this.$http('categorias').then(res => {
-                if (res.data.length > 0) {
-                    
-                    for (let i = 0; i < res.data.length; i++) {
+            this.$http('api/categorias').then(res => {
+                    for (let i = 0; i < res.data.data.length; i++) {
                         this.desserts.push({
-                            id_categoria: res.data[i].id,
-                            nome_categoria: res.data[i].nome_categoria,
-                            criador_categoria: res.data[i].User_Id_Creator //Trocar depois pro nome do usuário
+                            id_categoria: res.data.data[i].id,
+                            nome_categoria: res.data.data[i].nome_categoria,
+                            criador_categoria: res.data.data[i].User_Id_Creator //Trocar depois pro nome do usuário
                         })
                     }
-                }
+                
             })
         }
     },
 
     created() {
-        if(!this.$session.exists()){
-             this.$router.push('/login')
-         }
+        // if(!this.$session.exists()){
+        //      this.$router.push('/login')
+        //  }
         this.getAllCategories()
         if (this.$route.query.deleted) {
             this.SnackBarOptions.snackbar = true
