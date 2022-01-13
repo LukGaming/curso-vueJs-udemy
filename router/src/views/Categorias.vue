@@ -125,7 +125,7 @@ export default {
         },
         
         deleteItem(item) {
-            this.$http.delete(`categorias/${item}`).then(res =>{
+            this.$http.delete(`api/categorias/${item}`).then(res =>{
                 this.SnackBarOptions.snackbar = true
                 this.SnackBarOptions.snackbarMessage = "Item Removido com sucesso!"
                 this.getAllCategories()

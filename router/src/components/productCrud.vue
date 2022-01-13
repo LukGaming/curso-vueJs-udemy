@@ -1,56 +1,87 @@
 <template>
-<div>
-    <div class="d-flex column justify-center ">
-        <h1 v-if="method == 'create'" class="mt-10">Criando um novo Produto</h1>
-        <h1 v-if="method == 'edit'" class="mt-10">Editando Produto - {{id}}</h1>
-        <h1 v-if="method == 'read'" class="mt-10">Visualizando Produto - {{id}}</h1>
-
+  <div>
+    <div class="d-flex column justify-center">
+      <h1 v-if="method == 'create'" class="mt-10">Criando um novo Produto</h1>
+      <h1 v-if="method == 'edit'" class="mt-10">Editando Produto - {{ id }}</h1>
+      <h1 v-if="method == 'read'" class="mt-10">
+        Visualizando Produto - {{ id }}
+      </h1>
     </div>
     <div>
-        <!-- Snack bar é a mensagem depois que o produto for criado ou editado -->
-        <SnackBarMessageComponent :SnackBarOptions="SnackBarOptions" />
+      <!-- Snack bar é a mensagem depois que o produto for criado ou editado -->
+      <SnackBarMessageComponent :SnackBarOptions="SnackBarOptions" />
 
-        <v-form ref="form" lazy-validation class="mx-16">
-            <v-text-field v-model="nome" label="Nome" :readonly="inputsDisabled">
-            </v-text-field>
-            <div v-if="v$.nome.$error">
-                <v-alert color="red" type="warning" dense>
-                    O campo de <strong>Nome</strong> deve conter entre 3 e 50 caracteres
-                </v-alert>
-            </div>
-            <div class="valor">
-                Preço R$: <money v-model="valor" v-bind="money" :readonly="inputsDisabled" class="my-4 moeda"></money>
-            </div>
-            <div class="d-flex">
-                <v-select v-model="select" :items="nome_categorias"  label="Categoria">
+      <v-form ref="form" lazy-validation class="mx-16">
+        <v-text-field v-model="nome" label="Nome" :readonly="inputsDisabled">
+        </v-text-field>
+        <div v-if="v$.nome.$error">
+          <v-alert color="red" type="warning" dense>
+            O campo de <strong>Nome</strong> deve conter entre 3 e 50 caracteres
+          </v-alert>
+        </div>
+        <div class="valor">
+          Preço R$:
+          <money
+            v-model="valor"
+            v-bind="money"
+            :readonly="inputsDisabled"
+            class="my-4 moeda"
+          ></money>
+        </div>
+        <div class="d-flex">
+          <v-select v-model="select" :items="nome_categorias" label="Categoria">
+          </v-select>
+          <dialogCreateCategoriaComponent
+            :snackbar="snackbar"
+            :sucessMessage="sucessMessage"
+            :getAllCategoryes="getAllCategoryes"
+            :dialog="dialog"
+          />
+        </div>
 
-                </v-select>
-                <dialogCreateCategoriaComponent :snackbar="snackbar" :sucessMessage="sucessMessage" :getAllCategoryes="getAllCategoryes" :dialog="dialog" />
-            </div>
-
-            <div v-if="v$.valor.$error">
-                <v-alert color="red" type="warning" dense>Campo de <strong>Valor</strong> não pode ficar vazio</v-alert>
-            </div>
-            <v-textarea v-model="descricao" label="Descricao" :readonly="inputsDisabled"></v-textarea>
-            <div v-if="v$.descricao.$error">
-                <v-alert color="red" type="warning" dense>Campo de <strong>Descricao</strong> deve conter entre 20 e 2000 Caracteres</v-alert>
-            </div>
-            <div v-if="method == 'create'">
-                <v-btn color="primary" @click="submit" class="mt-10" :loading="loading" :disabled="inputsDisabled">
-                    Cadastrar Produto
-                </v-btn>
-            </div>
-            <div v-if="method == 'edit'" class="d-flex justify-center">
-                <v-btn color="primary" @click="submit" class="mx-10" :loading="loading">
-                    Salvar Alterações
-                </v-btn>
-                <v-btn color="warning" @click="excluirProduto" class="mx-10">
-                    Excluir Produto
-                </v-btn>
-            </div>
-        </v-form>
+        <div v-if="v$.valor.$error">
+          <v-alert color="red" type="warning" dense
+            >Campo de <strong>Valor</strong> não pode ficar vazio</v-alert
+          >
+        </div>
+        <v-textarea
+          v-model="descricao"
+          label="Descricao"
+          :readonly="inputsDisabled"
+        ></v-textarea>
+        <div v-if="v$.descricao.$error">
+          <v-alert color="red" type="warning" dense
+            >Campo de <strong>Descricao</strong> deve conter entre 20 e 2000
+            Caracteres</v-alert
+          >
+        </div>
+        <div v-if="method == 'create'">
+          <v-btn
+            color="primary"
+            @click="submit"
+            class="mt-10"
+            :loading="loading"
+            :disabled="inputsDisabled"
+          >
+            Cadastrar Produto
+          </v-btn>
+        </div>
+        <div v-if="method == 'edit'" class="d-flex justify-center">
+          <v-btn
+            color="primary"
+            @click="submit"
+            class="mx-10"
+            :loading="loading"
+          >
+            Salvar Alterações
+          </v-btn>
+          <v-btn color="warning" @click="excluirProduto" class="mx-10">
+            Excluir Produto
+          </v-btn>
+        </div>
+      </v-form>
     </div>
-</div>
+  </div>
 </template>
 
 <script>
@@ -96,9 +127,7 @@ export default {
             dialog: false,
             select: [],
             nome_categorias: [],
-            categorias: [
-
-            ],
+            categorias: [],
             money: {
                 decimal: ',',
                 thousands: '.',
@@ -125,15 +154,11 @@ export default {
         options: Object
     },
     created() {
-        // if (!this.$session.exists()) {
-        //     this.$router.push('/login')
-        // }
         this.getAllCategoryes()
         if (this.$route.name == "produto/create") {
             //Em caso da rota ser Create, aparecer os inputs vazios
             this.method = "create";
         }
-
         this.id = this.$route.params.id;
         if (this.$route.name == "produto/read") {
             this.method = "read";
@@ -160,17 +185,15 @@ export default {
 
 <style>
 .message {
-    margin-top: 60px;
+  margin-top: 60px;
 }
 
 .moeda {
-    padding: 10px;
-    font-size: 1.2rem;
-
+  padding: 10px;
+  font-size: 1.2rem;
 }
 
 .valor {
-    font-size: 1.2rem;
-
+  font-size: 1.2rem;
 }
 </style>

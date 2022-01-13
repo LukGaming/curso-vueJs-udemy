@@ -52,17 +52,12 @@ export default {
         }
     },
     created() {
-        // if(!this.$session.exists()){
-        //      this.$router.push('/login')
-        //  }
-        console.log('aqui estamos')
         this.$http.get("api/produtos").then((res) => {
             for (let i = 0; i < res.data.length; i++) {
                 this.desserts.push({
                     id: res.data[i].id,
                     ...res.data[i],
                 })
-
             }
             return res
         });

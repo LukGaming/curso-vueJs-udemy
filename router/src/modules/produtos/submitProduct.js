@@ -11,9 +11,9 @@
                     return
                 } else {
                     this.loading = true
-                    for(let i=0; i< this.categorias.length; i++){
-                        if(this.categorias[i].nome_categoria == this.select){
-                            this.id_categoria = this.categorias[i].id
+                    for(let i=0; i< this.categorias.data.length; i++){
+                        if(this.categorias.data[i].nome_categoria == this.select){
+                            this.id_categoria = this.categorias.data[i].id
                         }
                     }
                     this.$http.post('api/produtos', {
@@ -22,7 +22,7 @@
                         valor: this.valor,
                         descricao: this.descricao,
                         // id_user_criador: this.$session.get('userId'),
-                        // id_categoria: this.id_categoria
+                        id_categoria: this.id_categoria
                         
                     }).then(res => {
                         setTimeout(() => {

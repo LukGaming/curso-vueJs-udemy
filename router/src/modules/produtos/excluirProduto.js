@@ -1,7 +1,7 @@
 export default{
     excluirProduto() {
         if (confirm("Deseja realmente excluir o produto " + this.id + " ?")) {
-            this.$http.delete(`produtos/${this.id}`, {}).then(res => {
+            this.$http.delete(`api/produtos/${this.id}`, ).then(res => {
                 this.v$.$reset()
                 this.colorSnackbar = "red"
                 this.sucessMessage = "Produto Excluido com sucesso";
@@ -12,6 +12,5 @@ export default{
                 return res
             })
         }
-
     }
 }

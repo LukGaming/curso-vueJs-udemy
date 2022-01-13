@@ -50,6 +50,7 @@
 </template>
 
 <script>
+import get_user_data from '../modules/user/get_user_data'
 import useVuelidate from '@vuelidate/core'
 /*Funções das categorias*/
 import getCategoryByid from '../modules/categorias/getCategoryByid'
@@ -57,6 +58,7 @@ import submit from '../modules/categorias/submit'
 import deleteCategory from '../modules/categorias/deleteCategory'
 import validations from '../modules/categorias/validations'
 import CriadorCategoriaComponent from '../components/CriadorCategoriaComponent.vue'
+
 export default {
     data() {
         return {
@@ -83,9 +85,6 @@ export default {
         }
     },
     created() {
-        // if(!this.$session.exists()){
-        //      this.$router.push('/login')
-        //  }
         if (this.$route.name == "categoria/create") {
             this.method = "create"
         }
@@ -102,9 +101,11 @@ export default {
         }
     },
     methods: {
+        ...get_user_data,
         ...getCategoryByid,
         ...submit,
-        ...deleteCategory
+        ...deleteCategory,
+        
     },
     ...validations
 }

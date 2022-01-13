@@ -1,7 +1,7 @@
 export default{
     editarProduto() {
         this.loading = true;
-        this.$http.patch(`produtos/${this.id}`, {
+        this.$http.patch(`api/produtos/${this.id}`, {
             nome: this.nome,
             valor: this.valor,
             descricao: this.descricao

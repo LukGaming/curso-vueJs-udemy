@@ -1,5 +1,5 @@
 export default{
-    deletCategory() {
+    deleteCategory() {
         this.$http.delete(`api/categorias/${this.id}`).then(res => {
             this.$router.push({
                 path: '/categorias',

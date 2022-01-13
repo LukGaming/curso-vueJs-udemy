@@ -20,7 +20,8 @@ export default {
                 })
             }
             if (this.method == "edit") {
-                this.$http.get(`api/categorias/${this.nome_categoria}`).then(res => {
+                this.$http.get(`api/categorias/${this.id}`).then(res => {
+                    console.log(res)
                     if (res.data.length > 0) {
                         this.categoriaExists = true
 
@@ -36,8 +37,6 @@ export default {
                     }
                 })
             }
-
-            //Caso não exista, cria-la e enviar o id do usuário logado no momento junto!
         }
     },
 }

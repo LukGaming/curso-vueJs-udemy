@@ -176,10 +176,8 @@ export default {
         },
 
         deleteItemConfirm(id) {
-            console.log(id)
             //Apagar Produto do banco de dados aqui!
-            this.$http.post(`produtos/${id}/delete`).then(res => {
-                
+            this.$http.delete(`api/produtos/${id}`).then(res => {
                 this.listaDeProdutos()
                 return res
             })
