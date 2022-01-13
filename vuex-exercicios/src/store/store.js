@@ -10,12 +10,17 @@ export default new Vuex.Store({
         preco: 0,
     },
     getters: {
-       
-        quantidade: state => {
-            return state.quantidade;
+        valorTotal(state){
+           return  state.produtos.map(p => p.quantidade * p.preco)
+                .reduce((total, atual) => total + atual, 0)
         },
-        preco: state =>{
-            return state.preco
+        produtos(state){
+            return state.produtos
+        }
+    },
+    mutations:{
+        adicionarProduto(state, payload){
+            state.produtos.push(payload)
         }
     }
 })

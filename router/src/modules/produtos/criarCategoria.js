@@ -9,6 +9,7 @@ export default {
             this.dialog = false;
             this.SnackBarOptions.snackbarMessage = "Categoria Criada com sucesso"
             this.SnackBarOptions.snackbar = true
+            this.nova_categoria = ""
             this.getAllCategoryes()
             return res;
         }).catch(error => {

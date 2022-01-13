@@ -49,7 +49,6 @@
 import criar_categoria from '../modules/produtos/criarCategoria'
 export default {
     props: {
-        dialog: Boolean,
         getAllCategoryes: Function,
         SnackBarOptions: Object,
         sucessMessage: String
@@ -58,6 +57,7 @@ export default {
         return {
             nova_categoria: "",
             existe_categoria: false,
+            dialog: false
         }
     },
     methods: {

@@ -33,7 +33,6 @@
           </v-select>
           <dialogCreateCategoriaComponent
             :SnackBarOptions="SnackBarOptions"
-            :sucessMessage="sucessMessage"
             :getAllCategoryes="getAllCategoryes"
             :dialog="dialog"
           />

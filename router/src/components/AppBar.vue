@@ -31,10 +31,10 @@
                         <v-list nav dense>
                             <v-list-item-group v-model="group" active-class="deep-purple--text text--accent-4">
                                 <div v-for="(routerLink, index) in routerlinks" :key="index">
-                                    <router-link :to="routerLink.Routerlink" style="text-decoration: none; color: inherit;" exact>
+                                    <router-link :to="routerLink.Routerlink" style="text-decoration: none; color: inherit;" >
                                         <v-list-item>
                                             <v-list-item-icon>
-                                                <v-icon>mdi-{{routerLink.icon}}</v-icon>
+                                                <v-icon>{{routerLink.icon}}</v-icon>
                                             </v-list-item-icon>
                                             <v-list-item-title>{{routerLink.nome}}</v-list-item-title>
                                         </v-list-item>
@@ -85,13 +85,18 @@ export default {
         },
         routerlinks: [{
                 nome: "Página inicial",
-                icon: "home",
+                icon: "mdi-home",
                 Routerlink: "/"
             },
             {
                 nome: "Produtos",
-                icon: "view-dashboard",
+                icon: "mdi-view-dashboard",
                 Routerlink: "/produtos"
+            },
+            {
+                nome: "Categorias",
+                icon: "mdi-view-dashboard",
+                Routerlink: "/categorias"
             }
         ]
 

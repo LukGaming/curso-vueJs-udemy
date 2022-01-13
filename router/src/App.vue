@@ -19,7 +19,7 @@ Appbar
             },
             {
                 nome: "Produtos",
-                icon: "view-dashboard",
+                icon: "mdi-view-dashboard",
                 Routerlink: "/produtos"
             }
         ]

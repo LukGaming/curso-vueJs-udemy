@@ -20,12 +20,13 @@ import {
 export default {
     data() {
         return {
-
+            preco: 9.99,
+            quantidade: 3
         }
     },
     computed: {
 
-        ...mapGetters({quantidade: 'quantidade', valor: 'valor'})
+        // ...mapGetters({quantidade: 'quantidade', preco: 'valor'})
     }
 }
 </script>
