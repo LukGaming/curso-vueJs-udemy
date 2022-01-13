@@ -51,7 +51,7 @@ export default {
     props: {
         dialog: Boolean,
         getAllCategoryes: Function,
-        snackbar: Boolean,
+        SnackBarOptions: Object,
         sucessMessage: String
     },
     data() {

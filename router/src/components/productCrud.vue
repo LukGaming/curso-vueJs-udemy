@@ -32,7 +32,7 @@
           <v-select v-model="select" :items="nome_categorias" label="Categoria">
           </v-select>
           <dialogCreateCategoriaComponent
-            :snackbar="snackbar"
+            :SnackBarOptions="SnackBarOptions"
             :sucessMessage="sucessMessage"
             :getAllCategoryes="getAllCategoryes"
             :dialog="dialog"
