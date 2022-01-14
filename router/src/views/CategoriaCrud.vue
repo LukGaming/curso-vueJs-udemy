@@ -57,6 +57,7 @@ import getCategoryByid from '../modules/categorias/getCategoryByid'
 import submit from '../modules/categorias/submit'
 import deleteCategory from '../modules/categorias/deleteCategory'
 import validations from '../modules/categorias/validations'
+/*Funções das categorias*/
 import CriadorCategoriaComponent from '../components/CriadorCategoriaComponent.vue'
 
 export default {
@@ -97,7 +98,7 @@ export default {
             this.method = "show"
             this.inputsDisabled = true
             this.id = this.$route.params.id
-            this.getCategoryByid();
+            this.getCategoryByid()
         }
     },
     methods: {
@@ -105,7 +106,6 @@ export default {
         ...getCategoryByid,
         ...submit,
         ...deleteCategory,
-        
     },
     ...validations
 }

@@ -35,7 +35,7 @@ export default {
       set(value) {
         this.$store.commit("setPreco", value);
       },
-    },
+    },  
   },
 };
 </script>

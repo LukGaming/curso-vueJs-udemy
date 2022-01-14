@@ -94,10 +94,10 @@ export default {
 </script>
 
 <style>
-.borda-login {
+/* .borda-login {
   margin-left: 30%;
   margin-right: 30%;
-}
+} */
 
 .container-color {
   border-radius: 15px;
