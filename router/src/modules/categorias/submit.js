@@ -7,13 +7,14 @@ export default {
             if (this.method == "create") {
                 this.$http.post(`api/categorias`, {
                     nome_categoria: this.nome_categoria,
+                    user_id: localStorage.getItem('user_Id')
                 }).then(res => {
-                    console.log(res)
                     this.categoriaExists = false
                     this.v$.$reset()
                     this.snackbar = true
                     this.messageSnackBar = "Categoria Criada com sucesso!"
                     this.nome_categoria = ""
+                    return res
                 }).catch(error => {
                     this.categoriaExists = true
                     return error;

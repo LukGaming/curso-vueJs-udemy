@@ -40,9 +40,7 @@
             </v-dialog>
           </v-toolbar>
         </template>
-        
         <template v-slot:item.actions="{ item }">
-            
           <router-link :to="`/categorias/${item.id_categoria}/edit`">
             <v-icon small class="mr-2"> mdi-pencil </v-icon>
           </router-link>
@@ -50,7 +48,11 @@
             mdi-delete
           </v-icon>
         </template>
-        
+        <template v-slot:item.user_data="{ item }">
+          <router-link :to="`/usuarios/${item.user_data.id}`">
+            {{ item.user_data.name }}</router-link
+          >
+        </template>
       </v-data-table>
       <SnackBarMessageComponent :SnackBarOptions="SnackBarOptions" />
     </v-container>
@@ -59,6 +61,8 @@
 
 <script>
 import SnackBarMessageComponent from "../utils/SnackBarMessageComponent.vue";
+import getAllCategories from "../modules/categorias/getAllCategories";
+import get_user_data from "../modules/user/get_user_data";
 export default {
   components: {
     SnackBarMessageComponent,
@@ -84,9 +88,9 @@ export default {
       },
       {
         text: "Usuário Criador da Categoria",
-        value: "criador_categoria",
+        value: "user_data",
+        sortable: false,
       },
-
       {
         text: "Ações",
         value: "actions",
@@ -132,22 +136,9 @@ export default {
         return res;
       });
     },
-    getAllCategories() {
-      this.desserts = [];
-      this.$http("api/categorias").then((res) => {
-        for (let i = 0; i < res.data.data.length; i++) {
-            //Pegando Dados do usuário criador da categoria
-
-          this.desserts.push({
-            id_categoria: res.data.data[i].id,
-            nome_categoria: res.data.data[i].nome_categoria,
-            criador_categoria: res.data.data[i].user_id, //Trocar depois pro nome do usuário
-          });
-        }
-      });
-    },
+    ...get_user_data,
+    ...getAllCategories,
   },
-
   created() {
     // if(!this.$session.exists()){
     //      this.$router.push('/login')
