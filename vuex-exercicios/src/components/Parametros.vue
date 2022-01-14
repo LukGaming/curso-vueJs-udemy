@@ -1,39 +1,48 @@
 <template>
-<Painel titulo="Parâmetros" vermelho>
+  <Painel titulo="Parâmetros" vermelho>
     <div class="parametros">
-        <span>
-            <strong>Quantidade Padrão: </strong>
-            <input type="number" v-model="quantidade">
-        </span>
-        <span>
-            <strong>Preço Padrão: </strong>
-            <input type="number" v-model="preco">
-        </span>
+      <span>
+        <strong>Quantidade Padrão: </strong>
+        <input type="number" v-model="quantidade" />
+      </span>
+      <span>
+        <strong>Preço Padrão: </strong>
+        <input type="number" v-model="preco" />
+      </span>
     </div>
-</Painel>
+  </Painel>
 </template>
 
 <script>
-import {
-    mapGetters
-} from 'vuex'
+import { mapGetters } from "vuex";
 export default {
-    data() {
-        return {
-            preco: 9.99,
-            quantidade: 3
-        }
+  data() {
+    return {};
+  },
+  computed: {
+    quantidade: {
+      get() {
+        return this.$store.getters.quantidade;
+      },
+      set(value) {
+        this.$store.commit("setQuantidade", value);
+      },
     },
-    computed: {
-
-        // ...mapGetters({quantidade: 'quantidade', preco: 'valor'})
-    }
-}
+    preco: {
+      get() {
+        return this.$store.getters.preco;
+      },
+      set(value) {
+        this.$store.commit("setPreco", value);
+      },
+    },
+  },
+};
 </script>
 
 <style>
 .parametros {
-    display: flex;
-    justify-content: space-around;
+  display: flex;
+  justify-content: space-around;
 }
 </style>
