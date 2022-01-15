@@ -1,10 +1,16 @@
 export default{
     editarProduto() {
         this.loading = true;
+        for(let i=0; i<this.categorias.data.length; i++){
+            if(this.categorias.data[i].nome_categoria == this.select){
+                this.nova_categoria = this.categorias.data[i].id
+            }
+        }
         this.$http.patch(`api/produtos/${this.id}`, {
             nome: this.nome,
             valor: this.valor,
-            descricao: this.descricao
+            descricao: this.descricao,
+            id_categoria: this.nova_categoria
         }).then(res => {
             this.v$.$reset()
             setTimeout(() => {

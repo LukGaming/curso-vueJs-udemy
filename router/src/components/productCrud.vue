@@ -127,6 +127,7 @@ export default {
             select: [],
             nome_categorias: [],
             categorias: [],
+            nova_categoria: '',
             money: {
                 decimal: ',',
                 thousands: '.',

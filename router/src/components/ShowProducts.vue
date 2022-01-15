@@ -1,4 +1,4 @@
-<template lang="">
+<template >
 <div>
 
     <v-data-table :headers="headers" :items="desserts" sort-by="calories" class="elevation-1">
@@ -7,13 +7,11 @@
                 <v-toolbar-title>Produtos</v-toolbar-title>
                 <v-divider class="mx-4" inset vertical></v-divider>
                 <v-spacer></v-spacer>
-
                 <template>
                     <router-link to="/produtos/create">
                         <v-btn elevation="2" color="primary" class="ml-4">Novo Produto</v-btn>
                     </router-link>
                 </template>
-
                 <v-dialog v-model="dialogDelete" max-width="600px">
                     <v-card>
                         <v-card-title class="text-h5">Tem certeza que deseja deletar este Produto?</v-card-title>
@@ -27,6 +25,14 @@
                 </v-dialog>
             </v-toolbar>
         </template>
+        <template v-slot:item.user_data="{ item }">
+            <div class="d-flex justify-center">
+                <router-link :to="`/usuarios/${item.user_data.id}`">
+                {{item.user_data.name}}
+                </router-link>
+                 </div>
+            </template>
+          
         <template v-slot:item.actions="{ item }">
             <router-link :to="{ path: `/produtos/${item.id}/edit` }">
                 <v-icon small class="mr-2" @click="editItem(item)">
@@ -61,8 +67,8 @@
 </template>
 
 <script>
-import listaDeProdutos from '../modules/produtos/listaDeProdutos'
-import get_user_data from '../modules/user/get_user_data';
+import listaDeProdutos from "../modules/produtos/listaDeProdutos";
+import get_user_data from "../modules/user/get_user_data";
 export default {
   components: {},
   data: () => ({
@@ -74,7 +80,6 @@ export default {
       {
         text: "Id do Produto",
         align: "start",
-        sortable: true,
         value: "id",
       },
       {
@@ -140,9 +145,7 @@ export default {
     ...listaDeProdutos,
     ...get_user_data,
     initialize() {
-      this.desserts = [
-       
-      ];
+      this.desserts = [];
     },
 
     editItem(item) {
