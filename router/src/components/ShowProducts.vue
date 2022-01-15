@@ -61,164 +61,144 @@
 </template>
 
 <script>
+import listaDeProdutos from '../modules/produtos/listaDeProdutos'
+import get_user_data from '../modules/user/get_user_data';
 export default {
-    components: {
-
+  components: {},
+  data: () => ({
+    snackbar: false,
+    messageSnackBar: "",
+    dialog: false,
+    dialogDelete: false,
+    headers: [
+      {
+        text: "Id do Produto",
+        align: "start",
+        sortable: true,
+        value: "id",
+      },
+      {
+        text: "Nome",
+        value: "nome",
+      },
+      {
+        text: "valor",
+        value: "valor",
+      },
+      {
+        text: "Usuario criador do Produto",
+        value: "user_data",
+      },
+      {
+        text: "Ações",
+        value: "actions",
+        sortable: false,
+      },
+    ],
+    desserts: [],
+    editedIndex: -1,
+    editedItem: {
+      name: "",
+      calories: 0,
+      fat: 0,
+      carbs: 0,
+      protein: 0,
     },
-    data: () => ({
-        snackbar: false,
-        messageSnackBar: "",
-        dialog: false,
-        dialogDelete: false,
-        headers: [{
-                text: 'Id do Produto',
-                align: 'start',
-                sortable: true,
-                value: 'id',
-            },
-            {
-                text: 'Nome',
-                value: 'nome'
-            },
-            {
-                text: 'valor',
-                value: 'valor'
-            },
+    defaultItem: {
+      name: "",
+      calories: 0,
+      fat: 0,
+      carbs: 0,
+      protein: 0,
+    },
+  }),
 
-            {
-                text: 'Ações',
-                value: 'actions',
-                sortable: false
-            },
-        ],
-        desserts: [],
-        editedIndex: -1,
-        editedItem: {
-            name: '',
-            calories: 0,
-            fat: 0,
-            carbs: 0,
-            protein: 0,
-        },
-        defaultItem: {
-            name: '',
-            calories: 0,
-            fat: 0,
-            carbs: 0,
-            protein: 0,
-        },
-    }),
+  computed: {
+    formTitle() {
+      return this.editedIndex === -1 ? "New Item" : "Edit Item";
+    },
+  },
 
-    computed: {
-        formTitle() {
-            return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
-        },
+  watch: {
+    dialog(val) {
+      val || this.close();
+    },
+    dialogDelete(val) {
+      val || this.closeDelete();
+    },
+  },
+  created() {
+    // if (!this.$session.exists()) {
+    //     this.$router.push('/login')
+    // }
+    this.initialize();
+
+    this.listaDeProdutos();
+  },
+
+  methods: {
+    ...listaDeProdutos,
+    ...get_user_data,
+    initialize() {
+      this.desserts = [
+       
+      ];
     },
 
-    watch: {
-        dialog(val) {
-            val || this.close()
-        },
-        dialogDelete(val) {
-            val || this.closeDelete()
-        },
-    },
-    created() {
-
-        // if (!this.$session.exists()) {
-        //     this.$router.push('/login')
-        // }
-        this.initialize()
-
-        this.listaDeProdutos()
-
+    editItem(item) {
+      this.editedIndex = this.desserts.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      this.dialog = true;
     },
 
-    methods: {
-        listaDeProdutos() {
-
-            this.desserts = []
-            this.$http("api/produtos"
-            ).then((res) => {
-                for (let i = 0; i < res.data.data.length; i++) {
-                    this.desserts.push({
-                        id: res.data.data[i].id,
-                        ...res.data.data[i],
-                    })
-                }
-              return res
-            });
-        },
-        initialize() {
-            this.desserts = [{
-                    name: 'Frozen Yogurt',
-                    calories: 159,
-                    fat: 6.0,
-                    carbs: 24,
-                    protein: 4.0,
-                },
-
-            ]
-        },
-
-        editItem(item) {
-
-            this.editedIndex = this.desserts.indexOf(item)
-            this.editedItem = Object.assign({}, item)
-            this.dialog = true
-        },
-
-        deleteItem(item) {
-
-            this.editedIndex = this.desserts.indexOf(item)
-            this.editedItem = Object.assign({}, item)
-            this.dialogDelete = true
-        },
-
-        deleteItemConfirm(id) {
-            //Apagar Produto do banco de dados aqui!
-            this.$http.delete(`api/produtos/${id}`).then(res => {
-                this.listaDeProdutos()
-                return res
-            })
-            this.snackbar = true
-            this.messageSnackBar = "Produto excluido com sucesso!"
-            setInterval(() => {
-                if (this.snackbar == true) {
-                    this.snackbar = false
-                }
-            }, 5000);
-            this.closeDelete()
-        },
-
-        close() {
-            this.dialog = false
-            this.$nextTick(() => {
-                this.editedItem = Object.assign({}, this.defaultItem)
-                this.editedIndex = -1
-            })
-        },
-
-        closeDelete() {
-            this.dialogDelete = false
-            this.$nextTick(() => {
-                this.editedItem = Object.assign({}, this.defaultItem)
-                this.editedIndex = -1
-            })
-        },
-
-        save() {
-            if (this.editedIndex > -1) {
-                Object.assign(this.desserts[this.editedIndex], this.editedItem)
-            } else {
-                this.desserts.push(this.editedItem)
-            }
-            this.close()
-        },
+    deleteItem(item) {
+      this.editedIndex = this.desserts.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      this.dialogDelete = true;
     },
-}
+    deleteItemConfirm(id) {
+      //Apagar Produto do banco de dados aqui!
+      this.$http.delete(`api/produtos/${id}`).then((res) => {
+        this.listaDeProdutos();
+        return res;
+      });
+      this.snackbar = true;
+      this.messageSnackBar = "Produto excluido com sucesso!";
+      setInterval(() => {
+        if (this.snackbar == true) {
+          this.snackbar = false;
+        }
+      }, 5000);
+      this.closeDelete();
+    },
+
+    close() {
+      this.dialog = false;
+      this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedIndex = -1;
+      });
+    },
+
+    closeDelete() {
+      this.dialogDelete = false;
+      this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedIndex = -1;
+      });
+    },
+
+    save() {
+      if (this.editedIndex > -1) {
+        Object.assign(this.desserts[this.editedIndex], this.editedItem);
+      } else {
+        this.desserts.push(this.editedItem);
+      }
+      this.close();
+    },
+  },
+};
 </script>
 
 <style lang="">
-
 </style>
