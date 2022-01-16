@@ -12,6 +12,7 @@ export default{
             descricao: this.descricao,
             id_categoria: this.nova_categoria
         }).then(res => {
+            console.log(res)
             this.v$.$reset()
             setTimeout(() => {
                 this.SnackBarOptions.snackbar = true;
