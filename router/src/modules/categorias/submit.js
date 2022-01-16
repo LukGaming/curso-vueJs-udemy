@@ -7,7 +7,7 @@ export default {
             if (this.method == "create") {
                 this.$http.post(`api/categorias`, {
                     nome_categoria: this.nome_categoria,
-                    user_id: localStorage.getItem('id')
+                    user_id: localStorage.getItem('Id')
                 }).then(res => {
                     this.categoriaExists = false
                     this.v$.$reset()

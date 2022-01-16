@@ -1,14 +1,14 @@
 export default {
     criar_categoria() {
         this.$http.post(`api/categorias`, {
-            id: null,
             nome_categoria: this.nova_categoria,
-            // User_Id_Creator: this.$session.get('userId')
+            user_id: localStorage.getItem('Id')
         }).then(res => {
             this.existe_categoria = false
             this.dialog = false;
             this.SnackBarOptions.snackbarMessage = "Categoria Criada com sucesso"
             this.SnackBarOptions.snackbar = true
+            this.select = this.nova_categoria
             this.nova_categoria = ""
             this.getAllCategoryes()
             return res;
