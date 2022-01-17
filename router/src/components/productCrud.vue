@@ -11,7 +11,7 @@
       <!-- Snack bar é a mensagem depois que o produto for criado ou editado -->
       <SnackBarMessageComponent :SnackBarOptions="SnackBarOptions" />
 
-      <v-form  lazy-validation class="mx-16">
+      <v-form lazy-validation class="mx-16">
         <v-text-field v-model="nome" label="Nome" :readonly="inputsDisabled">
         </v-text-field>
         <div v-if="v$.nome.$error">
@@ -54,14 +54,46 @@
             Caracteres</v-alert
           >
         </div>
-
+        <div class="d-flex justify-center">
+          <v-row class="d-flex justify-center">
+            <v-col
+              v-for="image in imagens"
+              :key="image.id"
+              class="d-flex child-flex mb-16"
+              cols="1"
+            >
+              <div class="imagens">
+                <v-icon  @click="removerImagem(image.id)"> mdi-delete </v-icon>
+                <v-img
+                  :src="`http://localhost:8000/${image.caminho_imagem_produto}`"
+                  aspect-ratio="1"
+                  class="grey lighten-2"
+                >
+                  <template v-slot:placeholder>
+                    <v-row
+                      class="fill-height ma-0"
+                      align="center"
+                      justify="center"
+                    >
+                      <v-progress-circular
+                        indeterminate
+                        color="grey lighten-5"
+                      ></v-progress-circular>
+                    </v-row>
+                  </template>
+                </v-img>
+              </div>
+              
+            </v-col>
+          </v-row>
+        </div>
         <div v-if="method == 'create'">
           <v-file-input
             label="Imagens para o Produto"
             filled
             multiple
             prepend-icon="mdi-camera"
-           v-model="imagens"
+            v-model="imagens"
           ></v-file-input>
           <!-- <input type="file" enctype="multipart/form-data" ref="file" multiple /> -->
 
@@ -103,14 +135,14 @@ import resetForm from "../modules/produtos/resetForm.js";
 import getProductByID from "../modules/produtos/getProductByID.js";
 import editarProduto from "../modules/produtos/editarProduto.js";
 import excluirProduto from "../modules/produtos/excluirProduto.js";
-import submit_product_images from '../modules/produtos/submit_product_images.js';
+import submit_product_images from "../modules/produtos/submit_product_images.js";
+import removerImagem from '../modules/produtos/removerImagem.js'
 // Importação dos methods
 import validations from "../modules/produtos/validations.js";
 import useVuelidate from "@vuelidate/core";
 import dialogCreateCategoriaComponent from "../components/dialogCreateCategoriaComponent.vue";
 import useCurrencyInput from "vue-currency-input";
 import VMoney from "v-money";
-
 
 export default {
   directives: {
@@ -190,6 +222,7 @@ export default {
     ...editarProduto,
     ...excluirProduto,
     ...submit_product_images,
+    ...removerImagem,
   },
   ...validations,
 };
