@@ -11,7 +11,7 @@
       <!-- Snack bar é a mensagem depois que o produto for criado ou editado -->
       <SnackBarMessageComponent :SnackBarOptions="SnackBarOptions" />
 
-      <v-form ref="form" lazy-validation class="mx-16">
+      <v-form  lazy-validation class="mx-16">
         <v-text-field v-model="nome" label="Nome" :readonly="inputsDisabled">
         </v-text-field>
         <div v-if="v$.nome.$error">
@@ -54,7 +54,17 @@
             Caracteres</v-alert
           >
         </div>
+
         <div v-if="method == 'create'">
+          <v-file-input
+            label="Imagens para o Produto"
+            filled
+            multiple
+            prepend-icon="mdi-camera"
+           v-model="imagens"
+          ></v-file-input>
+          <!-- <input type="file" enctype="multipart/form-data" ref="file" multiple /> -->
+
           <v-btn
             color="primary"
             @click="submit"
@@ -85,101 +95,103 @@
 
 <script>
 //Importações de utils
-import SnackBarMessageComponent from '../utils/SnackBarMessageComponent.vue'
+import SnackBarMessageComponent from "../utils/SnackBarMessageComponent.vue";
 // Importação dos methods
-import submit from '../modules/produtos/submitProduct.js'
-import getAllCategoryes from '../modules/produtos/getAllCategoryes.js'
-import resetForm from '../modules/produtos/resetForm.js'
-import getProductByID from '../modules/produtos/getProductByID.js'
-import editarProduto from '../modules/produtos/editarProduto.js'
-import excluirProduto from '../modules/produtos/excluirProduto.js'
+import submit from "../modules/produtos/submitProduct.js";
+import getAllCategoryes from "../modules/produtos/getAllCategoryes.js";
+import resetForm from "../modules/produtos/resetForm.js";
+import getProductByID from "../modules/produtos/getProductByID.js";
+import editarProduto from "../modules/produtos/editarProduto.js";
+import excluirProduto from "../modules/produtos/excluirProduto.js";
+import submit_product_images from '../modules/produtos/submit_product_images.js';
 // Importação dos methods
-import validations from '../modules/produtos/validations.js'
-import useVuelidate from '@vuelidate/core'
-import dialogCreateCategoriaComponent from '../components/dialogCreateCategoriaComponent.vue'
-import useCurrencyInput from 'vue-currency-input'
-import VMoney from 'v-money'
+import validations from "../modules/produtos/validations.js";
+import useVuelidate from "@vuelidate/core";
+import dialogCreateCategoriaComponent from "../components/dialogCreateCategoriaComponent.vue";
+import useCurrencyInput from "vue-currency-input";
+import VMoney from "v-money";
+
 
 export default {
-    directives: {
-        money: VMoney
-    },
-    components: {
-        dialogCreateCategoriaComponent,
-        SnackBarMessageComponent
-    },
-    setup(props) {
-        const {
-            inputRef
-        } = useCurrencyInput(props.options)
-        return {
-            v$: useVuelidate(),
-            inputRef
-        };
-    },
-    data() {
-        return {
-            SnackBarOptions: {
-                snackbar: false,
-                snackbarMessage: ""
-            },
-            dialog: false,
-            select: [],
-            nome_categorias: [],
-            categorias: [],
-            nova_categoria: '',
-            money: {
-                decimal: ',',
-                thousands: '.',
-                precision: 2,
-                masked: false /* doesn't work with directive */
-            },
-            inputsDisabled: false,
-            loading: false,
-            colorSnackbar: "",
-            colorSnackbarText: "black",
-            error: "",
-            id: null,
-            nome: null,
-            valor: "",
-            descricao: "",
-            sucessMessage: "",
-            snackbar: false,
-            multiLine: true,
-            method: "create",
-            id_categoria: 0
-        };
-    },
-    props: {
-        options: Object
-    },
-    created() {
-        this.getAllCategoryes()
-        if (this.$route.name == "produto/create") {
-            //Em caso da rota ser Create, aparecer os inputs vazios
-            this.method = "create";
-        }
-        this.id = this.$route.params.id;
-        if (this.$route.name == "produto/read") {
-            this.method = "read";
-            this.getProductByID();
-            this.inputsDisabled = true
-        }
+  directives: {
+    money: VMoney,
+  },
+  components: {
+    dialogCreateCategoriaComponent,
+    SnackBarMessageComponent,
+  },
+  setup(props) {
+    const { inputRef } = useCurrencyInput(props.options);
+    return {
+      v$: useVuelidate(),
+      inputRef,
+    };
+  },
+  data() {
+    return {
+      SnackBarOptions: {
+        snackbar: false,
+        snackbarMessage: "",
+      },
+      dialog: false,
+      select: [],
+      nome_categorias: [],
+      categorias: [],
+      imagens: [],
+      nova_categoria: "",
+      money: {
+        decimal: ",",
+        thousands: ".",
+        precision: 2,
+        masked: false /* doesn't work with directive */,
+      },
+      inputsDisabled: false,
+      loading: false,
+      colorSnackbar: "",
+      colorSnackbarText: "black",
+      error: "",
+      id: null,
+      nome: null,
+      valor: "",
+      descricao: "",
+      sucessMessage: "",
+      snackbar: false,
+      multiLine: true,
+      method: "create",
+      id_categoria: 0,
+    };
+  },
+  props: {
+    options: Object,
+  },
+  created() {
+    this.getAllCategoryes();
+    if (this.$route.name == "produto/create") {
+      //Em caso da rota ser Create, aparecer os inputs vazios
+      this.method = "create";
+    }
+    this.id = this.$route.params.id;
+    if (this.$route.name == "produto/read") {
+      this.method = "read";
+      this.getProductByID();
+      this.inputsDisabled = true;
+    }
 
-        if (this.$route.name == "produto/edit") {
-            this.method = "edit";
-            this.getProductByID();
-        }
-    },
-    methods: {
-        ...submit,
-        ...getAllCategoryes,
-        ...resetForm,
-        ...getProductByID,
-        ...editarProduto,
-        ...excluirProduto,
-    },
-    ...validations,
+    if (this.$route.name == "produto/edit") {
+      this.method = "edit";
+      this.getProductByID();
+    }
+  },
+  methods: {
+    ...submit,
+    ...getAllCategoryes,
+    ...resetForm,
+    ...getProductByID,
+    ...editarProduto,
+    ...excluirProduto,
+    ...submit_product_images,
+  },
+  ...validations,
 };
 </script>
 

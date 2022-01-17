@@ -11,24 +11,28 @@ export default {
                         this.id_categoria = this.categorias.data[i].id
                     }
                 }
-                this.$http.post('api/produtos', {
-                    id: null,
+
+                var $produto = await this.$http.post('api/produtos', {
                     nome: this.nome,
                     valor: this.valor,
                     descricao: this.descricao,
                     // id_user_criador: this.$session.get('userId'),
                     id_categoria: this.id_categoria
-                }).then(res => {
-                    setTimeout(() => {
-                        this.v$.$reset()
-                        this.resetForm();
-                        this.loading = false
-                        this.SnackBarOptions.snackbarMessage = "Produto Criado com sucesso"
-                        this.SnackBarOptions.snackbar = true
-                        this.select = ""
-                    }, 1000);
-                    return res
-                })
+                });
+                setTimeout(() => {
+                    this.v$.$reset()
+                    // this.resetForm();
+                    this.loading = false
+                    this.SnackBarOptions.snackbarMessage = "Produto Criado com sucesso"
+                    this.SnackBarOptions.snackbar = true
+                    this.select = ""
+                    
+                }, 1000);
+                
+                this.id = $produto.data.produto.id
+                this.submit_product_images();
+                
+
             }
             return;
         }
