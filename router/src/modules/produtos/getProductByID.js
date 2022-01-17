@@ -6,8 +6,7 @@ export default {
         this.descricao = $produto.data.descricao
         var $categoria = await this.$http.get(`api/categorias/${$produto.data.id_categoria}`)
         this.select =  $categoria.data.nome_categoria
-        var $imagens_produto = await this.$http.get(`api/imagens/produtos/${$produto.data.id}`);
-        this.imagens = $imagens_produto.data.imagens_produto;
+        this.getImagesFromProduct();
         return;
     },
 }

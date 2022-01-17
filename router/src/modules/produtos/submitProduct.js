@@ -1,5 +1,6 @@
 export default {
     async submit() {
+       console.log( localStorage.getItem('Id'))
         if (this.method == "create") {
             const isFormCorrect = await this.v$.$validate()
             if (!isFormCorrect) {
@@ -11,12 +12,12 @@ export default {
                         this.id_categoria = this.categorias.data[i].id
                     }
                 }
-
+                
                 var $produto = await this.$http.post('api/produtos', {
                     nome: this.nome,
                     valor: this.valor,
                     descricao: this.descricao,
-                    // id_user_criador: this.$session.get('userId'),
+                    user_id: localStorage.getItem('Id'),
                     id_categoria: this.id_categoria
                 });
                 setTimeout(() => {

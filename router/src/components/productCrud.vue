@@ -137,6 +137,7 @@ import editarProduto from "../modules/produtos/editarProduto.js";
 import excluirProduto from "../modules/produtos/excluirProduto.js";
 import submit_product_images from "../modules/produtos/submit_product_images.js";
 import removerImagem from '../modules/produtos/removerImagem.js'
+import getImagesFromProduct from '../modules/produtos/getImagesFromProduct.js'
 // Importação dos methods
 import validations from "../modules/produtos/validations.js";
 import useVuelidate from "@vuelidate/core";
@@ -223,6 +224,7 @@ export default {
     ...excluirProduto,
     ...submit_product_images,
     ...removerImagem,
+    ...getImagesFromProduct
   },
   ...validations,
 };
