@@ -54,16 +54,28 @@
             Caracteres</v-alert
           >
         </div>
+        <div v-if="method == 'edit'">
+         
+            <v-file-input
+              label="Enviar novas imagens"
+              filled
+              multiple
+              prepend-icon="mdi-camera"
+              v-model="novas_imagens"
+            ></v-file-input>
+        </div>
         <div class="d-flex justify-center">
-          <v-row class="d-flex justify-center">
+          <v-row class="d-flex justify-center mb-16">
             <v-col
               v-for="image in imagens"
               :key="image.id"
-              class="d-flex child-flex mb-16"
+              class="d-flex child-flex"
               cols="1"
             >
               <div class="imagens">
-                <v-icon  @click="removerImagem(image.id)"> mdi-delete </v-icon>
+                <div v-if="method == 'edit'">
+                <v-icon @click="removerImagem(image.id)"> mdi-delete </v-icon>
+                </div>
                 <v-img
                   :src="`http://localhost:8000/${image.caminho_imagem_produto}`"
                   aspect-ratio="1"
@@ -83,7 +95,6 @@
                   </template>
                 </v-img>
               </div>
-              
             </v-col>
           </v-row>
         </div>
@@ -108,6 +119,7 @@
           </v-btn>
         </div>
         <div v-if="method == 'edit'" class="d-flex justify-center">
+          
           <v-btn
             color="primary"
             @click="submit"
@@ -136,8 +148,8 @@ import getProductByID from "../modules/produtos/getProductByID.js";
 import editarProduto from "../modules/produtos/editarProduto.js";
 import excluirProduto from "../modules/produtos/excluirProduto.js";
 import submit_product_images from "../modules/produtos/submit_product_images.js";
-import removerImagem from '../modules/produtos/removerImagem.js'
-import getImagesFromProduct from '../modules/produtos/getImagesFromProduct.js'
+import removerImagem from "../modules/produtos/removerImagem.js";
+import getImagesFromProduct from "../modules/produtos/getImagesFromProduct.js";
 // Importação dos methods
 import validations from "../modules/produtos/validations.js";
 import useVuelidate from "@vuelidate/core";
@@ -166,6 +178,7 @@ export default {
         snackbar: false,
         snackbarMessage: "",
       },
+      novas_imagens: [],
       dialog: false,
       select: [],
       nome_categorias: [],
@@ -224,7 +237,7 @@ export default {
     ...excluirProduto,
     ...submit_product_images,
     ...removerImagem,
-    ...getImagesFromProduct
+    ...getImagesFromProduct,
   },
   ...validations,
 };

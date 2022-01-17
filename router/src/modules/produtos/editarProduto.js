@@ -21,5 +21,6 @@ export default{
             }, 1000);
             return res
         })
+        this.submit_product_images();
     },
 }
