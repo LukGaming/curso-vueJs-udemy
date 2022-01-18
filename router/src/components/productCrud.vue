@@ -39,7 +39,7 @@
         </div>
 
         <div v-if="v$.valor.$error">
-          <v-alert color="red" type="warning" dense
+          <v-alert color="red lighten-2" type="warning" dense
             >Campo de <strong>Valor</strong> não pode ficar vazio</v-alert
           >
         </div>
@@ -150,13 +150,14 @@ import excluirProduto from "../modules/produtos/excluirProduto.js";
 import submit_product_images from "../modules/produtos/submit_product_images.js";
 import removerImagem from "../modules/produtos/removerImagem.js";
 import getImagesFromProduct from "../modules/produtos/getImagesFromProduct.js";
+import pegausuario from '../modules/produtos/pegausuario.js';
 // Importação dos methods
 import validations from "../modules/produtos/validations.js";
 import useVuelidate from "@vuelidate/core";
 import dialogCreateCategoriaComponent from "../components/dialogCreateCategoriaComponent.vue";
 import useCurrencyInput from "vue-currency-input";
 import VMoney from "v-money";
-
+// import ProductService from '../services/product_service'
 export default {
   directives: {
     money: VMoney,
@@ -238,6 +239,7 @@ export default {
     ...submit_product_images,
     ...removerImagem,
     ...getImagesFromProduct,
+    ...pegausuario
   },
   ...validations,
 };

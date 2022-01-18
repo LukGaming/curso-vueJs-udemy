@@ -12,12 +12,15 @@ export default {
             });
         }
         var $user_data = []
+        //    var  $usuarios = this.pegausuario($usuarios_criadores);
+        // console.log($usuarios)
         for (let i = 0; i < $usuarios_criadores.length; i++) {
-            $user_data.push(await this.get_user_data($usuarios_criadores[i]));
+            $user_data.push(this.get_user_data($usuarios_criadores[i]));
         }
+
         for (let i = 0; i < $usuarios_criadores.length; i++) {
             this.desserts[i].user_data = $user_data[i];
         }
-        
+
     }
 }

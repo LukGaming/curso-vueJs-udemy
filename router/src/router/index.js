@@ -7,6 +7,7 @@ import Login from '../views/Login'
 import Register from '../views/Register'
 import Categorias from '../views/Categorias'
 import CategoriaCrud from '../views/CategoriaCrud'
+
 Vue.use(Router)
 
 export default new Router({
@@ -66,6 +67,7 @@ export default new Router({
     name: 'categoria/show',
     component: CategoriaCrud
   }
+
 ]
 })
 
