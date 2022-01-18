@@ -37,6 +37,18 @@
             :dialog="dialog"
           />
         </div>
+        <v-col cols="12" sm="6">
+          <div class="col-2">
+            <v-select
+              v-model="value"
+              :items="items"
+              attach
+              chips
+              label="%"
+              multiple
+            ></v-select>
+          </div>
+        </v-col>
 
         <div v-if="v$.valor.$error">
           <v-alert color="red lighten-2" type="warning" dense
@@ -55,14 +67,13 @@
           >
         </div>
         <div v-if="method == 'edit'">
-         
-            <v-file-input
-              label="Enviar novas imagens"
-              filled
-              multiple
-              prepend-icon="mdi-camera"
-              v-model="novas_imagens"
-            ></v-file-input>
+          <v-file-input
+            label="Enviar novas imagens"
+            filled
+            multiple
+            prepend-icon="mdi-camera"
+            v-model="novas_imagens"
+          ></v-file-input>
         </div>
         <div class="d-flex justify-center">
           <v-row class="d-flex justify-center mb-16">
@@ -74,7 +85,7 @@
             >
               <div class="imagens">
                 <div v-if="method == 'edit'">
-                <v-icon @click="removerImagem(image.id)"> mdi-delete </v-icon>
+                  <v-icon @click="removerImagem(image.id)"> mdi-delete </v-icon>
                 </div>
                 <v-img
                   :src="`http://localhost:8000/${image.caminho_imagem_produto}`"
@@ -119,7 +130,6 @@
           </v-btn>
         </div>
         <div v-if="method == 'edit'" class="d-flex justify-center">
-          
           <v-btn
             color="primary"
             @click="submit"
@@ -150,7 +160,7 @@ import excluirProduto from "../modules/produtos/excluirProduto.js";
 import submit_product_images from "../modules/produtos/submit_product_images.js";
 import removerImagem from "../modules/produtos/removerImagem.js";
 import getImagesFromProduct from "../modules/produtos/getImagesFromProduct.js";
-import pegausuario from '../modules/produtos/pegausuario.js';
+import pegausuario from "../modules/produtos/pegausuario.js";
 // Importação dos methods
 import validations from "../modules/produtos/validations.js";
 import useVuelidate from "@vuelidate/core";
@@ -239,7 +249,7 @@ export default {
     ...submit_product_images,
     ...removerImagem,
     ...getImagesFromProduct,
-    ...pegausuario
+    ...pegausuario,
   },
   ...validations,
 };

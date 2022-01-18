@@ -112,6 +112,7 @@
         <SnackBarMessageComponent :SnackBarOptions="SnackBarOptions" />
       </v-main>
     </v-app>
+    
   </div>
 </template>
 
