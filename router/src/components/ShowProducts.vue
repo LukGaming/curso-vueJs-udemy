@@ -149,11 +149,24 @@ export default {
     //     this.$router.push('/login')
     // }
     this.initialize();
-
-    this.listaDeProdutos();
+    // this.listaDeProdutos();
     var produtos = new ProductService(this.$http);
-    this.produtos = await produtos.listAllProducts();
-    console.log(this.produtos);
+    this.desserts = await produtos.listProductsAndUsers()
+    // this.produtos = await produtos.listAllProducts();
+
+    // var $usuarios_criadores = [];
+    // for (let i = 0; i < this.produtos.data.data.length; i++) {
+    //   $usuarios_criadores.push(this.produtos.data.data[i].id_user_criador);
+    //   this.desserts.push({
+    //     id: this.produtos.data.data[i].id,
+    //     user_data: "",
+    //     ...this.produtos.data.data[i],
+    //   });
+    // }
+    // for (let i = 0; i < $usuarios_criadores.length; i++) {
+    //   let user_data = await produtos.listUser($usuarios_criadores[i]);
+    //   this.desserts[i].user_data =  user_data.data
+    // }
   },
   methods: {
     ...listaDeProdutos,
