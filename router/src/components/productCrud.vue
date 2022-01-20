@@ -22,7 +22,6 @@
         <div class="valor">
           Preço R$:
           <money
-         
             v-model="valor"
             v-bind="money"
             :readonly="inputsDisabled"
@@ -76,39 +75,43 @@
             v-model="novas_imagens"
           ></v-file-input>
         </div>
-        <div class="d-flex justify-center">
-          <v-row class="d-flex justify-center mb-16">
-            <v-col
-              v-for="image in imagens"
-              :key="image.id"
-              class="d-flex child-flex"
-              cols="1"
-            >
-              <div class="imagens">
-                <div v-if="method == 'edit'">
-                  <v-icon @click="removerImagem(image.id)"> mdi-delete </v-icon>
+        <div v-if="method == 'edit'">
+          <div class="d-flex justify-center">
+            <v-row class="d-flex justify-center mb-16">
+              <v-col
+                v-for="image in imagens"
+                :key="image.id"
+                class="d-flex child-flex"
+                cols="1"
+              >
+                <div class="imagens">
+                  <div v-if="method == 'edit'">
+                    <v-icon @click="removerImagem(image.id)">
+                      mdi-delete
+                    </v-icon>
+                  </div>
+                  <v-img
+                    :src="`http://localhost:8000/${image.caminho_imagem_produto}`"
+                    aspect-ratio="1"
+                    class="grey lighten-2"
+                  >
+                    <template v-slot:placeholder>
+                      <v-row
+                        class="fill-height ma-0"
+                        align="center"
+                        justify="center"
+                      >
+                        <v-progress-circular
+                          indeterminate
+                          color="grey lighten-5"
+                        ></v-progress-circular>
+                      </v-row>
+                    </template>
+                  </v-img>
                 </div>
-                <v-img
-                  :src="`http://localhost:8000/${image.caminho_imagem_produto}`"
-                  aspect-ratio="1"
-                  class="grey lighten-2"
-                >
-                  <template v-slot:placeholder>
-                    <v-row
-                      class="fill-height ma-0"
-                      align="center"
-                      justify="center"
-                    >
-                      <v-progress-circular
-                        indeterminate
-                        color="grey lighten-5"
-                      ></v-progress-circular>
-                    </v-row>
-                  </template>
-                </v-img>
-              </div>
-            </v-col>
-          </v-row>
+              </v-col>
+            </v-row>
+          </div>
         </div>
         <div v-if="method == 'create'">
           <v-file-input
@@ -117,9 +120,16 @@
             multiple
             prepend-icon="mdi-camera"
             v-model="imagens"
+            @change="preview_images"
           ></v-file-input>
-          <!-- <input type="file" enctype="multipart/form-data" ref="file" multiple /> -->
-
+          <div
+            v-for="image in imagePreview"
+            :key="image.nome"
+            class="d-flex child-flex"
+            cols="1"
+          >
+            <img :src="image" alt="" />
+          </div>
           <!-- <v-btn
             color="primary"
             @click="submit"
@@ -140,7 +150,7 @@
           </v-btn>
         </div>
         <div v-if="method == 'edit'" class="d-flex justify-center">
-          <v-btn
+          <!-- <v-btn
             color="primary"
             @click="submit"
             class="mx-10"
@@ -150,6 +160,12 @@
           </v-btn>
           <v-btn color="warning" @click="excluirProduto" class="mx-10">
             Excluir Produto
+          </v-btn> -->
+          <v-btn @click="submit" class="mx-10 wrapper gold" :loading="loading">
+            Salvar Alterações
+          </v-btn>
+          <v-btn @click="excluirProduto" class="wrapper gold mx-10">
+            Excluir Produto
           </v-btn>
         </div>
       </v-form>
@@ -158,7 +174,6 @@
 </template>
 
 <script>
-
 import SnackBarMessageComponent from "../utils/SnackBarMessageComponent.vue";
 
 import submit from "../modules/produtos/submitProduct.js";
@@ -200,6 +215,7 @@ export default {
         snackbarMessage: "",
       },
       novas_imagens: [],
+      imagePreview: [],
       dialog: false,
       select: [],
       nome_categorias: [],
@@ -250,6 +266,23 @@ export default {
     }
   },
   methods: {
+    preview_images(e) {
+      for (let i = 0; i < e.length; i++) {
+        let images = e[i];
+        let reader = new FileReader();
+        reader.readAsDataURL(images);
+        reader.onload = (e) => {
+          this.adiciona_fotos(e.target.result);
+          return e;
+        };
+      }
+
+      return e;
+    },
+    adiciona_fotos(event) {
+      this.imagePreview.push(event);
+      console.log(this.imagePreview);
+    },
     ...submit,
     ...getAllCategoryes,
     ...resetForm,
