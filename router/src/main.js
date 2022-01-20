@@ -7,6 +7,7 @@ import "./plugins/filters.js"
 import "./plugins/session.js"
 import 'animate.css';
 import './plugins/money.js'
+import './utils/button_gold.css';
 Vue.config.productionTip = false
 
 new Vue({

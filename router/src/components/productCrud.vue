@@ -22,10 +22,11 @@
         <div class="valor">
           Preço R$:
           <money
+         
             v-model="valor"
             v-bind="money"
             :readonly="inputsDisabled"
-            class="my-4 moeda"
+            class="my-4 moeda text--light"
           ></money>
         </div>
         <div class="d-flex">
@@ -119,12 +120,21 @@
           ></v-file-input>
           <!-- <input type="file" enctype="multipart/form-data" ref="file" multiple /> -->
 
-          <v-btn
+          <!-- <v-btn
             color="primary"
             @click="submit"
             class="mt-10"
             :loading="loading"
             :disabled="inputsDisabled"
+          >
+            Cadastrar Produto
+          </v-btn> -->
+          <v-btn
+            @click="submit"
+            :loading="loading"
+            :disabled="inputsDisabled"
+            depressed
+            class="wrapper gold mt-10"
           >
             Cadastrar Produto
           </v-btn>
@@ -267,5 +277,6 @@ export default {
 
 .valor {
   font-size: 1.2rem;
+  color: white;
 }
 </style>
