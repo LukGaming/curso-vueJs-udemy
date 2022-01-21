@@ -217,7 +217,6 @@ export default {
         this.editedIndex = -1;
       });
     },
-
     save() {
       if (this.editedIndex > -1) {
         Object.assign(this.desserts[this.editedIndex], this.editedItem);

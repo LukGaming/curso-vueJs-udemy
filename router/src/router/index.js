@@ -7,13 +7,13 @@ import Login from '../views/Login'
 import Register from '../views/Register'
 import Categorias from '../views/Categorias'
 import CategoriaCrud from '../views/CategoriaCrud'
-
+import Perfil from '../views/Perfil'
 Vue.use(Router)
 
 export default new Router({
-  
+
   mode: 'history',
-  routes:[{
+  routes: [{
     path: '/',
     name: 'Home',
     component: Home
@@ -27,12 +27,12 @@ export default new Router({
     path: '/produtos/create',
     name: 'produto/create',
     component: ProdutosCrud
-  },{
+  }, {
     path: '/produtos/:id/edit',
     name: 'produto/edit',
     component: ProdutosCrud
   }
-  ,{
+    , {
     path: '/produtos/:id',
     name: 'produto/read',
     component: ProdutosCrud
@@ -66,8 +66,12 @@ export default new Router({
     path: '/categorias/:id',
     name: 'categoria/show',
     component: CategoriaCrud
+  },
+  {
+    path: '/perfil',
+    name: 'perfil',
+    component: Perfil
   }
-
-]
+  ]
 })
 
