@@ -37,18 +37,7 @@
             :dialog="dialog"
           />
         </div>
-        <v-col cols="12" sm="6">
-          <div class="col-2">
-            <v-select
-              v-model="value"
-              :items="items"
-              attach
-              chips
-              label="%"
-              multiple
-            ></v-select>
-          </div>
-        </v-col>
+        
 
         <div v-if="v$.valor.$error">
           <v-alert color="red lighten-2" type="warning" dense
@@ -122,14 +111,40 @@
             v-model="imagens"
             @change="preview_images"
           ></v-file-input>
-          <div
-            v-for="image in imagePreview"
-            :key="image.nome"
-            class="d-flex child-flex"
-            cols="1"
-          >
-            <img :src="image" alt="" />
+
+          <!--Preview Images-->
+          <div class="d-flex justify-center">
+            <v-row class="d-flex justify-center mb-16">
+              <v-col
+                v-for="(image, index) in imagePreview"
+                :key="image.id"
+                class="d-flex child-flex"
+                cols="1"
+              >
+                <div class="imagens">
+                  <v-icon @click="removerPreviewImage(index)">
+                    mdi-delete
+                  </v-icon>
+                  <v-img :src="image" aspect-ratio="1" class="grey lighten-2">
+                    <template v-slot:placeholder>
+                      <v-row
+                        class="fill-height ma-0"
+                        align="center"
+                        justify="center"
+                      >
+                        <v-progress-circular
+                          indeterminate
+                          color="grey lighten-5"
+                        ></v-progress-circular>
+                      </v-row>
+                    </template>
+                  </v-img>
+                </div>
+              </v-col>
+            </v-row>
           </div>
+          <!--Preview Images-->
+
           <!-- <v-btn
             color="primary"
             @click="submit"
@@ -276,12 +291,16 @@ export default {
           return e;
         };
       }
-
       return e;
+    },
+    removerPreviewImage(image) {
+      console.log(this.imagePreview);
+      this.imagePreview.splice(image, 1);
+      this.imagens.splice(image, 1);
+      return image;
     },
     adiciona_fotos(event) {
       this.imagePreview.push(event);
-      console.log(this.imagePreview);
     },
     ...submit,
     ...getAllCategoryes,

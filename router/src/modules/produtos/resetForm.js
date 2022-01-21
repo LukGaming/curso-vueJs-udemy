@@ -4,5 +4,7 @@ export default {
         this.nome = ""
         this.valor = ""
         this.descricao = ""
+        this.imagens = []
+        this.imagePreview = []
     }
 }

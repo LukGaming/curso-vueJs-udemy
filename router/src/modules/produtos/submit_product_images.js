@@ -1,5 +1,6 @@
 export default {
     async submit_product_images() {
+
         if(this.method == 'edit'){
             let imagens_enviadas = [];
             for (let i = 0; i < this.novas_imagens.length; i++) {
@@ -14,6 +15,7 @@ export default {
         }
         if(this.method == 'create'){
             let imagens_enviadas = [];
+            console.log(this.imagens)
             for (let i = 0; i < this.imagens.length; i++) {
                 let formData = new FormData();
                 formData.append('fotos', this.imagens[i])

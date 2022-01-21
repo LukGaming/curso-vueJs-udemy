@@ -1,6 +1,6 @@
 export default {
     async submit() {
-       console.log( localStorage.getItem('Id'))
+        console.log(this.valor)
         if (this.method == "create") {
             const isFormCorrect = await this.v$.$validate()
             if (!isFormCorrect) {
@@ -22,7 +22,7 @@ export default {
                 });
                 setTimeout(() => {
                     this.v$.$reset()
-                    // this.resetForm();
+                    this.resetForm();
                     this.loading = false
                     this.SnackBarOptions.snackbarMessage = "Produto Criado com sucesso"
                     this.SnackBarOptions.snackbar = true
