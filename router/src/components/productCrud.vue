@@ -190,7 +190,6 @@
 
 <script>
 import SnackBarMessageComponent from "../utils/SnackBarMessageComponent.vue";
-
 import submit from "../modules/produtos/submitProduct.js";
 import getAllCategoryes from "../modules/produtos/getAllCategoryes.js";
 import resetForm from "../modules/produtos/resetForm.js";
@@ -201,7 +200,6 @@ import submit_product_images from "../modules/produtos/submit_product_images.js"
 import removerImagem from "../modules/produtos/removerImagem.js";
 import getImagesFromProduct from "../modules/produtos/getImagesFromProduct.js";
 import pegausuario from "../modules/produtos/pegausuario.js";
-
 import validations from "../modules/produtos/validations.js";
 import useVuelidate from "@vuelidate/core";
 import dialogCreateCategoriaComponent from "../components/dialogCreateCategoriaComponent.vue";
