@@ -6,6 +6,9 @@
         </div>
         <div class="mt-16 mx-16">
             <v-text-field v-model="name" label="Nome Completo"></v-text-field>
+            <div v-if="v$.name.$error">
+                <v-alert color="red" type="warning" dense>Campo de <strong>Nome</strong> Não pode ficar vazio</v-alert>
+            </div>
 
             <!--Componente de Data -->
             <div>
@@ -19,6 +22,9 @@
                   .substr(0, 10)
               " min="1950-01-01" @change="save"></v-date-picker>
                 </v-menu>
+            </div>
+            <div v-if="v$.date.$error">
+                <v-alert color="red" type="warning" dense>Campo de <strong>Data</strong> Não pode ficar vazio</v-alert>
             </div>
             <!--Componente de Data -->
             <vue-anka-cropper @cropper-saved="ImagemEditada" @cropper-error="erroSelectImage" @cropper-file-selected="cropperFileSelected" :options="{
@@ -45,9 +51,7 @@
             </v-col>
         </v-row>
         <div class="d-flex justify-center mt-4">
-            <v-btn depressed color="primary" @click="submit">
-                Salvar
-            </v-btn>
+            <v-btn depressed color="primary" @click="submit"> Salvar </v-btn>
         </div>
     </v-container>
 </div>
@@ -55,6 +59,9 @@
 
 <script>
 import vueAnkaCropper from "vue-anka-cropper";
+import useVuelidate from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
+import UsuarioService from "../services/UsuarioService";
 export default {
     data() {
         return {
@@ -67,14 +74,20 @@ export default {
         };
     },
     components: {
-        vueAnkaCropper
+        vueAnkaCropper,
     },
     watch: {
         menu(val) {
             val && setTimeout(() => (this.activePicker = "YEAR"));
         },
     },
+    setup() {
+            return {
+                v$: useVuelidate(),
+            };
+        },
     methods: {
+        
         save(date) {
             this.$refs.menu.save(date);
         },
@@ -88,15 +101,30 @@ export default {
         cropperFileSelected() {
             this.erro_imagem = false;
         },
-        submit() {
-            console.log(this.name)
-            console.log(this.cropperImgAfterEdit)
-            console.log(this.date)
-        }
+        async submit() {
+            const isFormCorrect = await this.v$.$validate()
+            if(!isFormCorrect){
+                return isFormCorrect
+            }else{
+                var $usuario = {
+                    user_id: localStorage.getItem('userId'),
+                    image: this.cropperImgAfterEdit,
+                    name: this.name,
+                    birth_date: this.date
+                }
+                var Usuario = new UsuarioService(this.$http);
+                Usuario.submit($usuario);
+            }
+        },
+        
     },
+    validations(){
+            return {
+                name: {required},
+                date: {required}
+            }
+        }
 };
 </script>
 
-<style>
-
-</style>
+<style></style>
