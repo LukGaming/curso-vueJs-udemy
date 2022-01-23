@@ -18,22 +18,13 @@
                 class="mt-4 text-light"
                 v-model="usuario.email"
               ></v-text-field>
-              <v-text-field
-                label="Senha"
-                type="password"
-                class="mt-4"
-                v-model="usuario.password"
-              ></v-text-field>
+              <v-text-field label="Senha" type="password" class="mt-4" v-model="usuario.password"></v-text-field>
               <div v-if="v$.$errors.length > 0 || SenhaIncorreta">
-                <v-alert border="left" color="red" type="error" dense
-                  >Usuário ou senha incorretos</v-alert
-                >
+                <v-alert border="left" color="red" type="error" dense>Usuário ou senha incorretos</v-alert>
               </div>
             </div>
             <div class="d-flex justify-space-around mt-4">
-              <v-btn color="success" @click="logar" :loading="loading"
-                >Logar</v-btn
-              >
+              <v-btn color="success" @click="logar" :loading="loading">Logar</v-btn>
               <router-link to="/register">
                 <v-btn color="primary">Criar uma conta</v-btn>
               </router-link>
