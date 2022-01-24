@@ -3,20 +3,18 @@
     <div class="d-flex column justify-center">
       <h1 v-if="method == 'create'" class="mt-10">Criando um novo Produto</h1>
       <h1 v-if="method == 'edit'" class="mt-10">Editando Produto - {{ id }}</h1>
-      <h1 v-if="method == 'read'" class="mt-10">
-        Visualizando Produto - {{ id }}
-      </h1>
+      <h1 v-if="method == 'read'" class="mt-10">Visualizando Produto - {{ id }}</h1>
     </div>
     <div>
       <!-- Snack bar é a mensagem depois que o produto for criado ou editado -->
       <SnackBarMessageComponent :SnackBarOptions="SnackBarOptions" />
 
       <v-form lazy-validation class="mx-16">
-        <v-text-field v-model="nome" label="Nome" :readonly="inputsDisabled">
-        </v-text-field>
+        <v-text-field v-model="nome" label="Nome" :readonly="inputsDisabled"></v-text-field>
         <div v-if="v$.nome.$error">
           <v-alert color="red" type="warning" dense>
-            O campo de <strong>Nome</strong> deve conter entre 3 e 50 caracteres
+            O campo de
+            <strong>Nome</strong> deve conter entre 3 e 50 caracteres
           </v-alert>
         </div>
         <div class="valor">
@@ -29,31 +27,27 @@
           ></money>
         </div>
         <div class="d-flex">
-          <v-select v-model="select" :items="nome_categorias" label="Categoria">
-          </v-select>
+          <v-select v-model="select" :items="nome_categorias" label="Categoria"></v-select>
           <dialogCreateCategoriaComponent
             :SnackBarOptions="SnackBarOptions"
             :getAllCategoryes="getAllCategoryes"
             :dialog="dialog"
           />
         </div>
-        
 
         <div v-if="v$.valor.$error">
-          <v-alert color="red lighten-2" type="warning" dense
-            >Campo de <strong>Valor</strong> não pode ficar vazio</v-alert
-          >
+          <v-alert color="red lighten-2" type="warning" dense>
+            Campo de
+            <strong>Valor</strong> não pode ficar vazio
+          </v-alert>
         </div>
-        <v-textarea
-          v-model="descricao"
-          label="Descricao"
-          :readonly="inputsDisabled"
-        ></v-textarea>
+        <v-textarea v-model="descricao" label="Descricao" :readonly="inputsDisabled"></v-textarea>
         <div v-if="v$.descricao.$error">
-          <v-alert color="red" type="warning" dense
-            >Campo de <strong>Descricao</strong> deve conter entre 20 e 2000
-            Caracteres</v-alert
-          >
+          <v-alert color="red" type="warning" dense>
+            Campo de
+            <strong>Descricao</strong> deve conter entre 20 e 2000
+            Caracteres
+          </v-alert>
         </div>
         <div v-if="method == 'edit'">
           <v-file-input
@@ -67,17 +61,10 @@
         <div v-if="method == 'edit'">
           <div class="d-flex justify-center">
             <v-row class="d-flex justify-center mb-16">
-              <v-col
-                v-for="image in imagens"
-                :key="image.id"
-                class="d-flex child-flex"
-                cols="1"
-              >
+              <v-col v-for="image in imagens" :key="image.id" class="d-flex child-flex" cols="1">
                 <div class="imagens">
                   <div v-if="method == 'edit'">
-                    <v-icon @click="removerImagem(image.id)">
-                      mdi-delete
-                    </v-icon>
+                    <v-icon @click="removerImagem(image.id)">mdi-delete</v-icon>
                   </div>
                   <v-img
                     :src="`http://localhost:8000/${image.caminho_imagem_produto}`"
@@ -85,15 +72,8 @@
                     class="grey lighten-2"
                   >
                     <template v-slot:placeholder>
-                      <v-row
-                        class="fill-height ma-0"
-                        align="center"
-                        justify="center"
-                      >
-                        <v-progress-circular
-                          indeterminate
-                          color="grey lighten-5"
-                        ></v-progress-circular>
+                      <v-row class="fill-height ma-0" align="center" justify="center">
+                        <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
                       </v-row>
                     </template>
                   </v-img>
@@ -122,20 +102,11 @@
                 cols="1"
               >
                 <div class="imagens">
-                  <v-icon @click="removerPreviewImage(index)">
-                    mdi-delete
-                  </v-icon>
+                  <v-icon @click="removerPreviewImage(index)">mdi-delete</v-icon>
                   <v-img :src="image" aspect-ratio="1" class="grey lighten-2">
                     <template v-slot:placeholder>
-                      <v-row
-                        class="fill-height ma-0"
-                        align="center"
-                        justify="center"
-                      >
-                        <v-progress-circular
-                          indeterminate
-                          color="grey lighten-5"
-                        ></v-progress-circular>
+                      <v-row class="fill-height ma-0" align="center" justify="center">
+                        <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
                       </v-row>
                     </template>
                   </v-img>
@@ -153,16 +124,13 @@
             :disabled="inputsDisabled"
           >
             Cadastrar Produto
-          </v-btn> -->
+          </v-btn>-->
           <v-btn
             @click="submit"
             :loading="loading"
-            :disabled="inputsDisabled"
             depressed
             class="wrapper gold mt-10"
-          >
-            Cadastrar Produto
-          </v-btn>
+          >Cadastrar Produto</v-btn>
         </div>
         <div v-if="method == 'edit'" class="d-flex justify-center">
           <!-- <v-btn
@@ -175,13 +143,9 @@
           </v-btn>
           <v-btn color="warning" @click="excluirProduto" class="mx-10">
             Excluir Produto
-          </v-btn> -->
-          <v-btn @click="submit" class="mx-10 wrapper gold" :loading="loading">
-            Salvar Alterações
-          </v-btn>
-          <v-btn @click="excluirProduto" class="wrapper gold mx-10">
-            Excluir Produto
-          </v-btn>
+          </v-btn>-->
+          <v-btn @click="submit" class="mx-10 wrapper gold" :loading="loading">Salvar Alterações</v-btn>
+          <v-btn @click="excluirProduto" class="wrapper gold mx-10">Excluir Produto</v-btn>
         </div>
       </v-form>
     </div>

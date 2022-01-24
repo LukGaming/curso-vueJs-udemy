@@ -51,7 +51,37 @@
                         <strong>Data</strong> Não pode ficar vazio
                     </v-alert>
                 </div>
+
+                <v-row v-if="imagem_antiga" class="d-flex justify-center mt-5">
+                    <v-col cols="2">
+                        <div class="imagem_edit">
+                            <v-img :src="imagem_antiga" aspect-ratio="1" class="grey lighten-2">
+                                <template v-slot:placeholder>
+                                    <v-row class="fill-height ma-0" align="center" justify="center">
+                                        <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                                    </v-row>
+                                </template>
+                            </v-img>
+                            <div class="containerBtn">
+                                <v-btn
+                                    class="mx-2 btnEdit"
+                                    fab
+                                    dark
+                                    x-small
+                                    color="cyan"
+                                    @click="editarImagemPerfil"
+                                >
+                                    <v-icon dark>mdi-pencil</v-icon>
+                                </v-btn>
+                                <v-btn class="mx-2 btnEdit" fab dark x-small color="red">
+                                    <v-icon dark>mdi-delete</v-icon>
+                                </v-btn>
+                            </div>
+                        </div>
+                    </v-col>
+                </v-row>
                 <!--Componente de Data -->
+                <!-- <div v-if="nova_imagem || method == 'created'"> -->
                 <v-row class="d-flex justify-center mt-5">
                     <v-col cols="6">
                         <vue-anka-cropper
@@ -66,6 +96,7 @@
                         ></vue-anka-cropper>
                     </v-col>
                 </v-row>
+                <!-- </div> -->
                 <div v-if="erro_imagem">
                     <v-alert
                         type="info"
@@ -122,7 +153,9 @@ export default {
             cropperImgAfterEdit: "",
             erro_imagem: false,
             method: "create",
-            user_data: []
+            user_data: [],
+            nova_imagem: false,
+            imagem_antiga: ""
         };
     },
     components: {
@@ -147,9 +180,10 @@ export default {
             var perfil_user = $user_data.perfil_user.perfil_usuario
             this.name = user.name
             this.date = perfil_user.birth_date
-            console.log(perfil_user)
-            // this.cropperImgAfterEdit =
-            // this.name = this.user_data.name
+            this.imagem_antiga = `http://localhost:8000/` + perfil_user.caminho_imagem_perfil
+        },
+        editarImagemPerfil() {
+            console.log("Editando imagem")
         },
         save(date) {
             this.$refs.menu.save(date);
@@ -190,4 +224,21 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.imagem_edit {
+    display: flex;
+}
+.containerBtn {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.imagem_edit {
+    position: relative;
+}
+.btnEdit {
+    margin: 5px;
+}
+</style>
