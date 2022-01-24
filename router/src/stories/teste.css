@@ -1,0 +1,16 @@
+button {
+  color: white;
+
+  border: none;
+}
+button.primary {
+  background-color: #1867c0 !important;
+}
+button.primary:hover {
+  background-color: #2a7edd !important;
+}
+button.large {
+  padding: 5px;
+  font-size: 1.2rem;
+  border-radius: 5px;
+}
