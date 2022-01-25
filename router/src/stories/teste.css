@@ -10,7 +10,9 @@ button.primary:hover {
   background-color: #2a7edd !important;
 }
 button.large {
-  padding: 5px;
+  padding: 10px;
   font-size: 1.2rem;
+}
+button.rounded {
   border-radius: 5px;
 }

@@ -8,19 +8,18 @@ export default {
 const Template = (args, { argTypes }) => ({
   components: { teste },
   props: Object.keys(argTypes),
-  template: '<teste :nome="nome" :Primary="Primary" :Large="Large"/>'
+  template:
+    '<teste :nome="nome" :green="green" :textLight="textLight" :gold="gold" :red="red" :primary="primary" :blue="blue"/>'
 })
 
 export const Primary = Template.bind({})
 Primary.args = {
-  nome: 'teste',
-  Primary: true,
-  Large: true
+  primary: true
 }
 
 export const Secondary = Template.bind({})
 Secondary.args = {
-  nome: 'Secondary',
-  Primary: false,
-  Large: true
+  secondary: false
 }
+export const Red = Template.bind({})
+Red.args = {}

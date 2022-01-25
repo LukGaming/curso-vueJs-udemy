@@ -1,24 +1,32 @@
 <template>
   <div>
-    <div class="text-center mt-16" >
+    <div class="text-center mt-16">
       <SnackBarMessageComponent :SnackBarOptions="SnackBarOptions" />
     </div>
+    <teste nome="Teste" secondary large rounded />
   </div>
 </template>
 
 <script>
+import teste from '../stories/teste'
 import SnackBarMessageComponent from "../utils/SnackBarMessageComponent.vue";
 export default {
   components: {
     SnackBarMessageComponent,
+    teste
   },
 
   data() {
+
     return {
       SnackBarOptions: {
         snackbar: false,
         snackbarMessage: "",
       },
+      nome: "Primary",
+      primary: true,
+      large: true,
+      rounded: true,
       images: [],
       image_uploaded: false,
       path_image: "",
@@ -47,7 +55,7 @@ export default {
       this.SnackBarOptions.snackbar = true;
     }
   },
- 
+
 };
 </script>
 
