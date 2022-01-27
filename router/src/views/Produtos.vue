@@ -1,14 +1,12 @@
 <template>
-<div>
-    
     <div>
-        <v-container>
-            <h1 class="d-flex justify-center">visualizando Produtos</h1>
-
-            <ShowProducts />
-        </v-container>
+        <div>
+            <v-container>
+                <h1 class="d-flex justify-center">visualizando Produtos</h1>
+                <ShowProducts />
+            </v-container>
+        </div>
     </div>
-</div>
 </template>
 
 <script>
@@ -17,34 +15,34 @@ import ShowProducts from '../components/ShowProducts.vue'
 export default {
 
     components: {
-        
+
         ShowProducts
     },
     data() {
         return {
             headers: [{
 
-                    align: 'start',
-                    sortable: false,
-                    id: 'id',
-                },
-                {
-                    text: 'Id do Produto',
-                    value: 'id'
-                },
-                {
-                    text: 'Nome',
-                    value: 'nome'
-                },
-                {
-                    text: 'Valor (R$)',
-                    value: 'valor'
-                },
-                {
-                    text: 'Ações',
-                    value: 'Options'
+                align: 'start',
+                sortable: false,
+                id: 'id',
+            },
+            {
+                text: 'Id do Produto',
+                value: 'id'
+            },
+            {
+                text: 'Nome',
+                value: 'nome'
+            },
+            {
+                text: 'Valor (R$)',
+                value: 'valor'
+            },
+            {
+                text: 'Ações',
+                value: 'Options'
 
-                },
+            },
             ],
             desserts: [
 

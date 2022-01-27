@@ -2,16 +2,16 @@
   <div>
     <div class="d-flex column justify-center">
       <h1 v-if="method == 'create'" class="mt-10">Criando um novo Produto</h1>
-      <h1 v-if="method == 'edit'" class="mt-10">Editando Produto - {{ id }}</h1>
-      <h1 v-if="method == 'read'" class="mt-10">Visualizando Produto - {{ id }}</h1>
+      <h1 v-if="method == 'edit'" class="mt-10">Editando Produto - {{ produto.id }}</h1>
+      <h1 v-if="method == 'read'" class="mt-10">Visualizando Produto - {{ produto.id }}</h1>
     </div>
     <div>
       <!-- Snack bar é a mensagem depois que o produto for criado ou editado -->
       <SnackBarMessageComponent :SnackBarOptions="SnackBarOptions" />
 
       <v-form lazy-validation class="mx-16">
-        <v-text-field v-model="nome" label="Nome" :readonly="inputsDisabled"></v-text-field>
-        <div v-if="v$.nome.$error">
+        <v-text-field v-model="produto.nome" label="Nome" :readonly="inputsDisabled"></v-text-field>
+        <div v-if="v$.produto.nome.$error">
           <v-alert color="red" type="warning" dense>
             O campo de
             <strong>Nome</strong> deve conter entre 3 e 50 caracteres
@@ -20,7 +20,7 @@
         <div class="valor">
           Preço R$:
           <money
-            v-model="valor"
+            v-model="produto.valor"
             v-bind="money"
             :readonly="inputsDisabled"
             class="my-4 moeda text--light"
@@ -35,14 +35,14 @@
           />
         </div>
 
-        <div v-if="v$.valor.$error">
+        <div v-if="v$.produto.valor.$error">
           <v-alert color="red lighten-2" type="warning" dense>
             Campo de
             <strong>Valor</strong> não pode ficar vazio
           </v-alert>
         </div>
-        <v-textarea v-model="descricao" label="Descricao" :readonly="inputsDisabled"></v-textarea>
-        <div v-if="v$.descricao.$error">
+        <v-textarea v-model="produto.descricao" label="Descricao" :readonly="inputsDisabled"></v-textarea>
+        <div v-if="v$.produto.descricao.$error">
           <v-alert color="red" type="warning" dense>
             Campo de
             <strong>Descricao</strong> deve conter entre 20 e 2000
@@ -187,6 +187,12 @@ export default {
   },
   data() {
     return {
+      produto: {
+        id: null,
+        nome: null,
+        valor: "",
+        descricao: "",
+      },
       SnackBarOptions: {
         snackbar: false,
         snackbarMessage: "",
@@ -207,18 +213,11 @@ export default {
       },
       inputsDisabled: false,
       loading: false,
-      colorSnackbar: "",
-      colorSnackbarText: "black",
-      error: "",
-      id: null,
-      nome: null,
-      valor: "",
-      descricao: "",
       sucessMessage: "",
       snackbar: false,
       multiLine: true,
       method: "create",
-      id_categoria: 0,
+      id_categoria: null,
     };
   },
   props: {
@@ -230,7 +229,7 @@ export default {
       //Em caso da rota ser Create, aparecer os inputs vazios
       this.method = "create";
     }
-    this.id = this.$route.params.id;
+    this.produto.id = this.$route.params.id;
     if (this.$route.name == "produto/read") {
       this.method = "read";
       this.getProductByID();

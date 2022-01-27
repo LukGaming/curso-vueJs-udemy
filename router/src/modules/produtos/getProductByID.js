@@ -1,10 +1,9 @@
 export default {
   async getProductByID () {
-    var $produto = await this.$http.get(`api/produtos/${this.id}`)
-    console.log($produto)
-    this.nome = $produto.data.nome
-    this.valor = $produto.data.valor
-    this.descricao = $produto.data.descricao
+    var $produto = await this.$http.get(`api/produtos/${this.produto.id}`)
+    this.produto.nome = $produto.data.nome
+    this.produto.valor = $produto.data.valor
+    this.produto.descricao = $produto.data.descricao
     var $categoria = await this.$http.get(
       `api/categorias/${$produto.data.id_categoria}`
     )

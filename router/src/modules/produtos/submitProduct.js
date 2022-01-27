@@ -1,6 +1,5 @@
 export default {
   async submit () {
-    console.log(this.valor)
     if (this.method == 'create') {
       const isFormCorrect = await this.v$.$validate()
       if (!isFormCorrect) {
@@ -13,9 +12,7 @@ export default {
           }
         }
         var $produto = await this.$http.post('api/produtos', {
-          nome: this.nome,
-          valor: this.valor,
-          descricao: this.descricao,
+          produto: this.produto,
           user_id: localStorage.getItem('userId'),
           id_categoria: this.id_categoria
         })
@@ -28,7 +25,7 @@ export default {
           this.select = ''
         }, 1000)
 
-        this.id = $produto.data.produto.id
+        this.produto.id = $produto.data.produto.id
         this.submit_product_images()
       }
       return
