@@ -1,52 +1,47 @@
 <template>
-<div class="mt-16">
-    <v-container>
-        <div class="d-flex justify-center">
-            <h1 class="mb-2 mt-16">
-                Criando uma nova Categoria
-            </h1>
-        </div>
-        <v-snackbar v-model="snackbar" top right class="mt-16" color="success">
-            {{messageSnackBar}}
-            <template v-slot:action="{ attrs }">
-                <v-btn color="primary" text v-bind="attrs" @click="snackbar = false">
-                    <div> Fechar</div>
-                </v-btn>
-            </template>
-        </v-snackbar>
-        <v-form ref="form" centralized>
+    <div>
+        <v-container>
+            <div class="d-flex justify-center">
+                <h1 class="mb-2">Criando uma nova Categoria</h1>
+            </div>
+            <v-snackbar v-model="snackbar" top right class="mt-16" color="success">
+                {{ messageSnackBar }}
+                <template v-slot:action="{ attrs }">
+                    <v-btn color="primary" text v-bind="attrs" @click="snackbar = false">
+                        <div>Fechar</div>
+                    </v-btn>
+                </template>
+            </v-snackbar>
+            <v-form ref="form" centralized>
+                <div v-if="method == 'edit' || method == 'show'" class="my-8">
+                    <CriadorCategoriaComponent :usuarioCriador="usuarioCriador" />
+                </div>
 
-            <div v-if="method == 'edit' || method == 'show' " class="my-8">
-                <CriadorCategoriaComponent :usuarioCriador="usuarioCriador" />
-            </div>
-
-            <v-text-field v-model="nome_categoria" label="Nome da Categoria" :disabled="inputsDisabled"></v-text-field>
-            <div class="input-errors" v-if="v$.nome_categoria.$error ">
-                <v-alert border="bottom" color="pink darken-1" dark>
-                    O nome da categoria deve obter entre 3 e 20 Caractéres
-                </v-alert>
-            </div>
-            <div v-if="categoriaExists">
-                <v-alert border="bottom" color="pink darken-1" dark>
-                    Esta categoria já existe
-                </v-alert>
-            </div>
-            <div v-if="method == 'create'">
-                <v-btn color="warning" @click="submit">
-                    Cadastrar Categoria
-                </v-btn>
-            </div>
-            <div v-if="method == 'edit'" class="d-flex justify-space-around row">
-                <v-btn color="success" @click="submit">
-                    Editar Categoria
-                </v-btn>
-                <v-btn color="warning" @click="deleteCategory">
-                    Excluir Categoria
-                </v-btn>
-            </div>
-        </v-form>
-    </v-container>
-</div>
+                <v-text-field
+                    v-model="nome_categoria"
+                    label="Nome da Categoria"
+                    :disabled="inputsDisabled"
+                ></v-text-field>
+                <div class="input-errors" v-if="v$.nome_categoria.$error">
+                    <v-alert
+                        border="bottom"
+                        color="pink darken-1"
+                        dark
+                    >O nome da categoria deve obter entre 3 e 20 Caractéres</v-alert>
+                </div>
+                <div v-if="categoriaExists">
+                    <v-alert border="bottom" color="pink darken-1" dark>Esta categoria já existe</v-alert>
+                </div>
+                <div v-if="method == 'create'">
+                    <v-btn color="warning" @click="submit">Cadastrar Categoria</v-btn>
+                </div>
+                <div v-if="method == 'edit'" class="d-flex justify-space-around row">
+                    <v-btn color="success" @click="submit">Editar Categoria</v-btn>
+                    <v-btn color="warning" @click="deleteCategory">Excluir Categoria</v-btn>
+                </div>
+            </v-form>
+        </v-container>
+    </div>
 </template>
 
 <script>

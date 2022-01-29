@@ -1,3 +1,4 @@
+import eventBus from '../../events/ProductCategory'
 export default {
   async submit () {
     const isFormCorrect = await this.v$.$validate()
@@ -16,6 +17,7 @@ export default {
             this.snackbar = true
             this.messageSnackBar = 'Categoria Criada com sucesso!'
             this.nome_categoria = ''
+            eventBus.$emit('categoria_criada')
             return res
           })
           .catch(error => {

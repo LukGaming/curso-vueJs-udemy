@@ -169,6 +169,7 @@ import useVuelidate from "@vuelidate/core";
 import dialogCreateCategoriaComponent from "../components/dialogCreateCategoriaComponent.vue";
 import useCurrencyInput from "vue-currency-input";
 import VMoney from "v-money";
+import eventBus from "../events/ProductCategory";
 
 export default {
   directives: {
@@ -199,7 +200,7 @@ export default {
       },
       novas_imagens: [],
       imagePreview: [],
-      dialog: false,
+      dialog: true,
       select: [],
       nome_categorias: [],
       categorias: [],
@@ -223,6 +224,13 @@ export default {
   props: {
     options: Object,
   },
+  mounted() {
+    eventBus.$on('categoria_criada', () => {
+      this.eventbusReceiver()
+      this.SnackBarOptions.snackbar = true
+      this.SnackBarOptions.snackbarMessage = "Categoria Criada com sucesso!"
+    })
+  },
   created() {
     this.getAllCategoryes();
     if (this.$route.name == "produto/create") {
@@ -242,6 +250,9 @@ export default {
     }
   },
   methods: {
+    eventbusReceiver() {
+      this.getAllCategoryes();
+    },
     preview_images(e) {
       for (let i = 0; i < e.length; i++) {
         let images = e[i];
