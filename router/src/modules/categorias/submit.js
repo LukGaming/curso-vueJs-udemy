@@ -17,6 +17,7 @@ export default {
             this.snackbar = true
             this.messageSnackBar = 'Categoria Criada com sucesso!'
             this.nome_categoria = ''
+            this.dialog = false
             eventBus.$emit('categoria_criada')
             return res
           })

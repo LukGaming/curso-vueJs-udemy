@@ -1,63 +1,94 @@
 <template>
-  <div>
-    <div class="text-center mt-16">
-      <SnackBarMessageComponent :SnackBarOptions="SnackBarOptions" />
-    </div>
-    <teste nome="Teste" secondary large rounded />
-  </div>
+  <div id="plano"></div>
 </template>
+<style>
+#plano {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1280px;
+  height: 640px;
+  margin: 0 auto;
+}
 
+#plano canvas {
+  display: block;
+  margin: 0 auto;
+}
+</style>
 <script>
-import teste from '../stories/teste'
-import SnackBarMessageComponent from "../utils/SnackBarMessageComponent.vue";
+/* eslint-disable */
+/* eslint-disable no-unused-vars */
+import 'pixi'
+import 'p2'
+import Phaser from 'phaser'
+/* eslint-enable no-unused-vars */
+import image from '../assets/ship.png'
+
 export default {
-  components: {
-    SnackBarMessageComponent,
-    teste
-  },
-
-  data() {
-
-    return {
-      SnackBarOptions: {
-        snackbar: false,
-        snackbarMessage: "",
-      },
-      nome: "Primary",
-      primary: true,
-      large: true,
-      rounded: true,
-      images: [],
-      image_uploaded: false,
-      path_image: "",
-    };
+  name: 'phaser',
+  data: () => ({
+    game: null,
+    sprites: {},
+  }),
+  mounted() {
+    this.$on('click', function () {
+      console.log('click')
+    })
+    let self = this
+    if (this.game == null) {
+      this.game = new Phaser.Game({
+        width: 1280,
+        height: 640,
+        renderer: Phaser.AUTO,
+        antialias: true,
+        parent: this.$el,
+        state: {
+          preload: function preload() {
+            self.preload(this)
+          },
+          create: function create() {
+            self.create(this)
+          },
+          update: function update() {
+            self.update(this)
+          },
+          render: function render() {
+            self.render(this)
+          }
+        }
+      })
+    }
   },
   methods: {
-    uploadFiles() {
-      this.images = this.$refs.file.files[0];
-      var formData = new FormData();
-      formData.append("fotos", this.images);
-      this.$http.post("api/files", formData).then((res) => {
-        console.log(res);
-        this.path_image = "http://localhost:8000/" + res.data.imagem;
-        this.image_uploaded = true;
-      });
+    preload() {
+      this.game.load.image('block', image)
     },
-  },
-  created() {
-    if (this.$route.query.register) {
-      this.SnackBarOptions.snackbarMessage = "Cadastro efetuado com sucesso!";
-      this.SnackBarOptions.snackbar = true;
+    create(phaser) {
+      let self = this;
+      var sprite = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'block')
+      sprite.anchor.set(0.5)
+      sprite.inputEnabled = true
+      sprite.input.enableDrag()
+      sprite.events.onInputDown.add(function () {
+        console.log('sprite down')
+      })
+      console.log(phaser)
+      console.log(self)
+    },
+    update(phaser) {
+      console.log(phaser)
+    },
+    render() {
+      var debug
+      debug = this.game.debug
+      debug.inputInfo(32, 32);
+      debug.pointer(this.game.input.activePointer);
+      debug.spriteInputInfo(this.game.world.children[0], 32, 150)
     }
-
-    if (this.$route.query.loginSucess) {
-      this.SnackBarOptions.snackbarMessage = "Login efetuado com sucesso!";
-      this.SnackBarOptions.snackbar = true;
-    }
   },
-
-};
+  destroyed() {
+    // this.game.destroy()
+  }
+}
 </script>
-
-<style>
-</style>

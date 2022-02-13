@@ -10,25 +10,7 @@
                     <v-icon dark>mdi-plus</v-icon>
                 </v-btn>
             </template>
-
-            <v-card>
-                <CategoriaCrud />
-                <!-- <v-container>
-                    <v-text-field label="Nome da Categoria" v-model="nova_categoria"></v-text-field>
-                    <v-alert
-                        v-if="existe_categoria"
-                        border="bottom"
-                        color="pink darken-1"
-                        dark
-                    >Essa categoria já existe!</v-alert>
-                </v-container>
-
-                <v-spacer></v-spacer>
-                <div class="d-flex justify-space-around">
-                    <v-btn color="primary" class="my-6" @click="criar_categoria">Criar</v-btn>
-                    <v-btn color="primary" class="my-6" text @click="dialog = false">Cancelar</v-btn>
-                </div>-->
-            </v-card>
+            <CategoriaCrud :dialog="dialog" />
         </v-dialog>
     </div>
 </template>
@@ -41,13 +23,13 @@ export default {
     props: {
         getAllCategoryes: Function,
         SnackBarOptions: Object,
-        sucessMessage: String
+        sucessMessage: String,
+        dialog: Boolean
     },
     data() {
         return {
             nova_categoria: "",
             existe_categoria: false,
-            dialog: false
         }
     },
     components: {
